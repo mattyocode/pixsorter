@@ -1,0 +1,25 @@
+@use "../../styles/base" as b;
+@use "../../styles/mixins" as m;
+
+.wrapper {
+  @include m.flex-centered;
+  flex-direction: column;
+  z-index: 10;
+  // color: b.$black;
+  margin: 3rem 0;
+}
+
+.title {
+  font-family: b.$header-font;
+  font-size: 3rem;
+  margin: 0.2em;
+
+  @media (min-width: b.$breakpoint-tablet) {
+    font-size: 5rem;
+    margin: 1rem;
+  }
+}
+
+.subhead {
+  font-family: b.$body-font;
+}

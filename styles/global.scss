@@ -1,0 +1,22 @@
+@use "styles/base" as b;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: b.$body-font;
+  color: b.$black;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  font-family: b.$header-font;
+}
