@@ -1,1 +1,20 @@
-@import "../../styles/_mixins";
+@use "../../styles/_mixins" as m;
+@use "../../styles/_base" as b;
+
+.imageUIWrapper {
+  @include m.flex-centered;
+  background-color: b.$black;
+  padding: 2rem;
+  min-height: 500px;
+  max-width: 450px;
+}
+
+.btnWrapper {
+  @include m.flex-centered;
+  height: 4rem;
+}
+
+.canvas {
+  width: 400px;
+  height: 400px;
+}

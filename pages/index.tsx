@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import { ImageBackground } from "../components/Layout";
 import { Heading } from "../components/Heading";
+import { ImageUI } from "../components/ImageUI";
 
 import styles from "../styles/Home.module.scss";
 
@@ -16,6 +17,7 @@ const Home: NextPage = () => {
       </Head>
       <ImageBackground src="/img/background.jpg">
         <Heading title="PixSorter" subhead="Watch alogrithms sort pixels." />
+        <ImageUI />
       </ImageBackground>
     </div>
   );
