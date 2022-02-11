@@ -5,7 +5,6 @@
   @include m.flex-centered;
   flex-direction: column;
   z-index: 10;
-  // color: b.$black;
   margin: 3rem 0;
 }
 
@@ -15,7 +14,7 @@
   margin: 0.2em;
 
   @media (min-width: b.$breakpoint-tablet) {
-    font-size: 5rem;
+    font-size: 4rem;
     margin: 1rem;
   }
 }
