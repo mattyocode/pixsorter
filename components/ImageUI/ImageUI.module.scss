@@ -3,15 +3,20 @@
 
 .imageUIWrapper {
   @include m.flex-centered;
+  flex-direction: column;
   background-color: b.$black;
   padding: 2rem;
   min-height: 500px;
   max-width: 450px;
+  margin-bottom: 2rem;
 }
 
 .btnWrapper {
-  @include m.flex-centered;
-  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 95%;
+  margin: 1rem 0 0.5rem 0;
 }
 
 .canvas {

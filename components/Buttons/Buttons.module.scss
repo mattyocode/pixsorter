@@ -1,0 +1,18 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/base" as b;
+
+.button {
+  @include m.removeBtnDefault;
+  color: b.$white;
+  height: 2rem;
+  width: 5rem;
+}
+
+.label {
+  font-family: b.$header-font;
+  font-size: 0.8rem;
+  margin: 6px 2px;
+}
+
+.img {
+}
