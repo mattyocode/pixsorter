@@ -25,7 +25,6 @@ export function ImageUIBtn({
         height={height}
         width={width}
         alt={alt}
-        objectFit="cover"
         className={styles.image}
       />
       <p className={styles.label}>{label}</p>
