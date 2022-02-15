@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import useHttp from "../../hooks/use-http";
 import { Canvas } from "../Canvas";
 import { ImageUIBtn } from "../Buttons";
 
@@ -7,13 +7,22 @@ import styles from "./ImageUI.module.scss";
 
 export function ImageUI() {
   const [canvasImg, setCanvasImg] = useState<string>("/img/test-image.jpg");
+  const { isLoading, error, sendRequest: fetchImg } = useHttp();
+
+  const addImageData = (imgData: any) => {
+    setCanvasImg(imgData.urls.regular);
+  };
 
   const shuffleImage = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/image");
-      const data = await response.json();
-      setCanvasImg(data.urls.regular);
+      // const response = await fetch("/api/image");
+      fetchImg(
+        {
+          url: "/api/image",
+        },
+        addImageData
+      );
     } catch (error) {
       console.log("error in imageUI", error);
     }
@@ -27,16 +36,24 @@ export function ImageUI() {
           src="/icons/shuffle.svg"
           label="New Img"
           alt="icon"
-          size={25}
+          width={30}
+          height={25}
           clickHandler={shuffleImage}
         />
         <ImageUIBtn
           src="/icons/upload.svg"
           label="Upload"
           alt="icon"
-          size={25}
+          width={25}
+          height={25}
         />
-        <ImageUIBtn src="/icons/sort.svg" label="Sort!" alt="icon" size={25} />
+        <ImageUIBtn
+          src="/icons/sort.svg"
+          label="Sort!"
+          alt="icon"
+          width={25}
+          height={25}
+        />
       </div>
     </div>
   );

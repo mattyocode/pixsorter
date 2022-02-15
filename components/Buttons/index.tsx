@@ -5,13 +5,15 @@ import styles from "./Buttons.module.scss";
 
 export function ImageUIBtn({
   src,
-  size,
+  width,
+  height,
   label,
   alt,
   clickHandler,
 }: {
   src: string;
-  size: number;
+  width: number;
+  height: number;
   label: string;
   alt: string;
   clickHandler?: (e: React.MouseEvent) => void;
@@ -20,10 +22,11 @@ export function ImageUIBtn({
     <button className={styles.button} onClick={clickHandler}>
       <Image
         src={src}
-        height={size}
-        width={size}
+        height={height}
+        width={width}
         alt={alt}
-        className={styles.img}
+        objectFit="cover"
+        className={styles.image}
       />
       <p className={styles.label}>{label}</p>
     </button>
