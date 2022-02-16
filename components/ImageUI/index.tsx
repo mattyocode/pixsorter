@@ -46,11 +46,17 @@ export function ImageUI() {
     }
   };
 
+  const resetInputValue = (
+    event: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
+  };
+
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files) {
       const file = e.target.files[0];
-      console.log(file);
       const url = window.URL.createObjectURL(file);
       setimage(url);
     }
@@ -93,6 +99,7 @@ export function ImageUI() {
             ref={inputFile}
             style={{ display: "none" }}
             onChange={onChangeFile}
+            onClick={resetInputValue}
           />
           <ImageUIBtn
             src="/icons/upload.svg"

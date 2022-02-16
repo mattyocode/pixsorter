@@ -46,7 +46,7 @@ export function Canvas({
         loadImage(context, imageSrc, width, height);
       }
     }
-  });
+  }, [imageSrc, height, width]);
 
   return <canvas ref={canvasRef} height={height} width={width} />;
 }
