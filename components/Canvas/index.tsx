@@ -9,7 +9,7 @@ const scaleToFill = (img: HTMLImageElement, width: number, height: number) => {
   return { x, y, scaledWidth, scaledHeight };
 };
 
-const draw = (
+const loadImage = (
   context: CanvasRenderingContext2D,
   imageSrc: string,
   width: number,
@@ -43,7 +43,7 @@ export function Canvas({
     if (canvasRef.current) {
       const context = canvasRef.current.getContext("2d");
       if (context) {
-        draw(context, imageSrc, width, height);
+        loadImage(context, imageSrc, width, height);
       }
     }
   });

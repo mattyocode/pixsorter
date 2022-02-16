@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import useHttp from "../../hooks/use-http";
 import { Canvas } from "../Canvas";
 import { ImageUIBtn } from "../Buttons";
@@ -13,18 +13,20 @@ type attributionData = {
 };
 
 export function ImageUI() {
-  const [canvasImg, setCanvasImg] = useState<string>("/img/test-image.jpg");
+  const [image, setimage] = useState<string>("/img/test-image.jpg");
   const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
     null
   );
-  const [canvasSize, setCanvasSize] = useState<number>(320);
+  const [canvasSize, setCanvasSize] = useState<number | null>(null);
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
+  const inputFile = useRef<HTMLInputElement | null>(null);
 
   const addImageData = (imgData: any) => {
-    setCanvasImg(imgData.urls.regular);
+    const imgUrl = imgData.urls.regular;
     const name = imgData.user.name;
     const accountLink = imgData.user.links.html;
+    setimage(imgUrl);
     setImgAttribution({ name, accountLink });
   };
 
@@ -36,6 +38,20 @@ export function ImageUI() {
       },
       addImageData
     );
+  };
+
+  const uploadFile = () => {
+    if (inputFile.current) {
+      inputFile.current.click();
+    }
+  };
+
+  const onChangeFile = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    console.log(file);
+    const url = window.URL.createObjectURL(file);
+    setimage(url);
   };
 
   useEffect(() => {
@@ -56,7 +72,9 @@ export function ImageUI() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.imageUI}>
-        <Canvas imageSrc={canvasImg} width={canvasSize} height={canvasSize} />
+        {canvasSize && (
+          <Canvas imageSrc={image} width={canvasSize} height={canvasSize} />
+        )}
         {isLoading && <Loading />}
         <div className={styles.btnWrapper}>
           <ImageUIBtn
@@ -67,13 +85,23 @@ export function ImageUI() {
             height={25}
             clickHandler={shuffleImage}
           />
+          {/* <div> */}
+          <input
+            type="file"
+            id="file"
+            ref={inputFile}
+            style={{ display: "none" }}
+            onChange={onChangeFile.bind(this)}
+          />
           <ImageUIBtn
             src="/icons/upload.svg"
             label="Upload"
             alt="icon"
             width={25}
             height={25}
+            clickHandler={uploadFile}
           />
+          {/* </div> */}
           <ImageUIBtn
             src="/icons/sort.svg"
             label="Sort!"
