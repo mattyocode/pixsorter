@@ -1,17 +1,21 @@
 .wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   z-index: 100;
+  max-width: 400px;
 }
 
 .field {
-  padding: 1rem;
+  flex: 1;
+  margin: 1rem;
 }
 
 .optionsWrapper {
+  flex: 3;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  margin-left: 1rem;
 
   ul {
     display: flex;
@@ -36,6 +40,7 @@
     margin: 0 1rem;
     white-space: nowrap;
     font-size: 1.2rem;
+    font-weight: bolder;
     scroll-snap-align: center;
   }
 }

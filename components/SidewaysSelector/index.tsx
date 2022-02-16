@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { ImageUIBtn } from "../Buttons";
 import styles from "./SidewaysSelector.module.scss";
 
@@ -17,15 +17,17 @@ const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
 export function SidewaysSelector({
   field,
   values,
+  selectedIdx,
+  setSelectedIdx,
 }: {
   field: string;
   values: {
     value: string;
     label: string;
   }[];
+  selectedIdx: number;
+  setSelectedIdx: Dispatch<SetStateAction<number>>;
 }) {
-  const [selectedIdx, setSelectedIdx] = useState<number>(0);
-
   const incrementSelected = (e: React.MouseEvent) => {
     e.preventDefault();
     setSelectedIdx((prev) => (prev + 1) % values.length);
@@ -37,7 +39,7 @@ export function SidewaysSelector({
   };
 
   return (
-    <form className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <label htmlFor="algorithms" className={styles.field}>
         <h3>{field}</h3>
       </label>
@@ -66,6 +68,6 @@ export function SidewaysSelector({
           clickHandler={incrementSelected}
         />
       </div>
-    </form>
+    </div>
   );
 }

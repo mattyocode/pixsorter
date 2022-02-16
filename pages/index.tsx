@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import React, { useState } from "react";
 
 import { ImageBackground } from "../components/Layout";
 import { Heading } from "../components/Heading";
@@ -17,6 +18,8 @@ const algoOptions = [
 ];
 
 const Home: NextPage = () => {
+  const [algoIdx, setAlgoIdx] = useState<number>(0);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -27,7 +30,12 @@ const Home: NextPage = () => {
       <ImageBackground src="/img/background.jpg">
         <Heading title="PixSorter" subhead="Watch alogrithms sort pixels." />
         <ImageUI />
-        <SidewaysSelector field="Sort with" values={algoOptions} />
+        <SidewaysSelector
+          field="Using"
+          values={algoOptions}
+          selectedIdx={algoIdx}
+          setSelectedIdx={setAlgoIdx}
+        />
       </ImageBackground>
     </div>
   );
