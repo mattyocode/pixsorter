@@ -1,12 +1,6 @@
 @use "../../styles/_mixins" as m;
 @use "../../styles/_base" as b;
 
-.wrapper {
-  // max-width: 450px;
-  // min-height: 500px;
-  // margin-bottom: 2rem;
-}
-
 .imageUI {
   @include m.flex-centered;
   flex-direction: column;

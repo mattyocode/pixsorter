@@ -46,12 +46,14 @@ export function ImageUI() {
     }
   };
 
-  const onChangeFile = (e) => {
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const file = e.target.files[0];
-    console.log(file);
-    const url = window.URL.createObjectURL(file);
-    setimage(url);
+    if (e.target.files) {
+      const file = e.target.files[0];
+      console.log(file);
+      const url = window.URL.createObjectURL(file);
+      setimage(url);
+    }
   };
 
   useEffect(() => {
@@ -80,32 +82,30 @@ export function ImageUI() {
           <ImageUIBtn
             src="/icons/shuffle.svg"
             label="New Img"
-            alt="icon"
+            alt="get new image"
             width={30}
             height={25}
             clickHandler={shuffleImage}
           />
-          {/* <div> */}
           <input
             type="file"
             id="file"
             ref={inputFile}
             style={{ display: "none" }}
-            onChange={onChangeFile.bind(this)}
+            onChange={onChangeFile}
           />
           <ImageUIBtn
             src="/icons/upload.svg"
             label="Upload"
-            alt="icon"
+            alt="upload file"
             width={25}
             height={25}
             clickHandler={uploadFile}
           />
-          {/* </div> */}
           <ImageUIBtn
             src="/icons/sort.svg"
             label="Sort!"
-            alt="icon"
+            alt="sort image"
             width={25}
             height={25}
           />

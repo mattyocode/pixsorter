@@ -8,6 +8,14 @@ import { SidewaysSelector } from "../components/SidewaysSelector";
 
 import styles from "../styles/Home.module.scss";
 
+const algoOptions = [
+  // { value: "quick", label: "Quick sort" },
+  { value: "bubble", label: "Bubble sort" },
+  { value: "insertion", label: "Insertion sort" },
+  { value: "selection", label: "Selection sort" },
+  // { value: "merge", label: "Merge sort" },
+];
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -19,10 +27,7 @@ const Home: NextPage = () => {
       <ImageBackground src="/img/background.jpg">
         <Heading title="PixSorter" subhead="Watch alogrithms sort pixels." />
         <ImageUI />
-        <SidewaysSelector
-          field="Sort with"
-          values={["Merge sort", "Selection sort"]}
-        />
+        <SidewaysSelector field="Sort with" values={algoOptions} />
       </ImageBackground>
     </div>
   );
