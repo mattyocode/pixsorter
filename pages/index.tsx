@@ -6,6 +6,7 @@ import { ImageBackground } from "../components/Layout";
 import { Heading } from "../components/Heading";
 import { ImageUI } from "../components/ImageUI";
 import { SidewaysSelector } from "../components/SidewaysSelector";
+import { Algorithm } from "../global";
 
 import styles from "../styles/Home.module.scss";
 
@@ -29,7 +30,7 @@ const Home: NextPage = () => {
       </Head>
       <ImageBackground src="/img/background.jpg">
         <Heading title="PixSorter" subhead="Watch alogrithms sort pixels." />
-        <ImageUI />
+        <ImageUI algorithmToUse={algoOptions[algoIdx].value as Algorithm} />
         <SidewaysSelector
           field="Using"
           values={algoOptions}

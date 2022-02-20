@@ -1,18 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
 import useHttp from "../../hooks/use-http";
-import { Canvas } from "../Canvas";
+import { SortCanvas } from "../Canvas";
 import { ImageUIBtn } from "../Buttons";
 import { Loading } from "../Loading";
 import useWindowDimensions from "../../hooks/use-window-dimensions";
+import { Algorithm } from "../../global";
 
 import styles from "./ImageUI.module.scss";
+
+type imageUIProps = {
+  algorithmToUse?: Algorithm | undefined;
+};
 
 type attributionData = {
   name: string;
   accountLink: string;
 };
 
-export function ImageUI() {
+export function ImageUI({ algorithmToUse }: imageUIProps) {
   const [image, setimage] = useState<string>("/img/test-image.jpg");
   const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
     null
@@ -81,7 +86,12 @@ export function ImageUI() {
     <div className={styles.wrapper}>
       <div className={styles.imageUI}>
         {canvasSize && (
-          <Canvas imageSrc={image} width={canvasSize} height={canvasSize} />
+          <SortCanvas
+            imageSrc={image}
+            algorithm={algorithmToUse}
+            width={canvasSize}
+            height={canvasSize}
+          />
         )}
         {isLoading && <Loading />}
         <div className={styles.btnWrapper}>
