@@ -24,4 +24,6 @@ export const loadScaledImage = (
     );
     context.drawImage(image, x, y, scaledWidth, scaledHeight);
   };
+
+  return image;
 };
