@@ -18,7 +18,7 @@ type attributionData = {
 };
 
 export function ImageUI({ algorithmToUse }: imageUIProps) {
-  const [image, setimage] = useState<string>("/img/test-image.jpg");
+  const [image, setimage] = useState<string | null>(null);
   const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
     null
   );
@@ -39,6 +39,7 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
 
   const shuffleImage = async (e: React.MouseEvent) => {
     e.preventDefault();
+    setKeepSorting(false);
     fetchImg(
       {
         url: "/api/image",
@@ -74,8 +75,14 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
     setKeepSorting((prev) => !prev);
   };
 
+  const stopSort = () => {
+    console.log("stop sort runs");
+    setKeepSorting(false);
+    console.log("stop sort keep sorting", keepSorting);
+  };
+
   useEffect(() => {
-    if (width) {
+    if (width && !keepSorting) {
       switch (true) {
         case width >= 450:
           setCanvasSize(400);
@@ -87,19 +94,26 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
           setCanvasSize(320);
       }
     }
-  }, [width]);
+  }, [width, keepSorting]);
+
+  useEffect(() => {
+    if (!image) {
+      setimage("img/test-image.jpg");
+    }
+  }, [image]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.imageUI}>
-        {canvasSize && (
+        {canvasSize && image && (
           <SortCanvas
             imageSrc={image}
             algorithm={algorithmToUse}
             width={canvasSize}
             height={canvasSize}
             keepSorting={keepSorting}
-            setIsSorted={setIsSorted}
+            // setKeepSorting={setKeepSorting}
+            stopSorting={stopSort}
           />
         )}
         {isLoading && <Loading />}
