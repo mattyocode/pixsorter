@@ -37,9 +37,13 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
     setImgAttribution({ name, accountLink });
   };
 
+  const stopSort = () => {
+    setKeepSorting(false);
+  };
+
   const shuffleImage = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setKeepSorting(false);
+    stopSort();
     fetchImg(
       {
         url: "/api/image",
@@ -49,6 +53,7 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
   };
 
   const uploadFile = () => {
+    stopSort();
     if (inputFile.current) {
       inputFile.current.click();
     }
@@ -73,12 +78,6 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
   const toggleSort = (e: React.MouseEvent) => {
     e.preventDefault();
     setKeepSorting((prev) => !prev);
-  };
-
-  const stopSort = () => {
-    console.log("stop sort runs");
-    setKeepSorting(false);
-    console.log("stop sort keep sorting", keepSorting);
   };
 
   useEffect(() => {
@@ -112,7 +111,6 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
             width={canvasSize}
             height={canvasSize}
             keepSorting={keepSorting}
-            // setKeepSorting={setKeepSorting}
             stopSorting={stopSort}
           />
         )}
