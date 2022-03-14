@@ -6,11 +6,12 @@ export const bubbleSort = (
   compare: (array: Uint8ClampedArray, index: number) => number,
   sortPosition: number = array.length,
   pixelIdxLength: number = 4,
-  renderLoops: number = 25
+  renderLoops: number = 100
 ): Uint8ClampedArray => {
   // if (!sortPosition) sortPosition = array.length;
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition <= pixelIdxLength) {
+      console.log("bubble sort ends");
       sortedCallback();
     }
     for (let j = 0; j < sortPosition; j += pixelIdxLength) {

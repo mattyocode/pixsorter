@@ -33,6 +33,7 @@ export function SortCanvas({
     const finishedSorting = () => {
       setIsSorted(true);
       stopSorting();
+      console.log("finishedSorting runs!");
     };
 
     if (keepSorting && !isSorted) {

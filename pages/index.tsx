@@ -29,7 +29,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ImageBackground src="/img/background.jpg">
-        <Heading title="PixSorter" subhead="Watch alogrithms sort pixels." />
+        <Heading title="PixSorter" subhead="Watch algorithms sort pixels." />
         <ImageUI algorithmToUse={algoOptions[algoIdx].value as Algorithm} />
         <SidewaysSelector
           field="Using"

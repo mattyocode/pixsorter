@@ -18,13 +18,12 @@ type attributionData = {
 };
 
 export function ImageUI({ algorithmToUse }: imageUIProps) {
-  const [image, setimage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
   const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
     null
   );
   const [canvasSize, setCanvasSize] = useState<number | null>(null);
   const [keepSorting, setKeepSorting] = useState<boolean>(false);
-  const [isSorted, setIsSorted] = useState<boolean>(false);
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
   const inputFile = useRef<HTMLInputElement | null>(null);
@@ -33,7 +32,7 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
     const imgUrl = imgData.urls.regular;
     const name = imgData.user.name;
     const accountLink = imgData.user.links.html;
-    setimage(imgUrl);
+    setImage(imgUrl);
     setImgAttribution({ name, accountLink });
   };
 
@@ -71,7 +70,7 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
     if (e.target.files) {
       const file = e.target.files[0];
       const url = window.URL.createObjectURL(file);
-      setimage(url);
+      setImage(url);
     }
   };
 
@@ -97,7 +96,7 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
 
   useEffect(() => {
     if (!image) {
-      setimage("img/test-image.jpg");
+      setImage("img/test-image.jpg");
     }
   }, [image]);
 
