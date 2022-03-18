@@ -7,12 +7,13 @@ import { Heading } from "../components/Heading";
 import { ImageUI } from "../components/ImageUI";
 import { SidewaysSelector } from "../components/SidewaysSelector";
 import { Algorithm } from "../global";
+import { bubbleSort } from "../helpers/bubble-sort";
 
 import styles from "../styles/Home.module.scss";
 
 const algoOptions = [
   // { value: "quick", label: "Quick sort" },
-  { value: "bubble", label: "Bubble sort" },
+  { value: "bubble", label: "Bubble sort", function: bubbleSort },
   { value: "insertion", label: "Insertion sort" },
   { value: "selection", label: "Selection sort" },
   // { value: "merge", label: "Merge sort" },

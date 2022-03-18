@@ -24,6 +24,7 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
   );
   const [canvasSize, setCanvasSize] = useState<number | null>(null);
   const [keepSorting, setKeepSorting] = useState<boolean>(false);
+
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
   const inputFile = useRef<HTMLInputElement | null>(null);
@@ -77,6 +78,7 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
   const toggleSort = (e: React.MouseEvent) => {
     e.preventDefault();
     setKeepSorting((prev) => !prev);
+    console.log("keep sorting in UI >", keepSorting);
   };
 
   useEffect(() => {

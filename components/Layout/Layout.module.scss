@@ -3,11 +3,11 @@
 .imageBackground {
   @include m.flex-centered;
   flex-direction: column;
-  position: relative;
   min-height: 100%;
   z-index: -100;
 }
 
 .nextImage {
   z-index: -100;
+  display: fixed;
 }

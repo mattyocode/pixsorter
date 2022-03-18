@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { loadScaledImage } from "../../helpers/load-scaled-image";
 
-import { compareBrightness } from "../../helpers/pixel-comparison";
+import { compareBrightness, compareBlue } from "../../helpers/pixel-comparison";
 import { bubbleSort } from "../../helpers/bubble-sort";
 import { Algorithm } from "../../global";
 
@@ -26,7 +26,6 @@ export function SortCanvas({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   let imgData = useRef<ImageData | null>(null);
-  // let remainingSort = useRef<number | undefined>(undefined);
   let context = useRef<CanvasRenderingContext2D | null>(null);
   let requestId = useRef<number | null>(null);
 
@@ -34,34 +33,32 @@ export function SortCanvas({
     const finishedSorting = () => {
       setIsSorted(true);
       stopSorting();
-      console.log("finishedSorting runs!");
     };
-    console.log("keep sorting && !isSorted", keepSorting, isSorted);
     if (keepSorting && !isSorted) {
       if (imgData.current?.data && context.current) {
-        console.log("remainingSort.current >", remainingSort);
-
         bubbleSort(
           imgData.current.data,
           finishedSorting,
-          compareBrightness,
+          compareBlue,
           remainingSort,
           setRemainingSort
         );
         context.current.putImageData(imgData.current, 0, 0);
         requestId.current = requestAnimationFrame(draw);
       }
-    } else {
-      console.log("FINISHED!");
-      if (requestId.current) {
-        cancelAnimationFrame(requestId.current);
-      }
     }
+    // else {
+    //   console.log("FINISHED!");
+    //   if (requestId.current) {
+    //     cancelAnimationFrame(requestId.current);
+    //   }
+    // }
   }, [keepSorting, stopSorting, isSorted, context, remainingSort]);
 
   useEffect(() => {
     setImageLoaded(false);
     setRemainingSort(null);
+    setIsSorted(false);
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext("2d");
       if (context.current) {
