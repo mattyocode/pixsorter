@@ -22,10 +22,11 @@ export function SortCanvas({
 }) {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const [isSorted, setIsSorted] = useState<boolean>(false);
+  const [remainingSort, setRemainingSort] = useState<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   let imgData = useRef<ImageData | null>(null);
-  let remainingSort = useRef<number | undefined>(undefined);
+  // let remainingSort = useRef<number | undefined>(undefined);
   let context = useRef<CanvasRenderingContext2D | null>(null);
   let requestId = useRef<number | null>(null);
 
@@ -35,14 +36,17 @@ export function SortCanvas({
       stopSorting();
       console.log("finishedSorting runs!");
     };
-
+    console.log("keep sorting && !isSorted", keepSorting, isSorted);
     if (keepSorting && !isSorted) {
       if (imgData.current?.data && context.current) {
+        console.log("remainingSort.current >", remainingSort);
+
         bubbleSort(
           imgData.current.data,
           finishedSorting,
           compareBrightness,
-          remainingSort.current
+          remainingSort,
+          setRemainingSort
         );
         context.current.putImageData(imgData.current, 0, 0);
         requestId.current = requestAnimationFrame(draw);
@@ -53,11 +57,11 @@ export function SortCanvas({
         cancelAnimationFrame(requestId.current);
       }
     }
-  }, [keepSorting, stopSorting, isSorted, context]);
+  }, [keepSorting, stopSorting, isSorted, context, remainingSort]);
 
   useEffect(() => {
     setImageLoaded(false);
-    remainingSort.current = undefined;
+    setRemainingSort(null);
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext("2d");
       if (context.current) {
