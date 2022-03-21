@@ -1,59 +1,171 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import useHttp from "../../hooks/use-http";
-import { Canvas } from "../Canvas";
+import { SortCanvas } from "../Canvas";
 import { ImageUIBtn } from "../Buttons";
+import { Loading } from "../Loading";
+import useWindowDimensions from "../../hooks/use-window-dimensions";
+import { Algorithm } from "../../global";
 
 import styles from "./ImageUI.module.scss";
 
-export function ImageUI() {
-  const [canvasImg, setCanvasImg] = useState<string>("/img/test-image.jpg");
+type imageUIProps = {
+  algorithmToUse?: Algorithm | undefined;
+};
+
+type attributionData = {
+  name: string;
+  accountLink: string;
+};
+
+export function ImageUI({ algorithmToUse }: imageUIProps) {
+  const [image, setImage] = useState<string | null>(null);
+  const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
+    null
+  );
+  const [canvasSize, setCanvasSize] = useState<number | null>(null);
+  const [keepSorting, setKeepSorting] = useState<boolean>(false);
+
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
+  const { width } = useWindowDimensions();
+  const inputFile = useRef<HTMLInputElement | null>(null);
 
   const addImageData = (imgData: any) => {
-    setCanvasImg(imgData.urls.regular);
+    const imgUrl = imgData.urls.regular;
+    const name = imgData.user.name;
+    const accountLink = imgData.user.links.html;
+    setImage(imgUrl);
+    setImgAttribution({ name, accountLink });
+  };
+
+  const stopSort = () => {
+    setKeepSorting(false);
   };
 
   const shuffleImage = async (e: React.MouseEvent) => {
     e.preventDefault();
-    try {
-      // const response = await fetch("/api/image");
-      fetchImg(
-        {
-          url: "/api/image",
-        },
-        addImageData
-      );
-    } catch (error) {
-      console.log("error in imageUI", error);
+    stopSort();
+    fetchImg(
+      {
+        url: "/api/image",
+      },
+      addImageData
+    );
+  };
+
+  const uploadFile = () => {
+    stopSort();
+    if (inputFile.current) {
+      inputFile.current.click();
     }
   };
 
+  const resetInputValue = (
+    event: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
+  };
+
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const url = window.URL.createObjectURL(file);
+      setImage(url);
+    }
+  };
+
+  const toggleSort = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setKeepSorting((prev) => !prev);
+    console.log("keep sorting in UI >", keepSorting);
+  };
+
+  useEffect(() => {
+    if (width && !keepSorting) {
+      switch (true) {
+        case width >= 450:
+          setCanvasSize(400);
+          break;
+        case width >= 425:
+          setCanvasSize(380);
+          break;
+        default:
+          setCanvasSize(320);
+      }
+    }
+  }, [width, keepSorting]);
+
+  useEffect(() => {
+    if (!image) {
+      setImage("img/test-image.jpg");
+    }
+  }, [image]);
+
   return (
-    <div className={styles.imageUIWrapper}>
-      <Canvas imageSrc={canvasImg} width={400} height={400} />
-      <div className={styles.btnWrapper}>
-        <ImageUIBtn
-          src="/icons/shuffle.svg"
-          label="New Img"
-          alt="icon"
-          width={30}
-          height={25}
-          clickHandler={shuffleImage}
-        />
-        <ImageUIBtn
-          src="/icons/upload.svg"
-          label="Upload"
-          alt="icon"
-          width={25}
-          height={25}
-        />
-        <ImageUIBtn
-          src="/icons/sort.svg"
-          label="Sort!"
-          alt="icon"
-          width={25}
-          height={25}
-        />
+    <div className={styles.wrapper}>
+      <div className={styles.imageUI}>
+        {canvasSize && image && (
+          <SortCanvas
+            imageSrc={image}
+            algorithm={algorithmToUse}
+            width={canvasSize}
+            height={canvasSize}
+            keepSorting={keepSorting}
+            stopSorting={stopSort}
+          />
+        )}
+        {isLoading && <Loading />}
+        <div className={styles.btnWrapper}>
+          <ImageUIBtn
+            src="/icons/shuffle.svg"
+            label="New Img"
+            alt="get new image"
+            width={30}
+            height={25}
+            clickHandler={shuffleImage}
+          />
+          <input
+            type="file"
+            id="file"
+            ref={inputFile}
+            style={{ display: "none" }}
+            onChange={onChangeFile}
+            onClick={resetInputValue}
+          />
+          <ImageUIBtn
+            src="/icons/upload.svg"
+            label="Upload"
+            alt="upload file"
+            width={25}
+            height={25}
+            clickHandler={uploadFile}
+          />
+          <ImageUIBtn
+            src="/icons/sort.svg"
+            label="Sort!"
+            alt="sort image"
+            width={25}
+            height={25}
+            clickHandler={toggleSort}
+          />
+        </div>
+      </div>
+      <div className={styles.attribution}>
+        {imgAttribution && (
+          <p>
+            Photo by{" "}
+            <a
+              href={`${imgAttribution.accountLink}?utm_source=pixsorter&utm_medium=referral`}
+            >
+              {imgAttribution.name}
+            </a>{" "}
+            on{" "}
+            <a href="https://unsplash.com/?utm_source=pixsorter&utm_medium=referral">
+              Unsplash
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

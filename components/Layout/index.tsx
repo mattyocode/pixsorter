@@ -13,13 +13,13 @@ export function ImageBackground({
   return (
     <div className={styles.imageBackground}>
       <Image
-        alt="bright light art gallery"
+        alt="bright black and white art gallery"
         src={src}
         layout="fill"
         objectFit="cover"
         objectPosition="center"
         quality={100}
-        className={styles.imageZIndex}
+        className={styles.nextImage}
       />
       {children}
     </div>

@@ -1,14 +1,17 @@
 @use "../../styles/_mixins" as m;
 @use "../../styles/_base" as b;
 
-.imageUIWrapper {
+.imageUI {
   @include m.flex-centered;
   flex-direction: column;
   background-color: b.$black;
-  padding: 2rem;
-  min-height: 500px;
-  max-width: 450px;
-  margin-bottom: 2rem;
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 100;
+
+  @media screen and (min-width: 450px) {
+    padding: 2rem;
+  }
 }
 
 .btnWrapper {
@@ -22,4 +25,25 @@
 .canvas {
   width: 400px;
   height: 400px;
+}
+
+.attribution {
+  min-height: 3rem;
+
+  p {
+    position: relative;
+    width: 100%;
+    text-align: right;
+    padding-right: 3px;
+    font-style: italic;
+    font-size: 0.8rem;
+
+    @media screen and (min-width: 450px) {
+      font-size: 1rem;
+    }
+  }
+
+  a {
+    text-decoration: underline;
+  }
 }
