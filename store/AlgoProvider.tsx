@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 
 import AlgoContext from "./algo-context";
+import { AlgoItem } from "./algoData";
 
 const defaultAlgoState = {
   algoIdx: 0,

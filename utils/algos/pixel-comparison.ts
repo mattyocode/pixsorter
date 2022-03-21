@@ -1,3 +1,8 @@
+export type compareFnTypes = (
+  array: Uint8ClampedArray,
+  index: number
+) => number;
+
 export const compareBrightness = (
   array: Uint8ClampedArray,
   index: number
