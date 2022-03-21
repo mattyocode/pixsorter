@@ -9,13 +9,13 @@ import {
   compareFnTypes,
 } from "../utils/algos/pixel-comparison";
 
-export type AlgoItem = {
+export type AlgoItemType = {
   name: string;
   value: string;
   function: sortAlgoTypes;
 };
 
-const AlgoOptions: AlgoItem[] = [
+export const AlgoOptions: AlgoItemType[] = [
   {
     name: "Bubble Sort",
     value: "bubble",
@@ -33,13 +33,13 @@ const AlgoOptions: AlgoItem[] = [
   },
 ];
 
-export type SortByItem = {
+export type SortByItemType = {
   name: string;
   value: string;
   function: compareFnTypes;
 };
 
-const SortByOptions: SortByItem[] = [
+export const SortByOptions: SortByItemType[] = [
   {
     name: "Brightness",
     value: "brightness",

@@ -1,19 +1,23 @@
 import React from "react";
 
-let algorithmData;
-let sortByData;
+import {
+  AlgoOptions,
+  SortByOptions,
+  AlgoItemType,
+  SortByItemType,
+} from "./algoData";
 
 const AlgoContext = React.createContext({
   // Initialised with default state for IDE autocompletion.
   algoIdx: 0,
-  algos: algorithmData,
+  algos: AlgoOptions,
   sortByIdx: 0,
-  sortByOptions: sortByData,
+  sortByOptions: SortByOptions,
   pixelDistance: 4,
   prevAlgo: () => {},
   nextAlgo: () => {},
-  prevSortBy: () => {},
-  nextSortBy: () => {},
+  // prevSortBy: () => {},
+  // nextSortBy: () => {},
 });
 
 export default AlgoContext;
