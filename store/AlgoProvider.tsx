@@ -94,3 +94,5 @@ const AlgoProvider = ({ children }: { children: React.ReactNode }) => {
     <AlgoContext.Provider value={algoContext}>{children}</AlgoContext.Provider>
   );
 };
+
+export default AlgoProvider;

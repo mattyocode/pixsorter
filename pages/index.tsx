@@ -6,6 +6,7 @@ import { ImageBackground } from "../components/Layout";
 import { Heading } from "../components/Heading";
 import { ImageUI } from "../components/ImageUI";
 import { SidewaysSelector } from "../components/SidewaysSelector";
+import AlgoProvider from "../store/AlgoProvider";
 import { Algorithm } from "../global";
 import { bubbleSort } from "../utils/algos/bubble-sort";
 
@@ -23,6 +24,7 @@ const Home: NextPage = () => {
   const [algoIdx, setAlgoIdx] = useState<number>(0);
 
   return (
+    // <AlgoProvider>
     <div className={styles.container}>
       <Head>
         <title>PixSorter</title>
@@ -40,6 +42,7 @@ const Home: NextPage = () => {
         />
       </ImageBackground>
     </div>
+    // </AlgoProvider>
   );
 };
 
