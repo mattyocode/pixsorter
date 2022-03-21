@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { loadScaledImage } from "../../helpers/load-scaled-image";
+import { loadScaledImage } from "../../utils/load-scaled-image";
 
-import { compareBrightness, compareBlue } from "../../helpers/pixel-comparison";
-import { bubbleSort } from "../../helpers/bubble-sort";
+import {
+  compareBrightness,
+  compareBlue,
+} from "../../utils/algos/pixel-comparison";
+import { bubbleSort } from "../../utils/algos/bubble-sort";
 import { Algorithm } from "../../global";
 
 export function SortCanvas({

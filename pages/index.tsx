@@ -7,7 +7,7 @@ import { Heading } from "../components/Heading";
 import { ImageUI } from "../components/ImageUI";
 import { SidewaysSelector } from "../components/SidewaysSelector";
 import { Algorithm } from "../global";
-import { bubbleSort } from "../helpers/bubble-sort";
+import { bubbleSort } from "../utils/algos/bubble-sort";
 
 import styles from "../styles/Home.module.scss";
 
