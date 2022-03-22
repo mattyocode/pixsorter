@@ -11,7 +11,7 @@ export function ImageBackground({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.imageBackground}>
+    <div className={styles.layoutBackground}>
       <Image
         alt="bright black and white art gallery"
         src={src}
@@ -19,7 +19,6 @@ export function ImageBackground({
         objectFit="cover"
         objectPosition="center"
         quality={100}
-        className={styles.nextImage}
       />
       {children}
     </div>

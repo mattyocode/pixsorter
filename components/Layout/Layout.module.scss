@@ -1,13 +1,9 @@
 @use "../../styles/_mixins" as m;
 
-.imageBackground {
+.layoutBackground {
   @include m.flex-centered;
   flex-direction: column;
-  min-height: 100%;
-  z-index: -100;
-}
-
-.nextImage {
-  z-index: -100;
-  display: fixed;
+  min-height: 100vh;
+  height: 100%;
+  position: relative;
 }

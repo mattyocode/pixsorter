@@ -1,16 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
-type sortTypes = {
-  array: Uint8ClampedArray;
-  sortedCallback: () => void;
-  compare: (array: Uint8ClampedArray, index: number) => number;
-  sortPosition: number | null;
-  setSortPosition: Dispatch<SetStateAction<number | null>>;
-  pixelIdxLength: number;
-  renderLoops: number;
-};
-
 export const bubbleSort = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
