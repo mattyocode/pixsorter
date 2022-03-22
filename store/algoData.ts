@@ -10,59 +10,54 @@ import {
 } from "../utils/algos/pixel-comparison";
 
 export type AlgoItemType = {
-  name: string;
+  label: string;
   value: string;
   function: sortAlgoTypes;
 };
 
 export const AlgoOptions: AlgoItemType[] = [
   {
-    name: "Bubble Sort",
+    label: "Bubble Sort",
     value: "bubble",
     function: bubbleSort,
   },
   {
-    name: "Insertion Sort",
+    label: "Insertion Sort",
     value: "insertion",
     function: bubbleSort,
   },
   {
-    name: "Selection Sort",
+    label: "Selection Sort",
     value: "selection",
     function: bubbleSort,
   },
 ];
 
 export type SortByItemType = {
-  name: string;
+  label: string;
   value: string;
   function: compareFnTypes;
 };
 
 export const SortByOptions: SortByItemType[] = [
   {
-    name: "Brightness",
+    label: "Brightness",
     value: "brightness",
     function: compareBrightness,
   },
   {
-    name: "Red",
+    label: "Red",
     value: "red",
     function: compareRed,
   },
   {
-    name: "Green",
+    label: "Green",
     value: "green",
     function: compareGreen,
   },
   {
-    name: "Blue",
+    label: "Blue",
     value: "Blue",
     function: compareBlue,
-  },
-  {
-    name: "Alpha",
-    value: "alpha",
-    function: compareAlpha,
   },
 ];

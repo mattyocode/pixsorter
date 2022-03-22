@@ -17,7 +17,7 @@ type attributionData = {
   accountLink: string;
 };
 
-export function ImageUI({ algorithmToUse }: imageUIProps) {
+export function ImageUI() {
   const [image, setImage] = useState<string | null>(null);
   const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
     null
@@ -108,7 +108,6 @@ export function ImageUI({ algorithmToUse }: imageUIProps) {
         {canvasSize && image && (
           <SortCanvas
             imageSrc={image}
-            algorithm={algorithmToUse}
             width={canvasSize}
             height={canvasSize}
             keepSorting={keepSorting}

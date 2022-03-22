@@ -1,23 +1,30 @@
 import React from "react";
 
-import {
-  AlgoOptions,
-  SortByOptions,
-  AlgoItemType,
-  SortByItemType,
-} from "./algoData";
+import { AlgoItemType, SortByItemType } from "./algoData";
 
-const AlgoContext = React.createContext({
+type AlgoContextTypes = {
+  algoIdx: number;
+  algos: AlgoItemType[];
+  sortByIdx: number;
+  sortByOptions: SortByItemType[];
+  pixelDistance: number;
+  prevAlgo: () => void;
+  nextAlgo: () => void;
+  prevSortBy: () => void;
+  nextSortBy: () => void;
+};
+
+const AlgoContext = React.createContext<AlgoContextTypes>({
   // Initialised with default state for IDE autocompletion.
   algoIdx: 0,
-  algos: AlgoOptions,
+  algos: [],
   sortByIdx: 0,
-  sortByOptions: SortByOptions,
+  sortByOptions: [],
   pixelDistance: 4,
   prevAlgo: () => {},
   nextAlgo: () => {},
-  // prevSortBy: () => {},
-  // nextSortBy: () => {},
+  prevSortBy: () => {},
+  nextSortBy: () => {},
 });
 
 export default AlgoContext;

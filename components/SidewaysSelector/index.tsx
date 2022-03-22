@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { ImageUIBtn } from "../Buttons";
+import { AlgoItemType, SortByItemType } from "../../store/algoData";
+
 import styles from "./SidewaysSelector.module.scss";
 
 const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
@@ -18,24 +20,23 @@ export function SidewaysSelector({
   field,
   values,
   selectedIdx,
-  setSelectedIdx,
+  prevBtnHandler,
+  nextBtnHandler,
 }: {
   field: string;
-  values: {
-    value: string;
-    label: string;
-  }[];
+  values: AlgoItemType[] | SortByItemType[];
   selectedIdx: number;
-  setSelectedIdx: Dispatch<SetStateAction<number>>;
+  prevBtnHandler: () => void;
+  nextBtnHandler: () => void;
 }) {
-  const incrementSelected = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setSelectedIdx((prev) => (prev + 1) % values.length);
-  };
-
   const decrementSelected = (e: React.MouseEvent) => {
     e.preventDefault();
-    setSelectedIdx((prev) => Math.abs((prev - 1) % values.length));
+    prevBtnHandler();
+  };
+
+  const incrementSelected = (e: React.MouseEvent) => {
+    e.preventDefault();
+    nextBtnHandler();
   };
 
   return (
@@ -54,7 +55,7 @@ export function SidewaysSelector({
         <ul>
           {values.map((value) => (
             <FieldValue
-              key={`fieldvalue-${value.value}`}
+              key={`fieldValue-${value.value}`}
               value={value.label}
               active={values[selectedIdx] === value}
             />

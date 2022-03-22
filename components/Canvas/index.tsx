@@ -1,23 +1,21 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useContext,
+} from "react";
+import AlgoContext from "../../store/algo-context";
 import { loadScaledImage } from "../../utils/load-scaled-image";
-
-import {
-  compareBrightness,
-  compareBlue,
-} from "../../utils/algos/pixel-comparison";
-import { bubbleSort } from "../../utils/algos/bubble-sort";
-import { Algorithm } from "../../global";
 
 export function SortCanvas({
   imageSrc,
-  algorithm,
   height,
   width,
   stopSorting,
   keepSorting,
 }: {
   imageSrc: string;
-  algorithm?: Algorithm | undefined;
   height: number;
   width: number;
   stopSorting: () => void;
@@ -26,8 +24,11 @@ export function SortCanvas({
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const [isSorted, setIsSorted] = useState<boolean>(false);
   const [remainingSort, setRemainingSort] = useState<number | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const algoCtx = useContext(AlgoContext);
+  const algorithm = algoCtx.algos[algoCtx.algoIdx].function;
+  const sortBy = algoCtx.sortByOptions[algoCtx.sortByIdx].function;
 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   let imgData = useRef<ImageData | null>(null);
   let context = useRef<CanvasRenderingContext2D | null>(null);
   let requestId = useRef<number | null>(null);
@@ -39,10 +40,10 @@ export function SortCanvas({
     };
     if (keepSorting && !isSorted) {
       if (imgData.current?.data && context.current) {
-        bubbleSort(
+        algorithm(
           imgData.current.data,
           finishedSorting,
-          compareBlue,
+          sortBy,
           remainingSort,
           setRemainingSort
         );
@@ -50,13 +51,15 @@ export function SortCanvas({
         requestId.current = requestAnimationFrame(draw);
       }
     }
-    // else {
-    //   console.log("FINISHED!");
-    //   if (requestId.current) {
-    //     cancelAnimationFrame(requestId.current);
-    //   }
-    // }
-  }, [keepSorting, stopSorting, isSorted, context, remainingSort]);
+  }, [
+    algorithm,
+    sortBy,
+    keepSorting,
+    stopSorting,
+    isSorted,
+    context,
+    remainingSort,
+  ]);
 
   useEffect(() => {
     setImageLoaded(false);
