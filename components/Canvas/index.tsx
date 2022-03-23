@@ -4,6 +4,8 @@ import React, {
   useRef,
   useCallback,
   useContext,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import AlgoContext from "../../store/algo-context";
 import { loadScaledImage } from "../../utils/load-scaled-image";
@@ -14,15 +16,18 @@ export function SortCanvas({
   width,
   stopSorting,
   keepSorting,
+  isSorted,
+  setIsSorted,
 }: {
   imageSrc: string;
   height: number;
   width: number;
   stopSorting: () => void;
   keepSorting?: boolean;
+  isSorted: boolean;
+  setIsSorted: Dispatch<SetStateAction<boolean>>;
 }) {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-  const [isSorted, setIsSorted] = useState<boolean>(false);
   const [remainingSort, setRemainingSort] = useState<number | null>(null);
   const algoCtx = useContext(AlgoContext);
   const algorithm = algoCtx.algos[algoCtx.algoIdx].function;
@@ -57,6 +62,7 @@ export function SortCanvas({
     keepSorting,
     stopSorting,
     isSorted,
+    setIsSorted,
     context,
     remainingSort,
   ]);
@@ -65,6 +71,7 @@ export function SortCanvas({
     setImageLoaded(false);
     setRemainingSort(null);
     setIsSorted(false);
+    stopSorting();
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext("2d");
       if (context.current) {
@@ -77,7 +84,7 @@ export function SortCanvas({
         );
       }
     }
-  }, [imageSrc, height, width]);
+  }, [stopSorting, imageSrc, height, width, setIsSorted, sortBy, algorithm]);
 
   useEffect(() => {
     if (imageLoaded && context.current) {

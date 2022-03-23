@@ -1,5 +1,5 @@
 import { sortAlgoTypes } from "../utils/algos/algoTypes";
-import { bubbleSort } from "../utils/algos/bubble-sort";
+import { bubbleSort, insertionSort, selectionSort } from "../utils/algos";
 import {
   compareAlpha,
   compareBlue,
@@ -24,12 +24,12 @@ export const AlgoOptions: AlgoItemType[] = [
   {
     label: "Insertion Sort",
     value: "insertion",
-    function: bubbleSort,
+    function: insertionSort,
   },
   {
     label: "Selection Sort",
     value: "selection",
-    function: bubbleSort,
+    function: selectionSort,
   },
 ];
 
