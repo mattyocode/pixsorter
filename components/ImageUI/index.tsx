@@ -130,9 +130,18 @@ export function ImageUI() {
 
   useEffect(() => {
     if (!image) {
-      setImage("img/test-image.jpg");
+      try {
+        fetchImg(
+          {
+            url: "/api/image",
+          },
+          addImageData
+        );
+      } catch {
+        setImage("img/test-image.jpg");
+      }
     }
-  }, [image]);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
