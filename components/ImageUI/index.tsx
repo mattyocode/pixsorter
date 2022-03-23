@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import useHttp from "../../hooks/use-http";
 import { SortCanvas } from "../Canvas";
 import { ImageUIBtn } from "../Buttons";
@@ -24,6 +24,7 @@ export function ImageUI() {
   );
   const [canvasSize, setCanvasSize] = useState<number | null>(null);
   const [keepSorting, setKeepSorting] = useState<boolean>(false);
+  const [isSorted, setIsSorted] = useState<boolean>(false);
 
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
@@ -37,9 +38,9 @@ export function ImageUI() {
     setImgAttribution({ name, accountLink });
   };
 
-  const stopSort = () => {
+  const stopSort = useCallback(() => {
     setKeepSorting(false);
-  };
+  }, [setKeepSorting]);
 
   const shuffleImage = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -77,9 +78,40 @@ export function ImageUI() {
 
   const toggleSort = (e: React.MouseEvent) => {
     e.preventDefault();
-    setKeepSorting((prev) => !prev);
-    console.log("keep sorting in UI >", keepSorting);
+    if (!isSorted) setKeepSorting((prev) => !prev);
   };
+
+  const resetSort = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isSorted) {
+      setKeepSorting(false);
+      setIsSorted(false);
+      const imageSrc = image;
+      setImage(null);
+      setTimeout(() => {
+        setImage(imageSrc);
+      }, 200);
+    }
+  };
+
+  let sortBtnData: {
+    src: string;
+    label: string;
+    alt: string;
+  } = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
+
+  if (!isSorted && keepSorting)
+    sortBtnData = {
+      src: "/icons/sort.svg",
+      label: "Sorting",
+      alt: "sort image",
+    };
+  else if (isSorted)
+    sortBtnData = {
+      src: "/icons/reset.svg",
+      label: "Reset?",
+      alt: "reset sorted image",
+    };
 
   useEffect(() => {
     if (width && !keepSorting) {
@@ -112,6 +144,8 @@ export function ImageUI() {
             height={canvasSize}
             keepSorting={keepSorting}
             stopSorting={stopSort}
+            isSorted={isSorted}
+            setIsSorted={setIsSorted}
           />
         )}
         {isLoading && <Loading />}
@@ -141,12 +175,12 @@ export function ImageUI() {
             clickHandler={uploadFile}
           />
           <ImageUIBtn
-            src="/icons/sort.svg"
-            label="Sort!"
-            alt="sort image"
+            src={sortBtnData.src}
+            label={sortBtnData.label}
+            alt={sortBtnData.alt}
             width={25}
             height={25}
-            clickHandler={toggleSort}
+            clickHandler={!isSorted ? toggleSort : resetSort}
           />
         </div>
       </div>
