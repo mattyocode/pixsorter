@@ -10,6 +10,8 @@ import React, {
 import AlgoContext from "../../store/algo-context";
 import { loadScaledImage } from "../../utils/load-scaled-image";
 
+import styles from "./Canvas.module.scss";
+
 export function SortCanvas({
   imageSrc,
   height,
@@ -103,5 +105,9 @@ export function SortCanvas({
     };
   }, [canvasRef, keepSorting, isSorted, draw]);
 
-  return <canvas ref={canvasRef} height={height} width={width} />;
+  return (
+    <div className={styles.canvas}>
+      <canvas ref={canvasRef} height={height} width={width} />
+    </div>
+  );
 }
