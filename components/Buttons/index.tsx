@@ -27,7 +27,8 @@ export function ImageUIBtn({
         alt={alt}
         className={styles.image}
       />
-      {label && <p className={styles.label}>{label}</p>}
+      <p className={styles.label}>{label || null}</p>
+      {/* <p className={styles.label}>Test!</p> */}
     </button>
   );
 }

@@ -7,10 +7,12 @@
   height: 2rem;
   width: 5rem;
   cursor: pointer;
+  position: relative;
 }
 
 .label {
   font-family: b.$header-font;
   font-size: 0.8rem;
   margin: 6px 2px;
+  position: relative;
 }
