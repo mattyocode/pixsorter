@@ -30,13 +30,13 @@ export function ImageUI() {
   const { width } = useWindowDimensions();
   const inputFile = useRef<HTMLInputElement | null>(null);
 
-  const addImageData = (imgData: any) => {
+  const addImageData = useCallback((imgData: any) => {
     const imgUrl = imgData.urls.regular;
     const name = imgData.user.name;
     const accountLink = imgData.user.links.html;
     setImage(imgUrl);
     setImgAttribution({ name, accountLink });
-  };
+  }, []);
 
   const stopSort = useCallback(() => {
     setKeepSorting(false);
@@ -141,22 +141,24 @@ export function ImageUI() {
         setImage("img/test-image.jpg");
       }
     }
-  }, []);
+  }, [fetchImg, addImageData, setImage, image]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.imageUI}>
-        {canvasSize && image && (
-          <SortCanvas
-            imageSrc={image}
-            width={canvasSize}
-            height={canvasSize}
-            keepSorting={keepSorting}
-            stopSorting={stopSort}
-            isSorted={isSorted}
-            setIsSorted={setIsSorted}
-          />
-        )}
+        <div className={styles.canvas}>
+          {canvasSize && image && (
+            <SortCanvas
+              imageSrc={image}
+              width={canvasSize}
+              height={canvasSize}
+              keepSorting={keepSorting}
+              stopSorting={stopSort}
+              isSorted={isSorted}
+              setIsSorted={setIsSorted}
+            />
+          )}
+        </div>
         {isLoading && <Loading />}
         <div className={styles.btnWrapper}>
           <ImageUIBtn
