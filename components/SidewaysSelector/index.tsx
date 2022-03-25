@@ -9,7 +9,7 @@ const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
 
   useEffect(() => {
     if (active && optionRef.current) {
-      optionRef.current.scrollIntoView();
+      optionRef.current.scrollIntoView(true);
     }
   }, [active]);
 
@@ -53,9 +53,9 @@ export function SidewaysSelector({
           clickHandler={decrementSelected}
         />
         <ul>
-          {values.map((value) => (
+          {values.map((value, idx) => (
             <FieldValue
-              key={`fieldValue-${value.value}`}
+              key={`fieldValue-${value.value}-${idx}`}
               value={value.label}
               active={values[selectedIdx] === value}
             />
