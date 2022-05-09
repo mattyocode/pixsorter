@@ -9,7 +9,13 @@ const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
 
   useEffect(() => {
     if (active && optionRef.current) {
-      optionRef.current.scrollIntoView();
+      console.log("is active, optionRef.current",
+      active, optionRef)
+      optionRef.current.scrollIntoView({
+        inline: "center",
+        block: "center",
+        behavior: "smooth"
+      });
     }
   }, [active]);
 
@@ -52,15 +58,17 @@ export function SidewaysSelector({
           height={25}
           clickHandler={decrementSelected}
         />
-        <ul>
-          {values.map((value) => (
-            <FieldValue
-              key={`fieldValue-${value.value}`}
+        <div className={styles.fieldWrapper}>
+          <ul>
+            {values.map((value, idx) => (
+              <FieldValue
+              key={`fieldValue-${value.value}-${idx}`}
               value={value.label}
               active={values[selectedIdx] === value}
-            />
-          ))}
-        </ul>
+              />
+              ))}
+          </ul>
+        </div>
         <ImageUIBtn
           src="/icons/right.svg"
           alt="next option"
