@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, Dispatch, SetStateAction } from "react";
+import { scrollIntoView } from "seamless-scroll-polyfill";
 import { ImageUIBtn } from "../Buttons";
 import { AlgoItemType, SortByItemType } from "../../store/algoData";
 
@@ -9,7 +10,20 @@ const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
 
   useEffect(() => {
     if (active && optionRef.current) {
-      optionRef.current.scrollIntoView(true);
+      console.log("is active, optionRef.current",
+      active, optionRef)
+      scrollIntoView(optionRef.current, {
+        inline: "center",
+        block: "nearest",
+        behavior: "smooth"
+      });
+      // scrollIntoView(
+      //   optionRef.current,
+      //   { inline: "center",
+      //     block: "nearest",
+      //     behavior: "smooth"
+      //   }
+      // );
     }
   }, [active]);
 
@@ -52,15 +66,17 @@ export function SidewaysSelector({
           height={25}
           clickHandler={decrementSelected}
         />
-        <ul>
-          {values.map((value, idx) => (
-            <FieldValue
+        <div className={styles.fieldWrapper}>
+          <ul>
+            {values.map((value, idx) => (
+              <FieldValue
               key={`fieldValue-${value.value}-${idx}`}
               value={value.label}
               active={values[selectedIdx] === value}
-            />
-          ))}
-        </ul>
+              />
+              ))}
+          </ul>
+        </div>
         <ImageUIBtn
           src="/icons/right.svg"
           alt="next option"

@@ -1627,6 +1627,11 @@ scheduler@^0.20.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
+seamless-scroll-polyfill@^2.1.8:
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/seamless-scroll-polyfill/-/seamless-scroll-polyfill-2.1.8.tgz#357b478b54a093e03581dcc9c0a86eae4b00eee2"
+  integrity sha512-cF92Op90//vEpHphRx25rttJGXIgxcTB1WR5y0ODQhN7O4d0lSEOp5+l3sQDx0aAZ2MfXCqFEb/rG/3ghvVDIQ==
+
 semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"

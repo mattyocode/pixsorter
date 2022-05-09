@@ -11,7 +11,7 @@ export function ImageBackground({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.layoutBackground}>
+    <div className={styles.imageBackground}>
       <Image
         alt="bright black and white art gallery"
         src={src}
