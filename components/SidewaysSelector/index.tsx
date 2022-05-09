@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, Dispatch, SetStateAction } from "react";
-import { scrollIntoView } from "seamless-scroll-polyfill";
 import { ImageUIBtn } from "../Buttons";
 import { AlgoItemType, SortByItemType } from "../../store/algoData";
 
@@ -12,18 +11,11 @@ const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
     if (active && optionRef.current) {
       console.log("is active, optionRef.current",
       active, optionRef)
-      scrollIntoView(optionRef.current, {
+      optionRef.current.scrollIntoView({
         inline: "center",
         block: "nearest",
         behavior: "smooth"
       });
-      // scrollIntoView(
-      //   optionRef.current,
-      //   { inline: "center",
-      //     block: "nearest",
-      //     behavior: "smooth"
-      //   }
-      // );
     }
   }, [active]);
 
