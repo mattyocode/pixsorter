@@ -13,7 +13,7 @@ const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
       active, optionRef)
       optionRef.current.scrollIntoView({
         inline: "center",
-        block: "nearest",
+        block: "center",
         behavior: "smooth"
       });
     }
