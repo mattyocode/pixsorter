@@ -9,6 +9,6 @@ module.exports = nextConfig;
 
 module.exports = {
   sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
+    includePaths: [path.join(__dirname, "src", "styles")],
   },
 };

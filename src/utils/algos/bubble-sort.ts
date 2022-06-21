@@ -1,6 +1,20 @@
 import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
+const bubbleSortHelper = (
+  array: Uint8ClampedArray,
+  compare: (array: Uint8ClampedArray, index: number) => number,
+  sortPosition: number,
+  pixelIdxLength: number,
+) => {
+  for (let j = 0; j < sortPosition; j += pixelIdxLength) {
+    if (compare(array, j) > compare(array, j + pixelIdxLength)) {
+      swap(j, j + pixelIdxLength, array);
+    }
+  }
+  return sortPosition -= pixelIdxLength;
+};
+
 const bubbleSort = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
@@ -18,12 +32,9 @@ const bubbleSort = (
         sortedCallback();
         break;
       }
-      for (let j = 0; j < sortPosition; j += pixelIdxLength) {
-        if (compare(array, j) > compare(array, j + pixelIdxLength)) {
-          swap(j, j + pixelIdxLength, array);
-        }
-      }
-      sortPosition -= pixelIdxLength;
+      sortPosition = bubbleSortHelper(
+        array, compare, sortPosition, pixelIdxLength
+      )
     }
     setSortPosition(sortPosition);
   }

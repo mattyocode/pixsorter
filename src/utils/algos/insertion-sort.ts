@@ -1,6 +1,21 @@
 import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
+
+const insertionSortHelper = (
+  sortPosition: number,
+  array: Uint8ClampedArray,
+  compare: (array: Uint8ClampedArray, index: number) => number,
+  pixelIdxLength: number,
+) => {
+  let j = sortPosition;
+  while (j > 0 && compare(array, j) < compare(array, j - pixelIdxLength)) {
+    swap(j, j - pixelIdxLength, array);
+    j -= pixelIdxLength;
+  }
+  return sortPosition += pixelIdxLength;
+}
+
 const insertionSort = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
@@ -18,12 +33,12 @@ const insertionSort = (
         sortedCallback();
         break;
       }
-      let j = sortPosition;
-      while (j > 0 && compare(array, j) < compare(array, j - pixelIdxLength)) {
-        swap(j, j - pixelIdxLength, array);
-        j -= pixelIdxLength;
-      }
-      sortPosition += pixelIdxLength;
+      sortPosition = insertionSortHelper(
+        sortPosition,
+        array,
+        compare,
+        pixelIdxLength,
+      )
     }
     setSortPosition(sortPosition);
   }
