@@ -2,10 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
 
-const renderLoopHelper = () => {
-  
-};
-
 const selectionSortHelper = (
   array: Uint8ClampedArray,
   compare: (array: Uint8ClampedArray, index: number) => number,
