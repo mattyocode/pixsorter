@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
-const bubbleSortHelper = (
+export const bubbleSortHelper = (
   array: Uint8ClampedArray,
   compare: (array: Uint8ClampedArray, index: number) => number,
   sortPosition: number,
   pixelIdxLength: number,
-) => {
+): number => {
   for (let j = 0; j < sortPosition; j += pixelIdxLength) {
     if (compare(array, j) > compare(array, j + pixelIdxLength)) {
       swap(j, j + pixelIdxLength, array);
