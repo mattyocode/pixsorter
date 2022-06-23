@@ -47,13 +47,13 @@ export function SortCanvas({
     };
     if (keepSorting && !isSorted) {
       if (imgData.current?.data && context.current) {
-        algorithm(
+        let {sortPosition, array} = algorithm(
           imgData.current.data,
           finishedSorting,
           sortBy,
           remainingSort,
-          setRemainingSort
         );
+        setRemainingSort(sortPosition);
         context.current.putImageData(imgData.current, 0, 0);
         requestId.current = requestAnimationFrame(draw);
       }

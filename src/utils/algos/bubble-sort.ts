@@ -20,25 +20,28 @@ const bubbleSort = (
   sortedCallback: () => void,
   compare: (array: Uint8ClampedArray, index: number) => number,
   sortPosition: number | null = array.length,
-  setSortPosition: Dispatch<SetStateAction<number | null>>,
   pixelIdxLength: number = 4,
   renderLoops: number = 100
-): Uint8ClampedArray => {
+): {
+  sortPosition: number,
+  array: Uint8ClampedArray,
+} => {
   if (!sortPosition) {
-    setSortPosition(array.length);
-  } else {
-    for (let i = 0; i < renderLoops; i++) {
-      if (sortPosition <= pixelIdxLength) {
-        sortedCallback();
-        break;
-      }
-      sortPosition = bubbleSortHelper(
-        array, compare, sortPosition, pixelIdxLength
-      )
-    }
-    setSortPosition(sortPosition);
+    // starting on the red pixel value at the end of the array
+    sortPosition = array.length - (pixelIdxLength - 1);
   }
-  return array;
+  for (let i = 0; i < renderLoops; i++) {
+    if (sortPosition <= pixelIdxLength) {
+      sortedCallback();
+      break;
+    }
+    sortPosition = bubbleSortHelper(
+      array, compare, sortPosition, pixelIdxLength
+    )
+  }
+  return {
+    sortPosition, array
+  }
 };
 
 export default bubbleSort;
