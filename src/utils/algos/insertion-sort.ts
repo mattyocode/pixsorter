@@ -21,28 +21,30 @@ const insertionSort = (
   sortedCallback: () => void,
   compare: (array: Uint8ClampedArray, index: number) => number,
   sortPosition: number | null = null,
-  setSortPosition: Dispatch<SetStateAction<number | null>>,
   pixelIdxLength: number = 4,
   renderLoops: number = 100
-): Uint8ClampedArray => {
+): {
+  sortPosition: number,
+  array: Uint8ClampedArray,
+} => {
   if (!sortPosition) {
-    setSortPosition(pixelIdxLength);
-  } else {
-    for (let i = 0; i < renderLoops; i++) {
-      if (sortPosition >= array.length) {
-        sortedCallback();
-        break;
-      }
-      sortPosition = insertionSortHelper(
-        sortPosition,
-        array,
-        compare,
-        pixelIdxLength,
-      )
-    }
-    setSortPosition(sortPosition);
+    sortPosition = 0
   }
-  return array;
+  for (let i = 0; i < renderLoops; i++) {
+    if (sortPosition >= array.length) {
+      sortedCallback();
+      break;
+    }
+    sortPosition = insertionSortHelper(
+      sortPosition,
+      array,
+      compare,
+      pixelIdxLength,
+    )
+  }
+  return {
+    sortPosition, array
+  }
 };
 
 export default insertionSort;
