@@ -50,6 +50,7 @@ const quickSort = (
   const endIdx = array.length;
   quickSortHelper(array, compare, pixelIdxLength, startIdx, endIdx);
   sortedCallback();
+  return array.length -1;
 };
 
 export default quickSort;
