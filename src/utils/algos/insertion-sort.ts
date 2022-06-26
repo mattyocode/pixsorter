@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
 
-const insertionSortHelper = (
-  sortPosition: number,
+export const insertionSortHelper = (
   array: Uint8ClampedArray,
   compare: (array: Uint8ClampedArray, index: number) => number,
+  sortPosition: number,
   pixelIdxLength: number,
 ) => {
   let j = sortPosition;
@@ -20,29 +19,24 @@ const insertionSort = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
   compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null = null,
-  setSortPosition: Dispatch<SetStateAction<number | null>>,
+  sortPosition: number | null,
   pixelIdxLength: number = 4,
   renderLoops: number = 100
-): Uint8ClampedArray => {
-  if (!sortPosition) {
-    setSortPosition(pixelIdxLength);
-  } else {
-    for (let i = 0; i < renderLoops; i++) {
-      if (sortPosition >= array.length) {
-        sortedCallback();
-        break;
-      }
-      sortPosition = insertionSortHelper(
-        sortPosition,
-        array,
-        compare,
-        pixelIdxLength,
-      )
+) => {
+  sortPosition = sortPosition || pixelIdxLength;
+  for (let i = 0; i < renderLoops; i++) {
+    if (sortPosition >= array.length) {
+      sortedCallback();
+      break;
     }
-    setSortPosition(sortPosition);
+    sortPosition = insertionSortHelper(
+      array,
+      compare,
+      sortPosition,
+      pixelIdxLength,
+    )
   }
-  return array;
+  return sortPosition;
 };
 
 export default insertionSort;
