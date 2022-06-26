@@ -67,7 +67,7 @@ describe("Bubble sort tests", () => {
       [1, 9, 9, 9, 2, 8, 8, 8, 3, 7, 7, 7]
     ))
   });
-  test("sorts three pixels without sortPosition provided", () => {
+  test("sorts three pixels with sortPosition as null", () => {
     let testArray = new Uint8ClampedArray(
       [2, 8, 8, 8, 3, 7, 7, 7, 1, 9, 9, 9]
     );
@@ -200,7 +200,7 @@ describe("Insertion sort tests", () => {
       [1, 9, 9, 9, 2, 8, 8, 8, 3, 7, 7, 7]
     ))
   });
-  test("sorts three pixels without sortPosition provided", () => {
+  test("sorts three pixels with sortPosition as null", () => {
     let testArray = new Uint8ClampedArray(
       [2, 8, 8, 8, 3, 7, 7, 7, 1, 9, 9, 9]
     );
@@ -333,7 +333,7 @@ describe("Selection sort tests", () => {
       [1, 9, 9, 9, 2, 8, 8, 8, 3, 7, 7, 7]
     ))
   });
-  test("sorts three pixels without sortPosition provided", () => {
+  test("sorts three pixels with sortPosition as null", () => {
     let testArray = new Uint8ClampedArray(
       [2, 8, 8, 8, 3, 7, 7, 7, 1, 9, 9, 9]
     );
