@@ -4,7 +4,7 @@ export type sortAlgoTypes = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
   compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null | undefined,
+  sortPosition: number | null,
   pixelIdxLength?: number,
   renderLoops?: number
-) => number;
+) => number | null;
