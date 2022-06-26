@@ -24,10 +24,7 @@ const selectionSort = (
   sortPosition: number = 0,
   pixelIdxLength: number = 4,
   renderLoops: number = 150
-): {
-  sortPosition: number;
-  array: Uint8ClampedArray;
-} => {
+) => {
   // if (sortPosition == null) {
   //   sortPosition = 0;
   // }
@@ -43,10 +40,7 @@ const selectionSort = (
       pixelIdxLength
     );
   }
-  return {
-    sortPosition,
-    array,
-  };
+  return sortPosition;
 };
 
 export default selectionSort;

@@ -7,4 +7,4 @@ export type sortAlgoTypes = (
   sortPosition: number | null | undefined,
   pixelIdxLength?: number,
   renderLoops?: number
-) => Uint8ClampedArray;
+) => number;

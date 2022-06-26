@@ -2,10 +2,10 @@ import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
 
-const insertionSortHelper = (
-  sortPosition: number,
+export const insertionSortHelper = (
   array: Uint8ClampedArray,
   compare: (array: Uint8ClampedArray, index: number) => number,
+  sortPosition: number,
   pixelIdxLength: number,
 ) => {
   let j = sortPosition;
@@ -23,12 +23,9 @@ const insertionSort = (
   sortPosition: number | null = null,
   pixelIdxLength: number = 4,
   renderLoops: number = 100
-): {
-  sortPosition: number,
-  array: Uint8ClampedArray,
-} => {
+) => {
   if (!sortPosition) {
-    sortPosition = 0
+    sortPosition = pixelIdxLength;
   }
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition >= array.length) {
@@ -36,15 +33,13 @@ const insertionSort = (
       break;
     }
     sortPosition = insertionSortHelper(
-      sortPosition,
       array,
       compare,
+      sortPosition,
       pixelIdxLength,
     )
   }
-  return {
-    sortPosition, array
-  }
+  return sortPosition;
 };
 
 export default insertionSort;

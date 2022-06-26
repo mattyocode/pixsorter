@@ -22,16 +22,13 @@ const bubbleSort = (
   sortPosition: number | null,
   pixelIdxLength: number = 4,
   renderLoops: number = 150
-): {
-  sortPosition: number,
-  array: Uint8ClampedArray,
-} => {
+) => {
   if (!sortPosition) {
     // starting on the red pixel value at the end of the array
     sortPosition = array.length - (pixelIdxLength);
   }
   for (let i = 0; i < renderLoops; i++) {
-    if (sortPosition <= pixelIdxLength) {
+    if (sortPosition < pixelIdxLength) {
       sortedCallback();
       break;
     }
@@ -39,9 +36,7 @@ const bubbleSort = (
       array, compare, sortPosition, pixelIdxLength
     )
   }
-  return {
-    sortPosition, array
-  }
+  return sortPosition;
 };
 
 export default bubbleSort;
