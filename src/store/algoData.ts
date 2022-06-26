@@ -1,5 +1,5 @@
 import { sortAlgoTypes } from "../utils/algos/algoTypes";
-import { bubbleSort, insertionSort, selectionSort } from "../utils/algos";
+import { bubbleSort, insertionSort, selectionSort, quickSort } from "../utils/algos";
 import {
   compareAlpha,
   compareBlue,
@@ -16,6 +16,11 @@ export type AlgoItemType = {
 };
 
 export const AlgoOptions: AlgoItemType[] = [
+  {
+    label: "Quick Sort",
+    value: "quick",
+    function: quickSort,
+  },
   {
     label: "Bubble Sort",
     value: "bubble",
