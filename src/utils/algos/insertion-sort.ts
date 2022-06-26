@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
 
 
@@ -20,7 +19,7 @@ const insertionSort = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
   compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null = null,
+  sortPosition: number | null,
   pixelIdxLength: number = 4,
   renderLoops: number = 100
 ) => {
