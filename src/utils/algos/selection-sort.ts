@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
 import swap from "./pixel-swap";
+
 
 export const selectionSortHelper = (
   array: Uint8ClampedArray,
@@ -25,9 +25,7 @@ const selectionSort = (
   pixelIdxLength: number = 4,
   renderLoops: number = 150
 ) => {
-  if (sortPosition == null) {
-    sortPosition = 0;
-  }
+  sortPosition = sortPosition || 0;
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition >= array.length) {
       sortedCallback();

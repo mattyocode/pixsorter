@@ -23,9 +23,7 @@ const insertionSort = (
   pixelIdxLength: number = 4,
   renderLoops: number = 100
 ) => {
-  if (!sortPosition) {
-    sortPosition = pixelIdxLength;
-  }
+  sortPosition = sortPosition || pixelIdxLength;
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition >= array.length) {
       sortedCallback();
