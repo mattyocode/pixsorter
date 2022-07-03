@@ -20,6 +20,7 @@ export function SortCanvas({
   keepSorting,
   isSorted,
   setIsSorted,
+  setImgDataUrl
 }: {
   imageSrc: string;
   height: number;
@@ -28,6 +29,7 @@ export function SortCanvas({
   keepSorting?: boolean;
   isSorted: boolean;
   setIsSorted: Dispatch<SetStateAction<boolean>>;
+  setImgDataUrl: Dispatch<SetStateAction<string | null>>;
 }) {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const [remainingSort, setRemainingSort] = useState<number | null>(null);
@@ -57,6 +59,9 @@ export function SortCanvas({
         context.current.putImageData(imgData.current, 0, 0);
         requestId.current = requestAnimationFrame(draw);
       }
+    } 
+    if (!keepSorting && canvasRef.current) {
+      setImgDataUrl(canvasRef.current?.toDataURL('image/png'))
     }
   }, [
     algorithm,
@@ -67,6 +72,7 @@ export function SortCanvas({
     setIsSorted,
     context,
     remainingSort,
+    setImgDataUrl
   ]);
 
   useEffect(() => {
@@ -95,7 +101,7 @@ export function SortCanvas({
   }, [imageLoaded, context, height, width]);
 
   useEffect(() => {
-    if (canvasRef.current && keepSorting && !isSorted) {
+    if (canvasRef.current) {
       requestId.current = requestAnimationFrame(draw);
     }
     return () => {
@@ -103,7 +109,7 @@ export function SortCanvas({
         cancelAnimationFrame(requestId.current);
       }
     };
-  }, [canvasRef, keepSorting, isSorted, draw]);
+  }, [canvasRef, draw]);
 
   return (
     <div className={styles.canvas}>
