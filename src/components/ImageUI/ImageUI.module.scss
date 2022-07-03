@@ -14,6 +14,18 @@
   }
 }
 
+.topButtonWrapper {
+  height: 0;
+  overflow: visible;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  & > button {
+    margin-right: -2rem;
+  }
+}
+
 .btnWrapper {
   display: flex;
   justify-content: space-between;

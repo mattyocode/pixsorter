@@ -10,6 +10,20 @@
   position: relative;
 }
 
+.roundButton {
+  @include m.removeBtnDefault;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  background-color: white;
+  border: black 5px solid;
+  z-index: 1000;
+
+  * {
+    z-index: 1000;
+  }
+}
+
 .label {
   font-family: b.$header-font;
   font-size: 0.8rem;
