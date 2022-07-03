@@ -8,9 +8,6 @@ import { Algorithm } from "../../global";
 
 import styles from "./ImageUI.module.scss";
 
-type imageUIProps = {
-  algorithmToUse?: Algorithm | undefined;
-};
 
 type attributionData = {
   name: string;
@@ -26,6 +23,7 @@ export function ImageUI() {
   const [canvasSize, setCanvasSize] = useState<number | null>(null);
   const [keepSorting, setKeepSorting] = useState<boolean>(false);
   const [isSorted, setIsSorted] = useState<boolean>(false);
+  const [startedSorting, setStartedSorting] = useState<boolean>(false);
 
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
@@ -79,6 +77,7 @@ export function ImageUI() {
 
   const toggleSort = (e: React.MouseEvent) => {
     e.preventDefault();
+    setStartedSorting(true);
     if (!isSorted) setKeepSorting((prev) => !prev);
   };
 
@@ -87,8 +86,9 @@ export function ImageUI() {
     if (isSorted) {
       setKeepSorting(false);
       setIsSorted(false);
+      setStartedSorting(false);
       const imageSrc = image;
-      setImage(null);
+      setImage("");
       setTimeout(() => {
         setImage(imageSrc);
       }, 200);
@@ -145,7 +145,7 @@ export function ImageUI() {
   }, [width, keepSorting]);
 
   useEffect(() => {
-    if (!image) {
+    if (!image && image !== "") {
       try {
         fetchImg(
           {
