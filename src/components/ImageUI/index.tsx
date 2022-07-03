@@ -8,9 +8,6 @@ import { Algorithm } from "../../global";
 
 import styles from "./ImageUI.module.scss";
 
-type imageUIProps = {
-  algorithmToUse?: Algorithm | undefined;
-};
 
 type attributionData = {
   name: string;
