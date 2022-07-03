@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import useHttp from "../../hooks/use-http";
 import { SortCanvas } from "../Canvas";
-import { ImageUIBtn } from "../Buttons";
+import { ImageUIBtn, ImageUIBtnRound } from "../Buttons";
 import { Loading } from "../Loading";
 import useWindowDimensions from "../../hooks/use-window-dimensions";
 import { Algorithm } from "../../global";
@@ -22,6 +22,7 @@ export function ImageUI() {
   const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
     null
   );
+  const [imgDataUrl, setImgDataUrl] = useState<string | null>(null)
   const [canvasSize, setCanvasSize] = useState<number | null>(null);
   const [keepSorting, setKeepSorting] = useState<boolean>(false);
   const [isSorted, setIsSorted] = useState<boolean>(false);
@@ -94,6 +95,21 @@ export function ImageUI() {
     }
   };
 
+  const downloader = (
+    dataUrl: string, filename: string
+  ) => {
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = filename;
+    link.click();
+  }
+
+  const downloadClickHandler = (e: React.MouseEvent) => {
+    if (imgDataUrl) {
+      downloader(imgDataUrl, "PixSorter download image")
+    }
+  }
+
   let sortBtnData: {
     src: string;
     label: string;
@@ -145,6 +161,16 @@ export function ImageUI() {
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.topButtonWrapper}>
+        <ImageUIBtnRound
+          src="/icons/save.svg"
+          label="Save"
+          alt="download file"
+          width={25}
+          height={25}
+          clickHandler={downloadClickHandler}
+        />
+      </div>
       <div className={styles.imageUI}>
         <div className={styles.canvas}>
           {canvasSize && image && (
@@ -156,6 +182,7 @@ export function ImageUI() {
               stopSorting={stopSort}
               isSorted={isSorted}
               setIsSorted={setIsSorted}
+              setImgDataUrl={setImgDataUrl}
             />
           )}
         </div>

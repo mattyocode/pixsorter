@@ -33,6 +33,35 @@ export function ImageUIBtn({
   );
 }
 
+export function ImageUIBtnRound({
+  src,
+  width,
+  height,
+  label,
+  alt,
+  clickHandler,
+}: {
+  src: string;
+  width: number;
+  height: number;
+  label?: string;
+  alt: string;
+  clickHandler?: (e: React.MouseEvent) => void;
+}) {
+  return (
+    <button className={styles.roundButton} onClick={clickHandler}>
+      <Image
+        src={src}
+        height={height}
+        width={width}
+        alt={alt}
+        className={styles.image}
+      />
+      <p className={styles.label}>{label || null}</p>
+    </button>
+  );
+}
+
 export function InlineBtn({
   src,
   width,
