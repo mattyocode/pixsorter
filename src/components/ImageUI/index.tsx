@@ -88,7 +88,7 @@ export function ImageUI() {
       setIsSorted(false);
       setStartedSorting(false);
       const imageSrc = image;
-      setImage(null);
+      setImage("");
       setTimeout(() => {
         setImage(imageSrc);
       }, 200);
@@ -145,7 +145,7 @@ export function ImageUI() {
   }, [width, keepSorting]);
 
   useEffect(() => {
-    if (!image) {
+    if (!image && image !== "") {
       try {
         fetchImg(
           {
