@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 import styles from "./Buttons.module.scss";
 
@@ -33,6 +34,19 @@ export function ImageUIBtn({
   );
 }
 
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.8,
+  },
+  visible: {
+    delay: 0.3,
+    opacity: 1,
+    scale: 1,
+    transition: { type: "spring", stiffness: 100, delay: 0.2, duration: 0.2 },
+  },
+};
+
 export function ImageUIBtnRound({
   src,
   width,
@@ -49,7 +63,13 @@ export function ImageUIBtnRound({
   clickHandler?: (e: React.MouseEvent) => void;
 }) {
   return (
-    <button className={styles.roundButton} onClick={clickHandler}>
+    <motion.button
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className={styles.roundButton}
+      onClick={clickHandler}
+    >
       <Image
         src={src}
         height={height}
@@ -58,7 +78,7 @@ export function ImageUIBtnRound({
         className={styles.image}
       />
       <p className={styles.label}>{label || null}</p>
-    </button>
+    </motion.button>
   );
 }
 
