@@ -1,4 +1,5 @@
 import React from "react";
+import { Parallax } from "../Parallax";
 
 import styles from "./Heading.module.scss";
 
@@ -10,9 +11,11 @@ export function Heading({
   subhead: string;
 }) {
   return (
-    <div className={styles.wrapper}>
-      <h1 className={styles.title}>{title}</h1>
-      <h3 className={styles.subhead}>{subhead}</h3>
-    </div>
+    <Parallax offset={70}>
+      <div className={styles.wrapper}>
+        <h1 className={styles.title}>{title}</h1>
+        <h3 className={styles.subhead}>{subhead}</h3>
+      </div>
+    </Parallax>
   );
 }
