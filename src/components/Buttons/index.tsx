@@ -80,9 +80,9 @@ export function ImageUIBtnRound({
         height={height}
         width={width}
         alt={alt}
-        className={styles.image}
+        className={styles.roundImage}
       />
-      <p className={styles.label}>{label || null}</p>
+      <p className={styles.smallLabel}>{label || null}</p>
     </motion.button>
   );
 }
