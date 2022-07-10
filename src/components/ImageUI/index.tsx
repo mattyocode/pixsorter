@@ -159,7 +159,7 @@ export function ImageUI() {
   }, [fetchImg, addImageData, setImage, image]);
 
   return (
-    <Parallax offset={25}>
+    <Parallax offset={Math.round(canvasSize ? canvasSize / 12 : 25)}>
       <div className={styles.wrapper}>
         <div className={styles.topButtonWrapper}>
           {startedSorting && (
