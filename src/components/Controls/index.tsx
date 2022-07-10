@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { SidewaysSelector } from "../SidewaysSelector";
+import { Parallax } from "../Parallax";
 
 import AlgoContext from "../../store/algo-context";
 
@@ -10,20 +11,22 @@ export function Controls() {
 
   return (
     <div className={styles.wrapper}>
-      <SidewaysSelector
-        field="Using"
-        values={algoCtx.algos}
-        selectedIdx={algoCtx.algoIdx}
-        prevBtnHandler={algoCtx.prevAlgo}
-        nextBtnHandler={algoCtx.nextAlgo}
-      />
-      <SidewaysSelector
-        field="Sort by"
-        values={algoCtx.sortByOptions}
-        selectedIdx={algoCtx.sortByIdx}
-        prevBtnHandler={algoCtx.prevSortBy}
-        nextBtnHandler={algoCtx.nextSortBy}
-      />
+      <Parallax offset={25}>
+        <SidewaysSelector
+          field="Using"
+          values={algoCtx.algos}
+          selectedIdx={algoCtx.algoIdx}
+          prevBtnHandler={algoCtx.prevAlgo}
+          nextBtnHandler={algoCtx.nextAlgo}
+        />
+        <SidewaysSelector
+          field="Sort by"
+          values={algoCtx.sortByOptions}
+          selectedIdx={algoCtx.sortByIdx}
+          prevBtnHandler={algoCtx.prevSortBy}
+          nextBtnHandler={algoCtx.nextSortBy}
+        />
+      </Parallax>
     </div>
   );
 }
