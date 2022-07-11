@@ -10,6 +10,20 @@
   position: relative;
 }
 
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.imageRotate {
+  animation: spinner 2s linear infinite;
+  animation-delay: 1s;
+}
+
 .roundButton {
   @include m.removeBtnDefault;
   overflow: hidden;
