@@ -1,18 +1,17 @@
 import swap from "./pixel-swap";
 
-
 export const bubbleSortHelper = (
   array: Uint8ClampedArray,
   compare: (array: Uint8ClampedArray, index: number) => number,
   sortPosition: number,
-  pixelIdxLength: number,
+  pixelIdxLength: number
 ): number => {
   for (let j = 0; j < sortPosition; j += pixelIdxLength) {
     if (compare(array, j) > compare(array, j + pixelIdxLength)) {
       swap(j, j + pixelIdxLength, array);
     }
   }
-  return sortPosition -= pixelIdxLength;
+  return (sortPosition -= pixelIdxLength);
 };
 
 const bubbleSort = (
@@ -21,18 +20,21 @@ const bubbleSort = (
   compare: (array: Uint8ClampedArray, index: number) => number,
   sortPosition: number | null,
   pixelIdxLength: number = 4,
-  renderLoops: number = 150
+  renderLoops: number = 70
 ) => {
-    // starting on the red pixel value at the end of the array
-  sortPosition = sortPosition || array.length - (pixelIdxLength);
+  // starting on the red pixel value at the end of the array
+  sortPosition = sortPosition || array.length - pixelIdxLength;
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition < pixelIdxLength) {
       sortedCallback();
       break;
     }
     sortPosition = bubbleSortHelper(
-      array, compare, sortPosition, pixelIdxLength
-    )
+      array,
+      compare,
+      sortPosition,
+      pixelIdxLength
+    );
   }
   return sortPosition;
 };
