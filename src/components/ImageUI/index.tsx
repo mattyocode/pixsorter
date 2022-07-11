@@ -1,11 +1,18 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
+import { AnimatePresence } from "framer-motion";
 import useHttp from "../../hooks/use-http";
 import { SortCanvas } from "../Canvas";
 import { ImageUIBtn, ImageUIBtnRound } from "../Buttons";
 import { Loading } from "../Loading";
 import { Parallax } from "../Parallax";
 import useWindowDimensions from "../../hooks/use-window-dimensions";
-import { Algorithm } from "../../global";
+import AlgoContext from "../../store/algo-context";
 
 import styles from "./ImageUI.module.scss";
 
@@ -24,6 +31,8 @@ export function ImageUI() {
   const [keepSorting, setKeepSorting] = useState<boolean>(false);
   const [isSorted, setIsSorted] = useState<boolean>(false);
   const [startedSorting, setStartedSorting] = useState<boolean>(false);
+
+  const algoCtx = useContext(AlgoContext);
 
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
@@ -113,13 +122,17 @@ export function ImageUI() {
     src: string;
     label: string;
     alt: string;
-  } = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
+    animate?: boolean;
+  };
+
+  sortBtnData = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
 
   if (!isSorted && keepSorting)
     sortBtnData = {
-      src: "/icons/sort.svg",
+      src: "/icons/processing.svg",
       label: "Sorting",
       alt: "sort image",
+      animate: true,
     };
   else if (isSorted)
     sortBtnData = {
@@ -158,20 +171,26 @@ export function ImageUI() {
     }
   }, [fetchImg, addImageData, setImage, image]);
 
+  useEffect(() => {
+    setStartedSorting(false);
+  }, [algoCtx]);
+
   return (
     <Parallax offset={Math.round(canvasSize ? canvasSize / 12 : 25)}>
       <div className={styles.wrapper}>
         <div className={styles.topButtonWrapper}>
-          {startedSorting && (
-            <ImageUIBtnRound
-              src="/icons/save.svg"
-              label="Save"
-              alt="download file"
-              width={25}
-              height={25}
-              clickHandler={downloadClickHandler}
-            />
-          )}
+          <AnimatePresence>
+            {startedSorting && (
+              <ImageUIBtnRound
+                src="/icons/save.svg"
+                label="Save"
+                alt="download file"
+                width={25}
+                height={25}
+                clickHandler={downloadClickHandler}
+              />
+            )}
+          </AnimatePresence>
         </div>
         <div className={styles.imageUI}>
           <div className={styles.canvas}>
@@ -221,6 +240,7 @@ export function ImageUI() {
               width={25}
               height={25}
               clickHandler={!isSorted ? toggleSort : resetSort}
+              animate={sortBtnData.animate}
             />
           </div>
         </div>
