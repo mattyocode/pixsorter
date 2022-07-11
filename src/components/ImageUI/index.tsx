@@ -125,19 +125,26 @@ export function ImageUI() {
     animate?: boolean;
   };
 
-  sortBtnData = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
+  if (!startedSorting) {
+    sortBtnData = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
+  }
 
   if (!isSorted && keepSorting)
     sortBtnData = {
-      src: "/icons/processing.svg",
-      label: "Sorting",
-      alt: "sort image",
-      animate: true,
+      src: "/icons/pause.svg",
+      label: "Pause",
+      alt: "pause sorting",
     };
-  else if (isSorted)
+  else if (!isSorted && !keepSorting && startedSorting) {
+    sortBtnData = {
+      src: "/icons/sort.svg",
+      label: "Resume",
+      alt: "continue sorting",
+    };
+  } else if (isSorted)
     sortBtnData = {
       src: "/icons/reset.svg",
-      label: "Reset?",
+      label: "Reset",
       alt: "reset sorted image",
     };
 
@@ -240,7 +247,6 @@ export function ImageUI() {
               width={25}
               height={25}
               clickHandler={!isSorted ? toggleSort : resetSort}
-              animate={sortBtnData.animate}
             />
           </div>
         </div>
