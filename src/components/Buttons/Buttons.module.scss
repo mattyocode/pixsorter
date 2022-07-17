@@ -10,10 +10,25 @@
   position: relative;
 }
 
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.imageRotate {
+  animation: spinner 2s linear infinite;
+  animation-delay: 1s;
+}
+
 .roundButton {
   @include m.removeBtnDefault;
-  height: 5rem;
-  width: 5rem;
+  overflow: hidden;
+  height: 3.5rem;
+  width: 3.5rem;
   border-radius: 50%;
   background-color: white;
   border: black 5px solid;
@@ -22,6 +37,11 @@
   * {
     z-index: 1000;
   }
+
+  @media (min-width: b.$breakpoint-tablet) {
+    height: 5rem;
+    width: 5rem;
+  }
 }
 
 .label {
@@ -29,4 +49,21 @@
   font-size: 0.8rem;
   margin: 6px 2px;
   position: relative;
+}
+
+.roundImage {
+  height: 5px;
+  width: 5px;
+}
+
+.smallLabel {
+  display: none;
+
+  @media (min-width: b.$breakpoint-tablet) {
+    display:block;
+    font-family: b.$header-font;
+    font-size: 0.8rem;
+    margin: 6px 2px;
+    position: relative;
+  }
 }

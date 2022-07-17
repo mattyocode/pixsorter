@@ -20,7 +20,7 @@ export function SortCanvas({
   keepSorting,
   isSorted,
   setIsSorted,
-  setImgDataUrl
+  setImgDataUrl,
 }: {
   imageSrc: string;
   height: number;
@@ -53,15 +53,15 @@ export function SortCanvas({
           imgData.current.data,
           finishedSorting,
           sortBy,
-          remainingSort,
+          remainingSort
         );
         setRemainingSort(newSortPosition);
         context.current.putImageData(imgData.current, 0, 0);
         requestId.current = requestAnimationFrame(draw);
       }
-    } 
+    }
     if (!keepSorting && canvasRef.current) {
-      setImgDataUrl(canvasRef.current?.toDataURL('image/png'))
+      setImgDataUrl(canvasRef.current?.toDataURL("image/png"));
     }
   }, [
     algorithm,
@@ -72,7 +72,7 @@ export function SortCanvas({
     setIsSorted,
     context,
     remainingSort,
-    setImgDataUrl
+    setImgDataUrl,
   ]);
 
   useEffect(() => {

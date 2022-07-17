@@ -1,6 +1,5 @@
 import swap from "./pixel-swap";
 
-
 export const selectionSortHelper = (
   array: Uint8ClampedArray,
   compare: (array: Uint8ClampedArray, index: number) => number,
@@ -14,7 +13,7 @@ export const selectionSortHelper = (
     }
   }
   swap(sortPosition, minIdx, array);
-  return sortPosition += pixelIdxLength;
+  return (sortPosition += pixelIdxLength);
 };
 
 const selectionSort = (
@@ -23,7 +22,7 @@ const selectionSort = (
   compare: (array: Uint8ClampedArray, index: number) => number,
   sortPosition: number | null,
   pixelIdxLength: number = 4,
-  renderLoops: number = 150
+  renderLoops: number = 50
 ) => {
   sortPosition = sortPosition || 0;
   for (let i = 0; i < renderLoops; i++) {

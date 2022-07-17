@@ -1,13 +1,20 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
+import { AnimatePresence } from "framer-motion";
 import useHttp from "../../hooks/use-http";
 import { SortCanvas } from "../Canvas";
 import { ImageUIBtn, ImageUIBtnRound } from "../Buttons";
 import { Loading } from "../Loading";
+import { Parallax } from "../Parallax";
 import useWindowDimensions from "../../hooks/use-window-dimensions";
-import { Algorithm } from "../../global";
+import AlgoContext from "../../store/algo-context";
 
 import styles from "./ImageUI.module.scss";
-
 
 type attributionData = {
   name: string;
@@ -19,11 +26,13 @@ export function ImageUI() {
   const [imgAttribution, setImgAttribution] = useState<attributionData | null>(
     null
   );
-  const [imgDataUrl, setImgDataUrl] = useState<string | null>(null)
+  const [imgDataUrl, setImgDataUrl] = useState<string | null>(null);
   const [canvasSize, setCanvasSize] = useState<number | null>(null);
   const [keepSorting, setKeepSorting] = useState<boolean>(false);
   const [isSorted, setIsSorted] = useState<boolean>(false);
   const [startedSorting, setStartedSorting] = useState<boolean>(false);
+
+  const algoCtx = useContext(AlgoContext);
 
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
@@ -35,6 +44,7 @@ export function ImageUI() {
     const accountLink = imgData.user.links.html;
     setImage(imgUrl);
     setImgAttribution({ name, accountLink });
+    setStartedSorting(false);
   }, []);
 
   const stopSort = useCallback(() => {
@@ -95,37 +105,46 @@ export function ImageUI() {
     }
   };
 
-  const downloader = (
-    dataUrl: string, filename: string
-  ) => {
+  const downloader = (dataUrl: string, filename: string) => {
     const link = document.createElement("a");
     link.href = dataUrl;
     link.download = filename;
     link.click();
-  }
+  };
 
   const downloadClickHandler = (e: React.MouseEvent) => {
     if (imgDataUrl) {
-      downloader(imgDataUrl, "PixSorter download image")
+      downloader(imgDataUrl, "PixSorter download image");
     }
-  }
+  };
 
   let sortBtnData: {
     src: string;
     label: string;
     alt: string;
-  } = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
+    animate?: boolean;
+  };
+
+  // if (!startedSorting) {
+  sortBtnData = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
+  // }
 
   if (!isSorted && keepSorting)
     sortBtnData = {
-      src: "/icons/sort.svg",
-      label: "Sorting",
-      alt: "sort image",
+      src: "/icons/pause.svg",
+      label: "Pause",
+      alt: "pause sorting",
     };
-  else if (isSorted)
+  else if (!isSorted && !keepSorting && startedSorting) {
+    sortBtnData = {
+      src: "/icons/sort.svg",
+      label: "Resume",
+      alt: "continue sorting",
+    };
+  } else if (isSorted)
     sortBtnData = {
       src: "/icons/reset.svg",
-      label: "Reset?",
+      label: "Reset",
       alt: "reset sorted image",
     };
 
@@ -159,85 +178,95 @@ export function ImageUI() {
     }
   }, [fetchImg, addImageData, setImage, image]);
 
+  useEffect(() => {
+    setStartedSorting(false);
+  }, [algoCtx]);
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.topButtonWrapper}>
-        <ImageUIBtnRound
-          src="/icons/save.svg"
-          label="Save"
-          alt="download file"
-          width={25}
-          height={25}
-          clickHandler={downloadClickHandler}
-        />
-      </div>
-      <div className={styles.imageUI}>
-        <div className={styles.canvas}>
-          {canvasSize && image && (
-            <SortCanvas
-              imageSrc={image}
-              width={canvasSize}
-              height={canvasSize}
-              keepSorting={keepSorting}
-              stopSorting={stopSort}
-              isSorted={isSorted}
-              setIsSorted={setIsSorted}
-              setImgDataUrl={setImgDataUrl}
+    <Parallax offset={Math.round(canvasSize ? canvasSize / 12 : 25)}>
+      <div className={styles.wrapper}>
+        <div className={styles.topButtonWrapper}>
+          <AnimatePresence>
+            {startedSorting && (
+              <ImageUIBtnRound
+                src="/icons/save.svg"
+                label="Save"
+                alt="download file"
+                width={25}
+                height={25}
+                clickHandler={downloadClickHandler}
+              />
+            )}
+          </AnimatePresence>
+        </div>
+        <div className={styles.imageUI}>
+          <div className={styles.canvas}>
+            {canvasSize && image && (
+              <SortCanvas
+                imageSrc={image}
+                width={canvasSize}
+                height={canvasSize}
+                keepSorting={keepSorting}
+                stopSorting={stopSort}
+                isSorted={isSorted}
+                setIsSorted={setIsSorted}
+                setImgDataUrl={setImgDataUrl}
+              />
+            )}
+          </div>
+          {isLoading && <Loading />}
+          <div className={styles.btnWrapper}>
+            <ImageUIBtn
+              src="/icons/shuffle.svg"
+              label="New Img"
+              alt="get new image"
+              width={30}
+              height={25}
+              clickHandler={shuffleImage}
             />
+            <input
+              type="file"
+              id="file"
+              ref={inputFile}
+              style={{ display: "none" }}
+              onChange={onChangeFile}
+              onClick={resetInputValue}
+            />
+            <ImageUIBtn
+              src="/icons/upload.svg"
+              label="Upload"
+              alt="upload file"
+              width={25}
+              height={25}
+              clickHandler={uploadFile}
+            />
+            <ImageUIBtn
+              src={sortBtnData.src}
+              label={sortBtnData.label}
+              alt={sortBtnData.alt}
+              width={25}
+              height={25}
+              clickHandler={!isSorted ? toggleSort : resetSort}
+            />
+          </div>
+        </div>
+        <div className={styles.attribution}>
+          {imgAttribution && (
+            <p>
+              Photo by{" "}
+              <a
+                href={`${imgAttribution.accountLink}?utm_source=pixsorter&utm_medium=referral`}
+              >
+                {imgAttribution.name}
+              </a>{" "}
+              on{" "}
+              <a href="https://unsplash.com/?utm_source=pixsorter&utm_medium=referral">
+                Unsplash
+              </a>
+            </p>
           )}
         </div>
-        {isLoading && <Loading />}
-        <div className={styles.btnWrapper}>
-          <ImageUIBtn
-            src="/icons/shuffle.svg"
-            label="New Img"
-            alt="get new image"
-            width={30}
-            height={25}
-            clickHandler={shuffleImage}
-          />
-          <input
-            type="file"
-            id="file"
-            ref={inputFile}
-            style={{ display: "none" }}
-            onChange={onChangeFile}
-            onClick={resetInputValue}
-          />
-          <ImageUIBtn
-            src="/icons/upload.svg"
-            label="Upload"
-            alt="upload file"
-            width={25}
-            height={25}
-            clickHandler={uploadFile}
-          />
-          <ImageUIBtn
-            src={sortBtnData.src}
-            label={sortBtnData.label}
-            alt={sortBtnData.alt}
-            width={25}
-            height={25}
-            clickHandler={!isSorted ? toggleSort : resetSort}
-          />
-        </div>
       </div>
-      <div className={styles.attribution}>
-        {imgAttribution && (
-          <p>
-            Photo by{" "}
-            <a
-              href={`${imgAttribution.accountLink}?utm_source=pixsorter&utm_medium=referral`}
-            >
-              {imgAttribution.name}
-            </a>{" "}
-            on{" "}
-            <a href="https://unsplash.com/?utm_source=pixsorter&utm_medium=referral">
-              Unsplash
-            </a>
-          </p>
-        )}
-      </div>
-    </div>
+    </Parallax>
   );
 }
