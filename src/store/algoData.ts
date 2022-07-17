@@ -1,5 +1,10 @@
 import { sortAlgoTypes } from "../utils/algos/algoTypes";
-import { bubbleSort, insertionSort, selectionSort, quickSort } from "../utils/algos";
+import {
+  bubbleSort,
+  insertionSort,
+  selectionSort,
+  quickSort,
+} from "../utils/algos";
 import {
   compareAlpha,
   compareBlue,
@@ -46,7 +51,7 @@ export type SortByItemType = {
 
 export const SortByOptions: SortByItemType[] = [
   {
-    label: "Brightness",
+    label: "Combined RGB",
     value: "brightness",
     function: compareBrightness,
   },
