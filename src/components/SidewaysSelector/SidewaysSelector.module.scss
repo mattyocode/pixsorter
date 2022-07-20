@@ -1,8 +1,12 @@
 .wrapper {
+  max-width: 400px;
+}
+
+.selectorRow {
   display: flex;
   justify-content: center;
   z-index: 100;
-  max-width: 400px;
+  // max-width: 400px;
 }
 
 .field {
@@ -10,12 +14,19 @@
   margin: 0.3rem;
   font-size: 0.9rem;
   text-align: end;
-  width: 4rem;
+  width: 3rem;
   @media screen and (min-width: 450px) {
     font-size: 1rem;
-    width: 8rem;
-    margin-right: 1rem;
+    width: 4rem;
+    // margin-right: 1rem;
   }
+}
+
+.innerFieldWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
 }
 
 .optionsWrapper {
@@ -47,6 +58,9 @@
   }
 
   li {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     min-width: 8rem;
     text-align: center;
     margin: 0 1rem;
@@ -60,6 +74,29 @@
       min-width: 9rem;
     }
   }
+}
+
+.fieldIcon {
+  display: inline;
+  padding-bottom: 7px;
+  margin: 0;
+  // margin: 0.5rem;
+  // align-items: center;
+  // display: none;
+}
+
+.fieldInfoWrapper {
+  max-width: 100%;
+  overflow: hidden;
+  & > h3 {
+    text-align: left;
+  }
+}
+
+.actionIcon {
+  display: flex;
+  align-items: center;
+  width: 1.5rem;
 }
 
 .dropdown {
