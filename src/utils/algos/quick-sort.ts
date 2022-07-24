@@ -1,4 +1,5 @@
 import swap from "./pixel-swap";
+import { SortDataTypes } from "./algoTypes";
 
 export const partition = (
   array: Uint8ClampedArray,
@@ -25,29 +26,40 @@ const quickSort = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
   compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null,
-  pixelIdxLength: number = 4
+  sortPosition: SortDataTypes | null,
+  pixelIdxLength: number = 4,
+  renderLoops: number = 320
 ) => {
-  const numPixels = Math.floor(array.length / 4);
-  let stack = new Array(numPixels);
-  stack.fill(0);
+  let top, high, low, stack;
+  if (!sortPosition) {
+    let numPixels = Math.floor(array.length / 4);
+    stack = new Array(numPixels);
+    stack.fill(0);
 
-  let high;
-  let low;
-  let top = -1;
+    top = -1;
 
-  stack[++top] = 0;
-  stack[++top] = array.length - pixelIdxLength;
+    stack[++top] = 0;
+    stack[++top] = array.length - pixelIdxLength;
+  } else {
+    top = sortPosition.top;
+    high = sortPosition.high;
+    low = sortPosition.low;
+    stack = sortPosition.stack;
+  }
 
-  while (top >= 0) {
-    // console.log("top >>", top);
+  for (let i = 0; i <= renderLoops; i++) {
+    if (top < 0) {
+      sortedCallback();
+      break;
+    }
+
     high = stack[top--];
     low = stack[top--];
 
     let p = partition(array, low, high, compare, pixelIdxLength);
 
-    if (p - pixelIdxLength > pixelIdxLength) {
-      stack[++top] = pixelIdxLength;
+    if (p - pixelIdxLength > low) {
+      stack[++top] = low;
       stack[++top] = p - pixelIdxLength;
     }
 
@@ -55,13 +67,15 @@ const quickSort = (
       stack[++top] = p + pixelIdxLength;
       stack[++top] = high;
     }
-
-    if (top === 0) {
-      sortedCallback();
-    }
   }
 
-  return top;
+  return {
+    ...sortPosition,
+    top: top,
+    high: high,
+    low: low,
+    stack: stack,
+  };
 };
 
 export default quickSort;
