@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import AlgoContext from "../../store/algo-context";
 import { loadScaledImage } from "../../utils/load-scaled-image";
+import { SortDataTypes } from "../../utils/algos/algoTypes";
 
 import styles from "./Canvas.module.scss";
 
@@ -32,10 +33,13 @@ export function SortCanvas({
   setImgDataUrl: Dispatch<SetStateAction<string | null>>;
 }) {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-  const [remainingSort, setRemainingSort] = useState<number | null>(null);
+  const [sortPosition, setSortPosition] = useState<
+    SortDataTypes | number | null
+  >(null);
   const algoCtx = useContext(AlgoContext);
   const algorithm = algoCtx.algos[algoCtx.algoIdx].function;
   const sortBy = algoCtx.sortByOptions[algoCtx.sortByIdx].function;
+  const hasStack = algoCtx.algos[algoCtx.algoIdx].stack;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let imgData = useRef<ImageData | null>(null);
@@ -49,13 +53,13 @@ export function SortCanvas({
     };
     if (keepSorting && !isSorted) {
       if (imgData.current?.data && context.current) {
-        let newSortPosition = algorithm(
+        let updatedPositionData = algorithm(
           imgData.current.data,
           finishedSorting,
           sortBy,
-          remainingSort
+          sortPosition
         );
-        setRemainingSort(newSortPosition);
+        setSortPosition(updatedPositionData);
         context.current.putImageData(imgData.current, 0, 0);
         requestId.current = requestAnimationFrame(draw);
       }
@@ -71,15 +75,16 @@ export function SortCanvas({
     isSorted,
     setIsSorted,
     context,
-    remainingSort,
+    sortPosition,
     setImgDataUrl,
   ]);
 
   useEffect(() => {
     setImageLoaded(false);
-    setRemainingSort(null);
+    setSortPosition(null);
     setIsSorted(false);
     stopSorting();
+
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext("2d");
       if (context.current) {
@@ -92,14 +97,25 @@ export function SortCanvas({
         );
       }
     }
-  }, [stopSorting, imageSrc, height, width, setIsSorted, sortBy, algorithm]);
+  }, [
+    stopSorting,
+    imageSrc,
+    height,
+    width,
+    setIsSorted,
+    sortBy,
+    algorithm,
+    // hasStack,
+  ]);
 
+  // Load image
   useEffect(() => {
     if (imageLoaded && context.current) {
       imgData.current = context.current.getImageData(0, 0, width, height);
     }
   }, [imageLoaded, context, height, width]);
 
+  // Animate
   useEffect(() => {
     if (canvasRef.current) {
       requestId.current = requestAnimationFrame(draw);
