@@ -8,7 +8,7 @@ import {
 import { bubbleSortHelper } from "../../utils/algos/bubble-sort";
 import { insertionSortHelper } from "../../utils/algos/insertion-sort";
 import { selectionSortHelper } from "../../utils/algos/selection-sort";
-import { quickSortHelper } from "../../utils/algos/quick-sort";
+import { SortDataTypes } from "../../utils/algos/algoTypes";
 
 // ---- Pixel comparison functions ---- //
 // Compare red pixel value in RGBA value array
@@ -420,6 +420,7 @@ describe("Selection sort tests", () => {
 });
 
 describe("Quick sort tests", () => {
+  let testSortPosition: null | SortDataTypes = null;
   // test("sort helper sorts two pixels based on red value (first of 4)", () => {
   //   let testArray = new Uint8ClampedArray([1, 0, 0, 0, 0, 0, 0, 0]);
   //   const startIdx = 0;
@@ -454,6 +455,7 @@ describe("Quick sort tests", () => {
       testArray,
       sortedCallback,
       compareFirst,
+      testSortPosition,
       pixelIndexLength
     );
     expect(testArray).toEqual(
@@ -468,6 +470,7 @@ describe("Quick sort tests", () => {
       testArray,
       sortedCallback,
       compareFirst,
+      testSortPosition,
       pixelIndexLength
     );
     expect(testArray).toEqual(
@@ -484,6 +487,7 @@ describe("Quick sort tests", () => {
       testArray,
       sortedCallback,
       compareFirst,
+      testSortPosition,
       pixelIndexLength
     );
     expect(testArray).toEqual(
@@ -500,6 +504,7 @@ describe("Quick sort tests", () => {
       testArray,
       sortedCallback,
       compareSecond,
+      testSortPosition,
       pixelIndexLength
     );
     expect(testArray).toEqual(
@@ -514,6 +519,7 @@ describe("Quick sort tests", () => {
       testArray,
       sortedCallback,
       compareThird,
+      testSortPosition,
       pixelIndexLength
     );
     expect(testArray).toEqual(
@@ -525,7 +531,13 @@ describe("Quick sort tests", () => {
       8, 7, 6, 5, 12, 11, 10, 9, 4, 3, 2, 1,
     ]);
     let sortedCallback = jest.fn();
-    quickSort(testArray, sortedCallback, compareAll, pixelIndexLength);
+    quickSort(
+      testArray,
+      sortedCallback,
+      compareAll,
+      testSortPosition,
+      pixelIndexLength
+    );
     console.log(">>>", testArray);
     expect(testArray).toEqual(
       new Uint8ClampedArray([4, 3, 2, 1, 8, 7, 6, 5, 12, 11, 10, 9])
