@@ -39,7 +39,6 @@ export function SortCanvas({
   const algoCtx = useContext(AlgoContext);
   const algorithm = algoCtx.algos[algoCtx.algoIdx].function;
   const sortBy = algoCtx.sortByOptions[algoCtx.sortByIdx].function;
-  const hasStack = algoCtx.algos[algoCtx.algoIdx].stack;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let imgData = useRef<ImageData | null>(null);
@@ -97,16 +96,7 @@ export function SortCanvas({
         );
       }
     }
-  }, [
-    stopSorting,
-    imageSrc,
-    height,
-    width,
-    setIsSorted,
-    sortBy,
-    algorithm,
-    // hasStack,
-  ]);
+  }, [stopSorting, imageSrc, height, width, setIsSorted, sortBy, algorithm]);
 
   // Load image
   useEffect(() => {
