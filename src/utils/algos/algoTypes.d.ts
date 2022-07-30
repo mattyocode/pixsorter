@@ -11,16 +11,18 @@ export type SortAlgoTypes = (
   array: Uint8ClampedArray,
   sortedCallback: () => void,
   compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null,
+  sortPosition: number | SortDataTypes | null,
   pixelIdxLength?: number,
   renderLoops?: number
-) => number;
+) => number | SortDataTypes;
 
-export type SortAlgoWithStackTypes = (
-  array: Uint8ClampedArray,
-  sortedCallback: () => void,
-  compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: SortDataTypes | null,
-  pixelIdxLength?: number,
-  renderLoops?: number
-) => SortDataTypes;
+// export type SortAlgoWithStackTypes = (
+//   array: Uint8ClampedArray,
+//   sortedCallback: () => void,
+//   compare: (array: Uint8ClampedArray, index: number) => number,
+//   sortPosition: SortDataTypes | null,
+//   pixelIdxLength?: number,
+//   renderLoops?: number
+// ) => SortDataTypes;
+
+// sortPosition is SortDataTypes | null

@@ -1,7 +1,4 @@
-import {
-  SortAlgoTypes,
-  SortAlgoWithStackTypes,
-} from "../utils/algos/algoTypes";
+import { SortAlgoTypes } from "../utils/algos/algoTypes";
 import {
   bubbleSort,
   insertionSort,
@@ -20,7 +17,7 @@ import {
 export type AlgoItemType = {
   label: string;
   value: string;
-  function: SortAlgoTypes | SortAlgoWithStackTypes;
+  function: SortAlgoTypes;
   stack: boolean;
 };
 
