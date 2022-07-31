@@ -1,4 +1,5 @@
 import swap from "./pixel-swap";
+import { SortAlgoTypes } from "./algoTypes";
 
 export const selectionSortHelper = (
   array: Uint8ClampedArray,
@@ -16,15 +17,15 @@ export const selectionSortHelper = (
   return (sortPosition += pixelIdxLength);
 };
 
-const selectionSort = (
-  array: Uint8ClampedArray,
-  sortedCallback: () => void,
-  compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null,
-  pixelIdxLength: number = 4,
-  renderLoops: number = 50
+const selectionSort: SortAlgoTypes = (
+  array,
+  sortedCallback,
+  compare,
+  sortPosition,
+  pixelIdxLength = 4,
+  renderLoops = 50
 ) => {
-  sortPosition = sortPosition || 0;
+  sortPosition = typeof sortPosition === "number" ? sortPosition : 0;
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition >= array.length) {
       sortedCallback();
