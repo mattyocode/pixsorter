@@ -1,4 +1,5 @@
 import swap from "./pixel-swap";
+import { SortAlgoTypes } from "./algoTypes";
 
 export const bubbleSortHelper = (
   array: Uint8ClampedArray,
@@ -14,16 +15,19 @@ export const bubbleSortHelper = (
   return (sortPosition -= pixelIdxLength);
 };
 
-const bubbleSort = (
-  array: Uint8ClampedArray,
-  sortedCallback: () => void,
-  compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null,
-  pixelIdxLength: number = 4,
-  renderLoops: number = 70
+const bubbleSort: SortAlgoTypes = (
+  array,
+  sortedCallback,
+  compare,
+  sortPosition,
+  pixelIdxLength = 4,
+  renderLoops = 70
 ) => {
   // starting on the red pixel value at the end of the array
-  sortPosition = sortPosition || array.length - pixelIdxLength;
+  sortPosition =
+    typeof sortPosition === "number"
+      ? sortPosition
+      : array.length - pixelIdxLength;
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition < pixelIdxLength) {
       sortedCallback();

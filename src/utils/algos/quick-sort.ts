@@ -1,5 +1,5 @@
 import swap from "./pixel-swap";
-import { SortDataTypes } from "./algoTypes";
+import { SortAlgoTypes, SortDataTypes } from "./algoTypes";
 
 export const partition = (
   array: Uint8ClampedArray,
@@ -22,16 +22,20 @@ export const partition = (
   return index + pixelIdxLength;
 };
 
-const quickSort = (
-  array: Uint8ClampedArray,
-  sortedCallback: () => void,
-  compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: SortDataTypes | null,
-  pixelIdxLength: number = 4,
-  renderLoops: number = 320
+function isSortDataObject(object: any): object is SortDataTypes {
+  return true;
+}
+
+const quickSort: SortAlgoTypes = (
+  array,
+  sortedCallback,
+  compare,
+  sortPosition,
+  pixelIdxLength = 4,
+  renderLoops = 320
 ) => {
   let top, high, low, stack;
-  if (!sortPosition) {
+  if (!sortPosition || typeof sortPosition === "number") {
     let numPixels = Math.floor(array.length / 4);
     stack = new Array(numPixels);
     stack.fill(0);
@@ -70,7 +74,6 @@ const quickSort = (
   }
 
   return {
-    ...sortPosition,
     top: top,
     high: high,
     low: low,
