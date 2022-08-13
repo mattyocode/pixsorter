@@ -1,11 +1,12 @@
 import swap from "./pixel-swap";
 import { SortAlgoTypes, SortDataTypes } from "./algoTypes";
+import { compareFnTypes } from "./pixel-comparison";
 
 export const partition = (
   array: Uint8ClampedArray,
   low: number,
   high: number,
-  compare: (array: Uint8ClampedArray, index: number) => number,
+  compare: compareFnTypes,
   pixelIdxLength: number
 ) => {
   let pivot = compare(array, high);
@@ -22,9 +23,9 @@ export const partition = (
   return index + pixelIdxLength;
 };
 
-function isSortDataObject(object: any): object is SortDataTypes {
-  return true;
-}
+// function isSortDataObject(object: any): object is SortDataTypes {
+//   return true;
+// }
 
 const quickSort: SortAlgoTypes = (
   array,
