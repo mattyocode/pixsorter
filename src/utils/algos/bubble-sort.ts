@@ -1,9 +1,10 @@
 import swap from "./pixel-swap";
 import { SortAlgoTypes } from "./algoTypes";
+import { compareFnTypes } from "./pixel-comparison";
 
 export const bubbleSortHelper = (
   array: Uint8ClampedArray,
-  compare: (array: Uint8ClampedArray, index: number) => number,
+  compare: compareFnTypes,
   sortPosition: number,
   pixelIdxLength: number
 ): number => {

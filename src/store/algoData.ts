@@ -4,6 +4,7 @@ import {
   insertionSort,
   selectionSort,
   quickSort,
+  mergeSort,
 } from "../utils/algos";
 import {
   compareAlpha,
@@ -27,6 +28,12 @@ export const AlgoOptions: AlgoItemType[] = [
     value: "quick",
     function: quickSort,
     stack: true,
+  },
+  {
+    label: "Merge Sort",
+    value: "merge",
+    function: mergeSort,
+    stack: false,
   },
   {
     label: "Bubble Sort",
