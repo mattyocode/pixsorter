@@ -22,12 +22,12 @@
   }
 }
 
-.innerFieldWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10rem;
-}
+// .innerFieldWrapper {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // width: 100%;
+// }
 
 .optionsWrapper {
   flex: 3;
@@ -35,44 +35,44 @@
   justify-content: space-around;
   align-items: center;
   // margin-left: 1rem;
+}
 
-  ul {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    width: 7rem;
-    padding: 0;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    &::-webkit-scrollbar {
-      background: transparent; /* make scrollbar transparent */
-      -webkit-appearance: none;
-      width: 0;
-      height: 0;
-    }
-    @media screen and (min-width: 450px) {
-      font-size: 1rem;
-      width: 9rem;
-    }
+.fieldList {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 7rem;
+  padding: 0;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    background: transparent; /* make scrollbar transparent */
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
   }
-
-  li {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-width: 8rem;
-    text-align: center;
-    margin: 0 1rem;
-    white-space: nowrap;
+  @media screen and (min-width: 450px) {
     font-size: 1rem;
-    font-weight: bolder;
-    scroll-snap-align: center;
+    width: 9rem;
+  }
+}
 
-    @media screen and (min-width: 450px) {
-      font-size: 1.2rem;
-      min-width: 9rem;
-    }
+.fieldListItem {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 8rem;
+  text-align: center;
+  margin: 0 1rem;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: bolder;
+  scroll-snap-align: center;
+
+  @media screen and (min-width: 450px) {
+    font-size: 1.2rem;
+    min-width: 9rem;
   }
 }
 
@@ -85,9 +85,47 @@
   // display: none;
 }
 
+.infoRowWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  // width: 100%;
+  width: 320px;
+  padding: 0;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    background: transparent; /* make scrollbar transparent */
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+  }
+  @media screen and (min-width: 450px) {
+    width: 100%;
+    font-size: 1rem;
+  }
+}
+
 .fieldInfoWrapper {
-  max-width: 100%;
   overflow: hidden;
+  min-width: 100%;
+  // text-align: center;
+  margin: 0 1rem;
+  // white-space: nowrap;
+  // font-size: 1rem;
+  // font-weight: bolder;
+  // scroll-snap-align: center;
+
+  @media screen and (min-width: 450px) {
+    min-width: 100%;
+  }
+
   & > h3 {
     text-align: left;
   }

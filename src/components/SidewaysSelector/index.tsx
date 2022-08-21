@@ -11,28 +11,21 @@ const FieldValue = ({ value, active }: { value: string; active: boolean }) => {
 
   useEffect(() => {
     if (active && optionRef.current) {
-      optionRef.current.scrollIntoView({
-        inline: "center",
-        block: "nearest",
-        behavior: "smooth",
-      });
+      // requestAnimationFrame(() => {
+      if (optionRef.current) {
+        optionRef.current.scrollIntoView({
+          inline: "center",
+          block: "nearest",
+          behavior: "smooth",
+        });
+      }
+      // });
     }
   }, [active]);
 
   return (
-    <li ref={optionRef}>
+    <li ref={optionRef} className={styles.fieldListItem}>
       {value}
-      {/* {active && (
-        <div className={styles.fieldIcon}>
-          <Image
-            src="/icons/slow.svg"
-            height={25}
-            width={25}
-            alt="more information"
-            className={styles.fieldIcon}
-          />
-        </div>
-      )} */}
     </li>
   );
 };
@@ -52,16 +45,34 @@ const fieldInfoVariants = {
 const FieldInfo = ({
   heading,
   bodyCopy,
-  children,
+  active,
   ...restProps
 }: {
   heading: string;
   bodyCopy: string;
-  children: React.Component;
-  // imageSrc: string | null;
+  active: boolean;
 }) => {
+  const infoRef = useRef<HTMLLIElement>(null);
+
+  useEffect(() => {
+    if (active && infoRef.current) {
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          if (infoRef.current) {
+            infoRef.current.scrollIntoView({
+              inline: "center",
+              block: "nearest",
+              behavior: "smooth",
+            });
+          }
+        });
+      }, 600);
+    }
+  }, [active]);
+
   return (
-    <motion.div
+    <motion.li
+      ref={infoRef}
       initial="closed"
       animate="open"
       exit="closed"
@@ -69,9 +80,9 @@ const FieldInfo = ({
       className={styles.fieldInfoWrapper}
       {...restProps}
     >
-      <h3>{heading}</h3>
       <p>{bodyCopy}</p>
-    </motion.div>
+      <h3>{heading}</h3>
+    </motion.li>
   );
 };
 
@@ -104,6 +115,23 @@ export function SidewaysSelector({
     setInfoOpen((prev) => !prev);
   };
 
+  const fieldValues = values.map((value, idx) => (
+    <FieldValue
+      key={`fieldValue-${value.value}-${idx}`}
+      value={value.label}
+      active={values[selectedIdx] === value}
+    />
+  ));
+
+  const fieldInfos = values.map((value, idx) => (
+    <FieldInfo
+      key={`fieldInfo-${value.value}-${idx}`}
+      heading={value.description.heading}
+      bodyCopy={value.description.bodyCopy}
+      active={values[selectedIdx] === value}
+    />
+  ));
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.selectorRow}>
@@ -118,16 +146,8 @@ export function SidewaysSelector({
             height={25}
             clickHandler={decrementSelected}
           />
-          <div className={styles.fieldWrapper}>
-            <ul>
-              {values.map((value, idx) => (
-                <FieldValue
-                  key={`fieldValue-${value.value}-${idx}`}
-                  value={value.label}
-                  active={values[selectedIdx] === value}
-                />
-              ))}
-            </ul>
+          <div>
+            <ul className={styles.fieldList}>{fieldValues}</ul>
           </div>
           <ImageUIBtn
             src="/icons/right.svg"
@@ -147,14 +167,9 @@ export function SidewaysSelector({
           />
         </div>
       </div>
-      <div className={styles.infoRow}>
+      <div className={styles.infoRowWrapper}>
         <AnimatePresence>
-          {infoOpen && (
-            <FieldInfo
-              heading="Avg. time: O(n²) | Avg Space: O(1)"
-              bodyCopy="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tempor ultrices enim, nec tincidunt nisi imperdiet sed. Morbi blandit sem in velit vulputate, suscipit interdum felis finibus. Sed suscipit tincidunt lorem, at rhoncus tellus rhoncus at. Vestibulum congue consectetur orci, sit amet pellentesque lacus vestibulum et."
-            />
-          )}
+          {infoOpen && <ul className={styles.infoRow}>{fieldInfos}</ul>}
         </AnimatePresence>
       </div>
     </div>
