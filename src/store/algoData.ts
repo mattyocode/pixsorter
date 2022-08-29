@@ -1,4 +1,4 @@
-import { sortAlgoTypes } from "../utils/algos/algoTypes";
+import { SortAlgoTypes } from "../utils/algos/algoTypes";
 import {
   DescriptionType,
   algoDescriptions,
@@ -9,6 +9,7 @@ import {
   insertionSort,
   selectionSort,
   quickSort,
+  mergeSort,
 } from "../utils/algos";
 import {
   compareBlue,
@@ -21,7 +22,7 @@ import {
 export type AlgoItemType = {
   label: string;
   value: string;
-  function: sortAlgoTypes;
+  function: SortAlgoTypes;
   description: DescriptionType;
 };
 
@@ -30,6 +31,12 @@ export const AlgoOptions: AlgoItemType[] = [
     label: "Quick Sort",
     value: "quick",
     function: quickSort,
+    description: algoDescriptions.quick,
+  },
+  {
+    label: "Merge Sort",
+    value: "merge",
+    function: mergeSort,
     description: algoDescriptions.quick,
   },
   {

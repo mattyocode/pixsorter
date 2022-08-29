@@ -1,29 +1,31 @@
 import swap from "./pixel-swap";
-
+import { SortAlgoTypes } from "./algoTypes";
+import { compareFnTypes } from "./pixel-comparison";
 
 export const insertionSortHelper = (
   array: Uint8ClampedArray,
-  compare: (array: Uint8ClampedArray, index: number) => number,
+  compare: compareFnTypes,
   sortPosition: number,
-  pixelIdxLength: number,
+  pixelIdxLength: number
 ) => {
   let j = sortPosition;
   while (j > 0 && compare(array, j) < compare(array, j - pixelIdxLength)) {
     swap(j, j - pixelIdxLength, array);
     j -= pixelIdxLength;
   }
-  return sortPosition += pixelIdxLength;
-}
+  return (sortPosition += pixelIdxLength);
+};
 
-const insertionSort = (
-  array: Uint8ClampedArray,
-  sortedCallback: () => void,
-  compare: (array: Uint8ClampedArray, index: number) => number,
-  sortPosition: number | null,
-  pixelIdxLength: number = 4,
-  renderLoops: number = 100
+const insertionSort: SortAlgoTypes = (
+  array,
+  sortedCallback,
+  compare,
+  sortPosition,
+  pixelIdxLength = 4,
+  renderLoops = 100
 ) => {
-  sortPosition = sortPosition || pixelIdxLength;
+  sortPosition = typeof sortPosition === "number" ? sortPosition : 0;
+
   for (let i = 0; i < renderLoops; i++) {
     if (sortPosition >= array.length) {
       sortedCallback();
@@ -33,8 +35,8 @@ const insertionSort = (
       array,
       compare,
       sortPosition,
-      pixelIdxLength,
-    )
+      pixelIdxLength
+    );
   }
   return sortPosition;
 };
