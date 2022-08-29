@@ -21,18 +21,13 @@ export function ImageUIBtn({
   clickHandler?: (e: React.MouseEvent) => void;
   animate?: boolean;
 }) {
-  let imageClassName = animate ? styles.imageRotate : "";
-
   return (
     <button className={styles.button} onClick={clickHandler}>
-      <Image
-        src={src}
-        height={height}
-        width={width}
-        alt={alt}
-        className={imageClassName}
-      />
-      <p className={styles.label}>{label || null}</p>
+      <div className={styles.image}>
+        <Image src={src} height={height} width={width} alt={alt} />
+      </div>
+
+      {label && <p className={styles.label}>{label}</p>}
     </button>
   );
 }

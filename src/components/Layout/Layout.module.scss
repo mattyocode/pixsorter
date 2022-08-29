@@ -3,8 +3,12 @@
 .imageBackground {
   @include m.flex-centered;
   flex-direction: column;
-  min-height: 110vh;
+  min-height: 150vh;
   height: 100%;
   width: 100%;
   position: relative;
+
+  @media screen and (min-width: 800px) {
+    min-height: 110vh;
+  }
 }

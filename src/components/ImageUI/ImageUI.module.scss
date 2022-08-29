@@ -9,7 +9,7 @@
   position: relative;
   z-index: 100;
 
-  @media screen and (min-width: 450px) {
+  @media screen and (min-width: b.$breakpoint-tablet) {
     padding: 2rem;
   }
 }
@@ -36,8 +36,12 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  width: 95%;
-  margin: 1rem 0 0.5rem 0;
+  width: 100%;
+  margin: 1rem 0 0.5rem 1rem;
+
+  @media screen and (min-width: b.$breakpoint-tablet) {
+    margin: 2rem 0 0rem 1rem;
+  }
 }
 
 .canvas {

@@ -125,9 +125,7 @@ export function ImageUI() {
     animate?: boolean;
   };
 
-  // if (!startedSorting) {
   sortBtnData = { src: "/icons/sort.svg", label: "Sort", alt: "sort image" };
-  // }
 
   if (!isSorted && keepSorting)
     sortBtnData = {
