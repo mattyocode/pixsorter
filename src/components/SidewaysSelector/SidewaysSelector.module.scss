@@ -22,13 +22,6 @@
   }
 }
 
-// .innerFieldWrapper {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // width: 100%;
-// }
-
 .optionsWrapper {
   flex: 3;
   display: flex;
@@ -113,14 +106,10 @@
 }
 
 .fieldInfoWrapper {
+  height: auto;
   overflow: hidden;
   min-width: 100%;
-  // text-align: center;
   margin: 0 1rem;
-  // white-space: nowrap;
-  // font-size: 1rem;
-  // font-weight: bolder;
-  // scroll-snap-align: center;
 
   @media screen and (min-width: 450px) {
     min-width: 100%;
@@ -128,6 +117,7 @@
 
   & > h3 {
     text-align: left;
+    font-size: 1.2rem;
   }
 }
 
