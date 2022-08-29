@@ -164,13 +164,23 @@ export function SidewaysSelector({
           />
         </div>
         <div className={styles.actionIcon}>
-          <ImageUIBtn
-            src="/icons/info.svg"
-            alt="more information"
-            width={18}
-            height={18}
-            clickHandler={toggleInfo}
-          />
+          {infoOpen ? (
+            <ImageUIBtn
+              src="/icons/close.svg"
+              alt="more information"
+              width={18}
+              height={18}
+              clickHandler={toggleInfo}
+            />
+          ) : (
+            <ImageUIBtn
+              src="/icons/info.svg"
+              alt="more information"
+              width={18}
+              height={18}
+              clickHandler={toggleInfo}
+            />
+          )}
         </div>
       </div>
       <motion.div
