@@ -61,7 +61,7 @@ export type SortByItemType = {
 
 export const SortByOptions: SortByItemType[] = [
   {
-    label: "Combined",
+    label: "RGB Total",
     value: "brightness",
     function: compareBrightness,
     description: sortByDescriptions.combined,
