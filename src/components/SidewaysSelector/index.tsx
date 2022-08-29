@@ -39,7 +39,7 @@ const fieldInfoVariants = {
   open: {
     height: 250,
     transition: {
-      duration: 1,
+      duration: 0.6,
       ease: "easeInOut",
     },
   },
