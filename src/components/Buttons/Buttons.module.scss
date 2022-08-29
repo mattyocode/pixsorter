@@ -8,6 +8,19 @@
   width: 5rem;
   cursor: pointer;
   position: relative;
+  // margin: auto 0;
+
+  @media (min-width: b.$breakpoint-tablet) {
+    height: 3rem;
+    width: 5rem;
+  }
+}
+
+.image {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  @include m.flex-centered
 }
 
 @keyframes spinner {
