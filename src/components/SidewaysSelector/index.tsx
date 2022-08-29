@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, RefObject } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { ImageUIBtn } from "../Buttons";
 import { AlgoItemType, SortByItemType } from "../../store/algoData";
@@ -47,15 +48,19 @@ const fieldInfoVariants = {
 
 const FieldInfo = ({
   heading,
-  bodyCopy,
   active,
   parentRef,
+  bodyCopy = null,
+  imageUrl = null,
+  imageAlt = null,
   ...restProps
 }: {
   heading: string | JSX.Element;
-  bodyCopy: string;
   active: boolean;
   parentRef: RefObject<HTMLElement>;
+  bodyCopy?: string | null;
+  imageUrl?: string | null;
+  imageAlt?: string | null;
 }) => {
   const infoRef = useRef<HTMLLIElement>(null);
 
@@ -70,8 +75,13 @@ const FieldInfo = ({
 
   return (
     <li ref={infoRef} className={styles.fieldInfoWrapper} {...restProps}>
-      <h3>{heading}</h3>
-      <p>{bodyCopy}</p>
+      <h4>{heading}</h4>
+      {bodyCopy && <p>{bodyCopy}</p>}
+      {imageUrl && imageAlt && (
+        <div className={styles.infoImage}>
+          <Image src={imageUrl} alt={imageAlt} width={320} height={160} />
+        </div>
+      )}
     </li>
   );
 };
@@ -122,17 +132,21 @@ export function SidewaysSelector({
     <FieldInfo
       key={`fieldInfo-${value.value}-${idx}`}
       heading={value.description.heading}
-      bodyCopy={value.description.bodyCopy}
       active={values[selectedIdx] === value}
       parentRef={fieldInfoRef}
+      bodyCopy={value.description?.bodyCopy}
+      imageUrl={value.description?.imageUrl}
+      imageAlt={value.description?.imageAlt}
     />
   ));
 
   useEffect(() => {
     if (infoOpen) {
       controls.start("open");
+      console.log("infoOpen");
     } else {
       controls.start("closed");
+      console.log("info closed");
     }
   }, [controls, infoOpen]);
 

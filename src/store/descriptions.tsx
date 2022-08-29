@@ -1,8 +1,11 @@
 import React from "react";
+import Image from "next/image";
 
 export type DescriptionType = {
   heading: string | JSX.Element;
-  bodyCopy: string;
+  bodyCopy?: string;
+  imageUrl?: string;
+  imageAlt?: string;
 };
 
 export const algoDescriptions: { [key: string]: DescriptionType } = {
@@ -30,8 +33,9 @@ export const algoDescriptions: { [key: string]: DescriptionType } = {
 
 const styledCombinedHeading = (
   <div>
-    Adding <span className="red">Red</span>, <span className="blue">Blue</span>,
-    and <span className="green">Green</span> pixel values
+    Adding <span className="red">Red</span>,{" "}
+    <span className="green">Green</span> &amp;{" "}
+    <span className="blue">Blue</span> pixel values
   </div>
 );
 
@@ -56,22 +60,22 @@ const styledBlueHeading = (
 export const sortByDescriptions: { [key: string]: DescriptionType } = {
   combined: {
     heading: styledCombinedHeading,
-    bodyCopy:
-      "Consequat in dolore in nulla. Adipisicing excepteur velit occaecat consequat non nostrud consequat labore. Eu aute consectetur ea dolore minim aliqua esse. Amet excepteur amet velit aliquip consequat non labore ad laboris id.",
+    imageUrl: "/img/combined.png",
+    imageAlt: "combined pixel value image",
   },
   red: {
     heading: styledRedHeading,
-    bodyCopy:
-      "Consequat in dolore in nulla. Adipisicing excepteur velit occaecat consequat non nostrud consequat labore. Eu aute consectetur ea dolore minim aliqua esse. Amet excepteur amet velit aliquip consequat non labore ad laboris id.",
+    imageUrl: "/img/red.png",
+    imageAlt: "red pixel value image",
   },
   green: {
     heading: styledGreenHeading,
-    bodyCopy:
-      "Consequat in dolore in nulla. Adipisicing excepteur velit occaecat consequat non nostrud consequat labore. Eu aute consectetur ea dolore minim aliqua esse. Amet excepteur amet velit aliquip consequat non labore ad laboris id.",
+    imageUrl: "/img/green.png",
+    imageAlt: "green pixel value image",
   },
   blue: {
     heading: styledBlueHeading,
-    bodyCopy:
-      "Consequat in dolore in nulla. Adipisicing excepteur velit occaecat consequat non nostrud consequat labore. Eu aute consectetur ea dolore minim aliqua esse. Amet excepteur amet velit aliquip consequat non labore ad laboris id.",
+    imageUrl: "/img/blue.png",
+    imageAlt: "blue pixel value image",
   },
 };

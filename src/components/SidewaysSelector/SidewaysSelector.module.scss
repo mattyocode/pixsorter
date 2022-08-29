@@ -115,6 +115,7 @@
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
+
   &::-webkit-scrollbar {
     background: transparent; /* make scrollbar transparent */
     -webkit-appearance: none;
@@ -138,10 +139,21 @@
     min-width: 100%;
   }
 
-  & > h3 {
-    text-align: left;
-    font-size: 1.2rem;
+  & > h4 {
+    text-align: center;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+
+    @media screen and (min-width: 450px) {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
   }
+}
+
+.infoImage {
+  display: flex;
+  justify-content: center;
 }
 
 .actionIcon {
