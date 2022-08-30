@@ -115,8 +115,14 @@ export function SidewaysSelector({
     setInfoOpen((prev) => !prev);
   };
 
+  // const stopScrolling = (e: React.MouseEvent | React.TouchEvent) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  // };
+
   const fieldValueRef = useRef<HTMLUListElement | null>(null);
   const fieldInfoRef = useRef<HTMLUListElement | null>(null);
+
   const controls = useAnimation();
 
   const fieldValues = values.map((value, idx) => (
@@ -149,6 +155,22 @@ export function SidewaysSelector({
       console.log("info closed");
     }
   }, [controls, infoOpen]);
+
+  useEffect(() => {
+    // Prevent selectors being scrollable - user has to click
+    const stopScrolling = (ev: WheelEvent | TouchEvent) => {
+      ev.stopPropagation();
+      ev.preventDefault();
+    };
+    const fieldInfoRefCurrent = fieldInfoRef.current;
+    fieldInfoRefCurrent?.addEventListener("wheel", stopScrolling);
+    fieldInfoRefCurrent?.addEventListener("touchmove", stopScrolling);
+
+    return () => {
+      fieldInfoRefCurrent?.removeEventListener("wheel", stopScrolling);
+      fieldInfoRefCurrent?.removeEventListener("touchmove", stopScrolling);
+    };
+  });
 
   return (
     <div className={styles.wrapper}>
