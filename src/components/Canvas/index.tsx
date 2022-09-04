@@ -11,25 +11,19 @@ import AlgoContext from "../../store/algo-context";
 import { loadScaledImage } from "../../utils/load-scaled-image";
 import { SortDataTypes } from "../../utils/algos/algoTypes";
 
+import SortingContext from "../../store/sorting-context";
+
 import styles from "./Canvas.module.scss";
 
 export function SortCanvas({
   imageSrc,
   height,
   width,
-  stopSorting,
-  keepSorting,
-  isSorted,
-  setIsSorted,
   setImgDataUrl,
 }: {
   imageSrc: string;
   height: number;
   width: number;
-  stopSorting: () => void;
-  keepSorting?: boolean;
-  isSorted: boolean;
-  setIsSorted: Dispatch<SetStateAction<boolean>>;
   setImgDataUrl: Dispatch<SetStateAction<string | null>>;
 }) {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
@@ -40,6 +34,9 @@ export function SortCanvas({
   const algorithm = algoCtx.algos[algoCtx.algoIdx].function;
   const sortBy = algoCtx.sortByOptions[algoCtx.sortByIdx].function;
 
+  const { keepSorting, setKeepSorting, isSorted, setIsSorted } =
+    useContext(SortingContext);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let imgData = useRef<ImageData | null>(null);
   let context = useRef<CanvasRenderingContext2D | null>(null);
@@ -48,7 +45,7 @@ export function SortCanvas({
   const draw = useCallback(() => {
     const finishedSorting = () => {
       setIsSorted(true);
-      stopSorting();
+      setKeepSorting(false);
     };
     if (keepSorting && !isSorted) {
       if (imgData.current?.data && context.current) {
@@ -70,7 +67,7 @@ export function SortCanvas({
     algorithm,
     sortBy,
     keepSorting,
-    stopSorting,
+    setKeepSorting,
     isSorted,
     setIsSorted,
     context,
@@ -82,7 +79,7 @@ export function SortCanvas({
     setImageLoaded(false);
     setSortPosition(null);
     setIsSorted(false);
-    stopSorting();
+    setKeepSorting(false);
 
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext("2d");
@@ -96,7 +93,7 @@ export function SortCanvas({
         );
       }
     }
-  }, [stopSorting, imageSrc, height, width, setIsSorted, sortBy, algorithm]);
+  }, [setKeepSorting, imageSrc, height, width, setIsSorted, sortBy, algorithm]);
 
   // Load image
   useEffect(() => {

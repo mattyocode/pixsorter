@@ -12,7 +12,8 @@ import { ImageUIBtn, ImageUIBtnRound } from "../Buttons";
 import { Loading } from "../Loading";
 import { Parallax } from "../Parallax";
 import useWindowDimensions from "../../hooks/use-window-dimensions";
-import AlgoContext from "../../store/algo-context";
+
+import SortingContext from "../../store/sorting-context";
 
 import styles from "./ImageUI.module.scss";
 
@@ -28,32 +29,39 @@ export function ImageUI() {
   );
   const [imgDataUrl, setImgDataUrl] = useState<string | null>(null);
   const [canvasSize, setCanvasSize] = useState<number | null>(null);
-  const [keepSorting, setKeepSorting] = useState<boolean>(false);
-  const [isSorted, setIsSorted] = useState<boolean>(false);
-  const [startedSorting, setStartedSorting] = useState<boolean>(false);
 
-  const algoCtx = useContext(AlgoContext);
+  const {
+    keepSorting,
+    setKeepSorting,
+    isSorted,
+    setIsSorted,
+    startedSorting,
+    setStartedSorting,
+  } = useContext(SortingContext);
 
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
   const inputFile = useRef<HTMLInputElement | null>(null);
 
-  const addImageData = useCallback((imgData: any) => {
-    const imgUrl = imgData.urls.regular;
-    const name = imgData.user.name;
-    const accountLink = imgData.user.links.html;
-    setImage(imgUrl);
-    setImgAttribution({ name, accountLink });
-    setStartedSorting(false);
-  }, []);
+  const addImageData = useCallback(
+    (imgData: any) => {
+      const imgUrl = imgData.urls.regular;
+      const name = imgData.user.name;
+      const accountLink = imgData.user.links.html;
+      setImage(imgUrl);
+      setImgAttribution({ name, accountLink });
+      setStartedSorting(false);
+    },
+    [setStartedSorting]
+  );
 
-  const stopSort = useCallback(() => {
-    setKeepSorting(false);
-  }, [setKeepSorting]);
+  // const stopSort = useCallback(() => {
+  //   setKeepSorting(false);
+  // }, [setKeepSorting]);
 
   const shuffleImage = async (e: React.MouseEvent) => {
     e.preventDefault();
-    stopSort();
+    setKeepSorting(false);
     fetchImg(
       {
         url: "/api/image",
@@ -63,7 +71,7 @@ export function ImageUI() {
   };
 
   const uploadFile = () => {
-    stopSort();
+    setKeepSorting(false);
     if (inputFile.current) {
       inputFile.current.click();
     }
@@ -176,9 +184,9 @@ export function ImageUI() {
     }
   }, [fetchImg, addImageData, setImage, image]);
 
-  useEffect(() => {
-    setStartedSorting(false);
-  }, [algoCtx]);
+  // useEffect(() => {
+  //   setStartedSorting(false);
+  // }, [algoCtx]);
 
   return (
     <Parallax offset={Math.round(canvasSize ? canvasSize / 12 : 25)}>
@@ -204,10 +212,10 @@ export function ImageUI() {
                 imageSrc={image}
                 width={canvasSize}
                 height={canvasSize}
-                keepSorting={keepSorting}
-                stopSorting={stopSort}
-                isSorted={isSorted}
-                setIsSorted={setIsSorted}
+                // keepSorting={keepSorting}
+                // stopSorting={stopSort}
+                // isSorted={isSorted}
+                // setIsSorted={setIsSorted}
                 setImgDataUrl={setImgDataUrl}
               />
             )}
