@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, RefObject } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { ImageUIBtn } from "../Buttons";
 import { AlgoItemType, SortByItemType } from "../../store/algoData";
 
@@ -115,13 +115,9 @@ export function SidewaysSelector({
     setInfoOpen((prev) => !prev);
   };
 
-  // const stopScrolling = (e: React.MouseEvent | React.TouchEvent) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  // };
-
   const fieldValueRef = useRef<HTMLUListElement | null>(null);
   const fieldInfoRef = useRef<HTMLUListElement | null>(null);
+  const fieldInfoWrapperRef = useRef<HTMLDivElement | null>(null);
 
   const controls = useAnimation();
 
@@ -149,28 +145,15 @@ export function SidewaysSelector({
   useEffect(() => {
     if (infoOpen) {
       controls.start("open");
-      console.log("infoOpen");
     } else {
       controls.start("closed");
-      console.log("info closed");
     }
   }, [controls, infoOpen]);
 
   useEffect(() => {
-    // Prevent selectors being scrollable - user has to click
-    const stopScrolling = (ev: WheelEvent | TouchEvent) => {
-      ev.stopPropagation();
-      ev.preventDefault();
-    };
-    const fieldInfoRefCurrent = fieldInfoRef.current;
-    fieldInfoRefCurrent?.addEventListener("wheel", stopScrolling);
-    fieldInfoRefCurrent?.addEventListener("touchmove", stopScrolling);
-
-    return () => {
-      fieldInfoRefCurrent?.removeEventListener("wheel", stopScrolling);
-      fieldInfoRefCurrent?.removeEventListener("touchmove", stopScrolling);
-    };
-  });
+    preventScrollX(fieldValueRef);
+    preventScrollX(fieldInfoRef);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -224,6 +207,7 @@ export function SidewaysSelector({
         initial="closed"
         animate={controls}
         variants={fieldInfoVariants}
+        ref={fieldInfoWrapperRef}
       >
         <ul ref={fieldInfoRef} className={styles.infoRow}>
           {fieldInfos}
@@ -232,3 +216,37 @@ export function SidewaysSelector({
     </div>
   );
 }
+
+const preventScrollX = (ref: RefObject<HTMLElement>) => {
+  // Prevent selectors being scrollable - user has to click
+  const stopScrolling = (e: WheelEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    window.scrollBy(0, e.deltaY);
+  };
+
+  let startY: number;
+
+  const touchStart = (e: TouchEvent) => {
+    startY = e.touches[0].pageY;
+  };
+
+  const stopSwiping = (e: TouchEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const offsetY = startY - e.touches[0].pageY;
+    window.scrollBy(0, offsetY);
+  };
+
+  const refCurrent = ref.current;
+  refCurrent?.addEventListener("wheel", stopScrolling);
+  refCurrent?.addEventListener("touchstart", touchStart);
+  refCurrent?.addEventListener("touchmove", stopSwiping);
+
+  return () => {
+    refCurrent?.removeEventListener("wheel", stopScrolling);
+    refCurrent?.removeEventListener("touchstart", touchStart);
+    refCurrent?.removeEventListener("touchmove", stopSwiping);
+  };
+};
