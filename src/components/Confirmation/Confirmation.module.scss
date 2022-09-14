@@ -1,0 +1,57 @@
+@use "../../styles/_mixins" as m;
+@use "../../styles/_base" as b;
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.modalWrapper {
+  position: fixed;
+  @include m.flex-centered;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 130;
+  pointer-events: none;
+}
+
+.overlay {
+  pointer-events: auto;
+  width: 90%;
+  max-width: 480px;
+  background-color: white;
+  border-radius: 2px;
+  height: 200px;
+  // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.19), 0 2px 2px rgba(0, 0, 0, 0.23);
+  z-index: 135;
+
+  @media screen and (min-width: 400px) {
+    padding: 1rem;
+  }
+}
+
+.modalContent {
+  // max-height: 80vh;
+  // overflow-y: auto !important;
+  z-index: 150;
+}
+
+.close {
+  font-size: 3rem;
+  color: black;
+  display: flex;
+  justify-content: right;
+  
+  // position: absolute;
+  // top: 2rem;
+  // left: 1rem;
+  cursor: pointer;
+  z-index: 140;
+}
