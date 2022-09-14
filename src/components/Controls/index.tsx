@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { SidewaysSelector } from "../SidewaysSelector";
+import { Modal } from "../Modal";
 import { Parallax } from "../Parallax";
 
 import AlgoContext from "../../store/algo-context";
+import SortingContext from "../../store/sorting-context";
 
 import styles from "./Controls.module.scss";
 
@@ -26,6 +28,9 @@ export function Controls() {
           prevBtnHandler={algoCtx.prevSortBy}
           nextBtnHandler={algoCtx.nextSortBy}
         />
+        <Modal openState={true} closeModal={() => {}}>
+          You sure about that?
+        </Modal>
       </Parallax>
     </div>
   );
