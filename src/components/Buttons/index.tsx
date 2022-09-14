@@ -11,7 +11,6 @@ export function ImageUIBtn({
   label,
   alt,
   clickHandler,
-  animate = false,
 }: {
   src: string;
   width: number;
@@ -19,7 +18,6 @@ export function ImageUIBtn({
   label?: string;
   alt: string;
   clickHandler?: (e: React.MouseEvent) => void;
-  animate?: boolean;
 }) {
   return (
     <button className={styles.button} onClick={clickHandler}>

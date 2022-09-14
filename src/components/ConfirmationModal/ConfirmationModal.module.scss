@@ -1,0 +1,21 @@
+@use "../../styles/_mixins" as m;
+@use "../../styles/_base" as b;
+
+.buttonWrapper {
+  @include m.flex-centered;
+  width: 90%;
+}
+
+.back {
+  background-color: black;
+  color: black;
+  height: 20px;
+  width: 50px;
+}
+
+.continue {
+  background-color: black;
+  color: black;
+  height: 20px;
+  width: 50px;
+}
