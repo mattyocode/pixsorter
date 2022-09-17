@@ -35,12 +35,6 @@ const Backdrop = ({ closeFn }: { closeFn: (e: React.MouseEvent) => void }) => {
 let portalElement: Element | DocumentFragment =
   document.getElementById("modal-root");
 
-// if (!portalElement) {
-//   portalElement = document.createElement("div");
-//   portalElement.setAttribute("id", "modal-root");
-//   document.body.appendChild(portalElement);
-// }
-
 export function Modal({
   openState,
   closeModal,
@@ -79,51 +73,3 @@ export function Modal({
     return null;
   }
 }
-
-const ModalWrapper = ({
-  children,
-  ...restProps
-}: {
-  children: React.ReactNode;
-}) => {
-  return (
-    <div className={styles.modalWrapper} {...restProps}>
-      {children}
-    </div>
-  );
-};
-
-const Overlay = ({
-  children,
-  ...restProps
-}: {
-  children: React.ReactNode[];
-}) => {
-  return (
-    <motion.div
-      // variants={dropIn}
-      // initial="hidden"
-      // animate="visible"
-      // exit="exit"
-      data-testid="modal"
-      className={styles.overlay}
-      {...restProps}
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-// const ModalReleaseBody = () => {
-//   return <div className={styles.releaseBody} />;
-// };
-
-// const ModalOverlayOnly = ({ children, ...restProps }) => {
-//   return (
-//     <ModalWrapper>
-//       <Overlay data-testid="modal" {...restProps}>
-//         <ModalContent>{children}</ModalContent>
-//       </Overlay>
-//     </ModalWrapper>
-//   );
-// };
