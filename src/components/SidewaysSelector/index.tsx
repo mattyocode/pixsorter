@@ -192,6 +192,7 @@ export function SidewaysSelector({
               width={18}
               height={18}
               clickHandler={toggleInfo}
+              confirm={false}
             />
           ) : (
             <ImageUIBtn
@@ -200,6 +201,7 @@ export function SidewaysSelector({
               width={18}
               height={18}
               clickHandler={toggleInfo}
+              confirm={false}
             />
           )}
         </div>
