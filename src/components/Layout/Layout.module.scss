@@ -7,10 +7,10 @@
   height: 100%;
   width: 100%;
   position: relative;
-  padding-top: 1rem;
+  padding: 1rem 0;
 
   @media screen and (min-width: 800px) {
     min-height: 110vh;
-    padding-top: 0;
+    // padding: 5rem 0;
   }
 }
