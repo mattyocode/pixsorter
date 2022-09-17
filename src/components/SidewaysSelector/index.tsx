@@ -92,12 +92,14 @@ export function SidewaysSelector({
   selectedIdx,
   prevBtnHandler,
   nextBtnHandler,
+  valueType = "",
 }: {
   field: string;
   values: AlgoItemType[] | SortByItemType[];
   selectedIdx: number;
   prevBtnHandler: () => void;
   nextBtnHandler: () => void;
+  valueType?: string;
 }) {
   const [infoOpen, setInfoOpen] = useState<boolean>(false);
   const decrementSelected = (e: React.MouseEvent) => {
@@ -169,6 +171,7 @@ export function SidewaysSelector({
             height={25}
             clickHandler={decrementSelected}
             confirm={true}
+            confirmationActionName={`Changing ${valueType}`}
           />
           <div>
             <ul ref={fieldValueRef} className={styles.fieldList}>
@@ -182,6 +185,7 @@ export function SidewaysSelector({
             height={25}
             clickHandler={incrementSelected}
             confirm={true}
+            confirmationActionName={`Changing ${valueType}`}
           />
         </div>
         <div className={styles.actionIcon}>
