@@ -16,6 +16,7 @@ export function ImageUIBtn({
   alt,
   clickHandler,
   confirm,
+  confirmationActionName = "",
 }: {
   src: string;
   width: number;
@@ -24,6 +25,7 @@ export function ImageUIBtn({
   alt: string;
   clickHandler?: (e: React.MouseEvent) => void;
   confirm: boolean;
+  confirmationActionName?: string;
 }) {
   const fireClickHandler = (e: React.MouseEvent) => {
     if (clickHandler) {
@@ -37,7 +39,7 @@ export function ImageUIBtn({
     <>
       {showModal && (
         <ConfirmationModal
-          name="algorithm"
+          actionName={confirmationActionName}
           callback={fireClickHandler}
           close={closeModal}
         />
@@ -118,6 +120,7 @@ export function InlineBtn({
   alt,
   clickHandler,
   confirm,
+  confirmationActionName = "",
 }: {
   src: string;
   width: number;
@@ -126,6 +129,7 @@ export function InlineBtn({
   alt: string;
   clickHandler?: (e: React.MouseEvent) => void;
   confirm: boolean;
+  confirmationActionName?: string;
 }) {
   const fireClickHandler = (e: React.MouseEvent) => {
     if (clickHandler) {
@@ -138,7 +142,7 @@ export function InlineBtn({
     <>
       {showModal && (
         <ConfirmationModal
-          name="algorithm"
+          actionName={confirmationActionName}
           callback={fireClickHandler}
           close={closeModal}
         />
