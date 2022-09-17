@@ -203,7 +203,6 @@ export function ImageUI() {
                 width={25}
                 height={25}
                 clickHandler={downloadClickHandler}
-                // confirm={false}
               />
             )}
           </AnimatePresence>
@@ -215,10 +214,6 @@ export function ImageUI() {
                 imageSrc={image}
                 width={canvasSize}
                 height={canvasSize}
-                // keepSorting={keepSorting}
-                // stopSorting={stopSort}
-                // isSorted={isSorted}
-                // setIsSorted={setIsSorted}
                 setImgDataUrl={setImgDataUrl}
               />
             )}
@@ -233,6 +228,7 @@ export function ImageUI() {
               height={25}
               clickHandler={shuffleImage}
               confirm={true}
+              confirmationActionName="Shuffling image"
             />
             <input
               type="file"
@@ -250,6 +246,7 @@ export function ImageUI() {
               height={25}
               clickHandler={uploadFile}
               confirm={true}
+              confirmationActionName="Uploading new image"
             />
             <ImageUIBtn
               src={sortBtnData.src}
@@ -259,6 +256,7 @@ export function ImageUI() {
               height={25}
               clickHandler={!isSorted ? toggleSort : resetSort}
               confirm={!isSorted ? false : true}
+              confirmationActionName={!isSorted ? "" : "Resetting"}
             />
           </div>
         </div>
