@@ -6,6 +6,7 @@ import { ImageBackground } from "../components/Layout";
 import { Heading } from "../components/Heading";
 import { ImageUI } from "../components/ImageUI";
 import { Controls } from "../components/Controls";
+import { Footer } from "../components/Footer";
 import AlgoProvider from "../store/AlgoProvider";
 import SortingProvider from "../store/SortingProvider";
 import UIProvider from "../store/UIProvider";
@@ -28,6 +29,9 @@ const Home: NextPage = () => {
               />
               <ImageUI />
               <Controls />
+              <Footer>
+                by <a href="https://github.com/mattyocode">mattyocode</a>
+              </Footer>
             </ImageBackground>
           </main>
         </UIProvider>
