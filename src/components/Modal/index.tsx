@@ -67,7 +67,7 @@ export function Modal({
         {ReactDOM.createPortal(
           <div className={styles.modalWrapper} {...restProps}>
             <div className={styles.modalBackground}>
-              <div className={styles.close}></div>
+              <div className={styles.close} onClick={closeModal}></div>
               <div className={styles.modalContent}>{children}</div>
             </div>
           </div>,
