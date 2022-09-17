@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useContext } from "react";
 
 import SortingContext from "../store/sorting-context";
+import UIContext from "../store/ui-context";
 
 const useConfirmationModal = (
   clickHandler: (e: React.MouseEvent) => void,
@@ -8,6 +9,7 @@ const useConfirmationModal = (
 ) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const sortingContext = useContext(SortingContext);
+  const uiContext = useContext(UIContext);
 
   const closeModal = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -15,9 +17,9 @@ const useConfirmationModal = (
   };
 
   const confirmIfSortingStarted = (e: React.MouseEvent) => {
-    const hasStartedSorting = sortingContext.startedSorting;
     const isSorting = sortingContext.keepSorting;
-    if (isSorting && confirm) {
+    const remindMe = uiContext.askToConfirm;
+    if (isSorting && confirm && remindMe) {
       setShowModal(true);
     } else {
       clickHandler(e);
