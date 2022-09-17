@@ -5,6 +5,11 @@
 .wrapper {
   @include m.flex-centered;
   flex-direction: column;
+
+  @media screen and (min-width:400px) {
+    
+    width: 90%;
+  }
 }
 
 .heading {
@@ -33,4 +38,11 @@
     width: 5rem;
     height: 2rem;
   }
+}
+
+
+.checkboxWrapper {
+  display: flex;
+  justify-content: left;
+  width: 100%;
 }

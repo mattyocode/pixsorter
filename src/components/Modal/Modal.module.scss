@@ -26,10 +26,9 @@
 .modalBackground {
   pointer-events: auto;
   width: 480px;
-  height: 200px;
+  height: 230px;
   background-color: white;
   border-radius: 2px;
-  // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.19), 0 2px 2px rgba(0, 0, 0, 0.23);
   z-index: 135;
 
   @media screen and (min-width: 400px) {
@@ -40,11 +39,9 @@
 .modalContent {
   @include m.flex-centered;
   z-index: 150;
-
 }
 
 .close {
-  // width: 100%;
   display: flex;
   justify-content: right;
   padding: 1rem 2rem;
@@ -59,6 +56,7 @@
   &:hover {
     opacity: 1;
   }
+
   &:after {
     content: '\2715';
     font-size: 1.5rem;
