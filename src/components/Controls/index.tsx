@@ -18,6 +18,7 @@ export function Controls() {
           selectedIdx={algoCtx.algoIdx}
           prevBtnHandler={algoCtx.prevAlgo}
           nextBtnHandler={algoCtx.nextAlgo}
+          valueType="algorithm"
         />
         <SidewaysSelector
           field="Sort by"
@@ -25,6 +26,7 @@ export function Controls() {
           selectedIdx={algoCtx.sortByIdx}
           prevBtnHandler={algoCtx.prevSortBy}
           nextBtnHandler={algoCtx.nextSortBy}
+          valueType="pixel value"
         />
       </Parallax>
     </div>

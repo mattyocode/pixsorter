@@ -1,33 +1,38 @@
 import React from "react";
-import Image from "next/image";
 
 export type DescriptionType = {
-  heading: string | JSX.Element;
+  heading?: string | JSX.Element;
   bodyCopy?: string;
   imageUrl?: string;
   imageAlt?: string;
+  footer?: string;
 };
 
 export const algoDescriptions: { [key: string]: DescriptionType } = {
   quick: {
-    heading: "Avg. time: O(n log n) | Avg. Space: O(n)",
+    footer: "Avg. time: O(n log(n)) | Avg. Space: O(n log(n))",
     bodyCopy:
       "Find the correct position of a pivot point in the array (i.e. all values before are lower, and all following are higher), then divide the array at that point. Repeat until the subarrays are so small that moving the pivot sorts them.",
   },
+  merge: {
+    footer: "Avg. time: O(n log(n)) | Avg. Space: O(n)",
+    bodyCopy:
+      "Recursively split the array into halves, until it cannot be divided further, then merge the atomic subarrays back together in size order until all subarrays are merged back together.",
+  },
   bubble: {
-    heading: "Avg. time: O(n²) | Avg. Space: O(1)",
+    footer: "Avg. time: O(n²) | Avg. Space: O(1)",
     bodyCopy:
       "Start at the beginning. Check if the next value in the array is lower: if so, swap with the current pixel; if not, don't. Move to the next value. This moves the largest number to the last index. Repeat the whole process, stopping one index earlier each time.",
   },
   insertion: {
-    heading: "Avg. time: O(n²) | Avg. Space: O(1)",
+    footer: "Avg. time: O(n²) | Avg. Space: O(1)",
     bodyCopy:
-      "Consequat in dolore in nulla. Adipisicing excepteur velit occaecat consequat non nostrud consequat labore. Eu aute consectetur ea dolore minim aliqua esse. Amet excepteur amet velit aliquip consequat non labore ad laboris id.",
+      "Iterate through the array, creating a sorted section at the beginning of the array by swapping lower values into their correct position with each loop until reaching the end of the array.",
   },
   selection: {
-    heading: "Avg. time: O(n²) | Avg. Space: O(1)",
+    footer: "Avg. time: O(n²) | Avg. Space: O(1)",
     bodyCopy:
-      "Consequat in dolore in nulla. Adipisicing excepteur velit occaecat consequat non nostrud consequat labore. Eu aute consectetur ea dolore minim aliqua esse. Amet excepteur amet velit aliquip consequat non labore ad laboris id.",
+      "Loop through the array to find the lowest value and then move it into the first position. Find the next lowest and move it into position two. Repeat until reaching the end of the array.",
   },
 };
 

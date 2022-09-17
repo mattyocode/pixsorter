@@ -613,7 +613,6 @@ describe("Merge sort tests", () => {
       testSortPosition,
       pixelIndexLength
     );
-    console.log(">>>", testArray);
     expect(testArray).toEqual(
       new Uint8ClampedArray([4, 3, 2, 1, 8, 7, 6, 5, 12, 11, 10, 9])
     );

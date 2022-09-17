@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ConfirmationModal } from "../ConfirmationModal";
+
+import useConfirmationModal from "../../hooks/use-confirmation-modal";
+import SortingContext from "../../store/sorting-context";
 
 import styles from "./Buttons.module.scss";
 
@@ -11,7 +15,8 @@ export function ImageUIBtn({
   label,
   alt,
   clickHandler,
-  animate = false,
+  confirm,
+  confirmationActionName = "",
 }: {
   src: string;
   width: number;
@@ -19,16 +24,33 @@ export function ImageUIBtn({
   label?: string;
   alt: string;
   clickHandler?: (e: React.MouseEvent) => void;
-  animate?: boolean;
+  confirm: boolean;
+  confirmationActionName?: string;
 }) {
-  return (
-    <button className={styles.button} onClick={clickHandler}>
-      <div className={styles.image}>
-        <Image src={src} height={height} width={width} alt={alt} />
-      </div>
+  const fireClickHandler = (e: React.MouseEvent) => {
+    if (clickHandler) {
+      clickHandler(e);
+    }
+  };
+  const { showModal, closeModal, confirmIfSortingStarted } =
+    useConfirmationModal(fireClickHandler, confirm);
 
-      {label && <p className={styles.label}>{label}</p>}
-    </button>
+  return (
+    <>
+      {showModal && (
+        <ConfirmationModal
+          actionName={confirmationActionName}
+          callback={fireClickHandler}
+          close={closeModal}
+        />
+      )}
+      <button className={styles.button} onClick={confirmIfSortingStarted}>
+        <div className={styles.image}>
+          <Image src={src} height={height} width={width} alt={alt} />
+        </div>
+        {label && <p className={styles.label}>{label}</p>}
+      </button>
+    </>
   );
 }
 
@@ -97,6 +119,8 @@ export function InlineBtn({
   height,
   alt,
   clickHandler,
+  confirm,
+  confirmationActionName = "",
 }: {
   src: string;
   width: number;
@@ -104,16 +128,34 @@ export function InlineBtn({
   label: string;
   alt: string;
   clickHandler?: (e: React.MouseEvent) => void;
+  confirm: boolean;
+  confirmationActionName?: string;
 }) {
+  const fireClickHandler = (e: React.MouseEvent) => {
+    if (clickHandler) {
+      clickHandler(e);
+    }
+  };
+  const { showModal, closeModal, confirmIfSortingStarted } =
+    useConfirmationModal(fireClickHandler, confirm);
   return (
-    <button className={styles.button} onClick={clickHandler}>
-      <Image
-        src={src}
-        height={height}
-        width={width}
-        alt={alt}
-        className={styles.image}
-      />
-    </button>
+    <>
+      {showModal && (
+        <ConfirmationModal
+          actionName={confirmationActionName}
+          callback={fireClickHandler}
+          close={closeModal}
+        />
+      )}
+      <button className={styles.button} onClick={clickHandler}>
+        <Image
+          src={src}
+          height={height}
+          width={width}
+          alt={alt}
+          className={styles.image}
+        />
+      </button>
+    </>
   );
 }

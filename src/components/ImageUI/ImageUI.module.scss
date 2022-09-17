@@ -5,12 +5,12 @@
   @include m.flex-centered;
   flex-direction: column;
   background-color: b.$black;
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 1.8rem 1rem;
   position: relative;
   z-index: 100;
 
   @media screen and (min-width: b.$breakpoint-tablet) {
-    padding: 2rem;
+    padding: 2rem 2rem 1.5rem 2rem;
   }
 }
 
@@ -40,7 +40,7 @@
   margin: 1rem 0 0.5rem 1rem;
 
   @media screen and (min-width: b.$breakpoint-tablet) {
-    margin: 2rem 0 0rem 1rem;
+    margin: 1.5rem 0 0rem 1rem;
   }
 }
 

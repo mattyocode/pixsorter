@@ -1,0 +1,48 @@
+@use "../../styles/_mixins" as m;
+@use "../../styles/_base" as b;
+
+
+.wrapper {
+  @include m.flex-centered;
+  flex-direction: column;
+
+  @media screen and (min-width:400px) {
+    
+    width: 90%;
+  }
+}
+
+.heading {
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.text {
+  margin: 0;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.buttonWrapper {
+  @include m.flex-centered;
+  justify-content: space-between;
+  width: 90%;
+  height: 4rem;
+  width: 12rem;
+  color: white;
+
+  & button {
+    @include m.removeBtnDefault;
+    background-color: black;
+    color: white;
+    width: 5rem;
+    height: 2rem;
+  }
+}
+
+
+.checkboxWrapper {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}

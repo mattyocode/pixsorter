@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, RefObject } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { ImageUIBtn } from "../Buttons";
 import { AlgoItemType, SortByItemType } from "../../store/algoData";
 
@@ -38,7 +38,7 @@ const fieldInfoVariants = {
     height: 0,
   },
   open: {
-    height: 250,
+    height: 210,
     transition: {
       duration: 0.6,
       ease: "easeInOut",
@@ -47,20 +47,22 @@ const fieldInfoVariants = {
 };
 
 const FieldInfo = ({
-  heading,
   active,
   parentRef,
+  heading = null,
   bodyCopy = null,
   imageUrl = null,
   imageAlt = null,
+  footer = null,
   ...restProps
 }: {
-  heading: string | JSX.Element;
   active: boolean;
   parentRef: RefObject<HTMLElement>;
+  heading?: string | JSX.Element | null;
   bodyCopy?: string | null;
   imageUrl?: string | null;
   imageAlt?: string | null;
+  footer?: string | null;
 }) => {
   const infoRef = useRef<HTMLLIElement>(null);
 
@@ -75,13 +77,14 @@ const FieldInfo = ({
 
   return (
     <li ref={infoRef} className={styles.fieldInfoWrapper} {...restProps}>
-      <h4>{heading}</h4>
+      {heading && <h4>{heading}</h4>}
       {bodyCopy && <p>{bodyCopy}</p>}
       {imageUrl && imageAlt && (
         <div className={styles.infoImage}>
           <Image src={imageUrl} alt={imageAlt} width={320} height={160} />
         </div>
       )}
+      {footer && <p className={styles.footer}>{footer}</p>}
     </li>
   );
 };
@@ -92,12 +95,14 @@ export function SidewaysSelector({
   selectedIdx,
   prevBtnHandler,
   nextBtnHandler,
+  valueType = "",
 }: {
   field: string;
   values: AlgoItemType[] | SortByItemType[];
   selectedIdx: number;
   prevBtnHandler: () => void;
   nextBtnHandler: () => void;
+  valueType?: string;
 }) {
   const [infoOpen, setInfoOpen] = useState<boolean>(false);
   const decrementSelected = (e: React.MouseEvent) => {
@@ -115,13 +120,9 @@ export function SidewaysSelector({
     setInfoOpen((prev) => !prev);
   };
 
-  // const stopScrolling = (e: React.MouseEvent | React.TouchEvent) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  // };
-
   const fieldValueRef = useRef<HTMLUListElement | null>(null);
   const fieldInfoRef = useRef<HTMLUListElement | null>(null);
+  const fieldInfoWrapperRef = useRef<HTMLDivElement | null>(null);
 
   const controls = useAnimation();
 
@@ -143,34 +144,22 @@ export function SidewaysSelector({
       bodyCopy={value.description?.bodyCopy}
       imageUrl={value.description?.imageUrl}
       imageAlt={value.description?.imageAlt}
+      footer={value.description?.footer}
     />
   ));
 
   useEffect(() => {
     if (infoOpen) {
       controls.start("open");
-      console.log("infoOpen");
     } else {
       controls.start("closed");
-      console.log("info closed");
     }
   }, [controls, infoOpen]);
 
   useEffect(() => {
-    // Prevent selectors being scrollable - user has to click
-    const stopScrolling = (ev: WheelEvent | TouchEvent) => {
-      ev.stopPropagation();
-      ev.preventDefault();
-    };
-    const fieldInfoRefCurrent = fieldInfoRef.current;
-    fieldInfoRefCurrent?.addEventListener("wheel", stopScrolling);
-    fieldInfoRefCurrent?.addEventListener("touchmove", stopScrolling);
-
-    return () => {
-      fieldInfoRefCurrent?.removeEventListener("wheel", stopScrolling);
-      fieldInfoRefCurrent?.removeEventListener("touchmove", stopScrolling);
-    };
-  });
+    preventScrollX(fieldValueRef);
+    preventScrollX(fieldInfoRef);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -185,6 +174,8 @@ export function SidewaysSelector({
             width={25}
             height={25}
             clickHandler={decrementSelected}
+            confirm={true}
+            confirmationActionName={`Changing ${valueType}`}
           />
           <div>
             <ul ref={fieldValueRef} className={styles.fieldList}>
@@ -197,6 +188,8 @@ export function SidewaysSelector({
             width={25}
             height={25}
             clickHandler={incrementSelected}
+            confirm={true}
+            confirmationActionName={`Changing ${valueType}`}
           />
         </div>
         <div className={styles.actionIcon}>
@@ -207,6 +200,7 @@ export function SidewaysSelector({
               width={18}
               height={18}
               clickHandler={toggleInfo}
+              confirm={false}
             />
           ) : (
             <ImageUIBtn
@@ -215,6 +209,7 @@ export function SidewaysSelector({
               width={18}
               height={18}
               clickHandler={toggleInfo}
+              confirm={false}
             />
           )}
         </div>
@@ -224,6 +219,7 @@ export function SidewaysSelector({
         initial="closed"
         animate={controls}
         variants={fieldInfoVariants}
+        ref={fieldInfoWrapperRef}
       >
         <ul ref={fieldInfoRef} className={styles.infoRow}>
           {fieldInfos}
@@ -232,3 +228,37 @@ export function SidewaysSelector({
     </div>
   );
 }
+
+const preventScrollX = (ref: RefObject<HTMLElement>) => {
+  // Prevent selectors being scrollable - user has to click
+  const stopScrolling = (e: WheelEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    window.scrollBy(0, e.deltaY);
+  };
+
+  let startY: number;
+
+  const touchStart = (e: TouchEvent) => {
+    startY = e.touches[0].pageY;
+  };
+
+  const stopSwiping = (e: TouchEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const offsetY = startY - e.touches[0].pageY;
+    window.scrollBy(0, offsetY);
+  };
+
+  const refCurrent = ref.current;
+  refCurrent?.addEventListener("wheel", stopScrolling);
+  refCurrent?.addEventListener("touchstart", touchStart);
+  refCurrent?.addEventListener("touchmove", stopSwiping);
+
+  return () => {
+    refCurrent?.removeEventListener("wheel", stopScrolling);
+    refCurrent?.removeEventListener("touchstart", touchStart);
+    refCurrent?.removeEventListener("touchmove", stopSwiping);
+  };
+};
