@@ -4,7 +4,6 @@ import UIContext from "./ui-context";
 
 const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-
   const uiContext = {
     showModal,
     setShowModal,
