@@ -168,6 +168,7 @@ export function SidewaysSelector({
             width={25}
             height={25}
             clickHandler={decrementSelected}
+            confirm={true}
           />
           <div>
             <ul ref={fieldValueRef} className={styles.fieldList}>
@@ -180,6 +181,7 @@ export function SidewaysSelector({
             width={25}
             height={25}
             clickHandler={incrementSelected}
+            confirm={true}
           />
         </div>
         <div className={styles.actionIcon}>

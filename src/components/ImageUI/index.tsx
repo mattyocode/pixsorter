@@ -16,6 +16,7 @@ import useWindowDimensions from "../../hooks/use-window-dimensions";
 import SortingContext from "../../store/sorting-context";
 
 import styles from "./ImageUI.module.scss";
+import AlgoContext from "../../store/algo-context";
 
 type attributionData = {
   name: string;
@@ -38,6 +39,7 @@ export function ImageUI() {
     startedSorting,
     setStartedSorting,
   } = useContext(SortingContext);
+  const algoCtx = useContext(AlgoContext);
 
   const { isLoading, error, sendRequest: fetchImg } = useHttp();
   const { width } = useWindowDimensions();
@@ -184,9 +186,9 @@ export function ImageUI() {
     }
   }, [fetchImg, addImageData, setImage, image]);
 
-  // useEffect(() => {
-  //   setStartedSorting(false);
-  // }, [algoCtx]);
+  useEffect(() => {
+    setStartedSorting(false);
+  }, [algoCtx]);
 
   return (
     <Parallax offset={Math.round(canvasSize ? canvasSize / 12 : 25)}>
@@ -201,6 +203,7 @@ export function ImageUI() {
                 width={25}
                 height={25}
                 clickHandler={downloadClickHandler}
+                // confirm={false}
               />
             )}
           </AnimatePresence>
@@ -229,6 +232,7 @@ export function ImageUI() {
               width={30}
               height={25}
               clickHandler={shuffleImage}
+              confirm={true}
             />
             <input
               type="file"
@@ -245,6 +249,7 @@ export function ImageUI() {
               width={25}
               height={25}
               clickHandler={uploadFile}
+              confirm={true}
             />
             <ImageUIBtn
               src={sortBtnData.src}
@@ -253,6 +258,7 @@ export function ImageUI() {
               width={25}
               height={25}
               clickHandler={!isSorted ? toggleSort : resetSort}
+              confirm={!isSorted ? false : true}
             />
           </div>
         </div>
