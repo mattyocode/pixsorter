@@ -38,7 +38,7 @@ const fieldInfoVariants = {
     height: 0,
   },
   open: {
-    height: 250,
+    height: 210,
     transition: {
       duration: 0.6,
       ease: "easeInOut",
@@ -47,20 +47,22 @@ const fieldInfoVariants = {
 };
 
 const FieldInfo = ({
-  heading,
   active,
   parentRef,
+  heading = null,
   bodyCopy = null,
   imageUrl = null,
   imageAlt = null,
+  footer = null,
   ...restProps
 }: {
-  heading: string | JSX.Element;
   active: boolean;
   parentRef: RefObject<HTMLElement>;
+  heading?: string | JSX.Element | null;
   bodyCopy?: string | null;
   imageUrl?: string | null;
   imageAlt?: string | null;
+  footer?: string | null;
 }) => {
   const infoRef = useRef<HTMLLIElement>(null);
 
@@ -75,13 +77,14 @@ const FieldInfo = ({
 
   return (
     <li ref={infoRef} className={styles.fieldInfoWrapper} {...restProps}>
-      <h4>{heading}</h4>
+      {heading && <h4>{heading}</h4>}
       {bodyCopy && <p>{bodyCopy}</p>}
       {imageUrl && imageAlt && (
         <div className={styles.infoImage}>
           <Image src={imageUrl} alt={imageAlt} width={320} height={160} />
         </div>
       )}
+      {footer && <p className={styles.footer}>{footer}</p>}
     </li>
   );
 };
@@ -141,6 +144,7 @@ export function SidewaysSelector({
       bodyCopy={value.description?.bodyCopy}
       imageUrl={value.description?.imageUrl}
       imageAlt={value.description?.imageAlt}
+      footer={value.description?.footer}
     />
   ));
 
