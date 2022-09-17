@@ -9,10 +9,10 @@ export function Checkbox({
 }: {
   label: string;
   checked: boolean;
-  toggleChecked: () => void;
+  toggleChecked: (e: React.MouseEvent) => void;
 }) {
   const changeHandler = (e: React.MouseEvent) => {
-    toggleChecked();
+    toggleChecked(e);
   };
   return (
     <div className={styles.wrapper}>
