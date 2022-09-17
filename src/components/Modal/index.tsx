@@ -32,8 +32,9 @@ const Backdrop = ({ closeFn }: { closeFn: (e: React.MouseEvent) => void }) => {
   );
 };
 
-let portalElement: Element | DocumentFragment =
-  document.getElementById("modal-root");
+let portalElement: Element | DocumentFragment = document.getElementById(
+  "modal-root"
+) as Element;
 
 export function Modal({
   openState,
