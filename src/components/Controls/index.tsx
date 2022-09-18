@@ -8,34 +8,33 @@ import styles from "./Controls.module.scss";
 
 export function Controls() {
   const algoCtx = useContext(AlgoContext);
-  const [loaded, setLoaded] = useState<boolean>(false);
+  // const [loaded, setLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log("useEffect runs");
-    setLoaded(true);
-  }, []);
+  // useEffect(() => {
+  //   setLoaded(true);
+  // }, []);
   return (
     <div className={styles.wrapper}>
-      {loaded && (
-        <Parallax offset={25}>
-          <SidewaysSelector
-            field="Using"
-            values={algoCtx.algos}
-            selectedIdx={algoCtx.algoIdx}
-            prevBtnHandler={algoCtx.prevAlgo}
-            nextBtnHandler={algoCtx.nextAlgo}
-            valueType="algorithm"
-          />
-          <SidewaysSelector
-            field="Sort by"
-            values={algoCtx.sortByOptions}
-            selectedIdx={algoCtx.sortByIdx}
-            prevBtnHandler={algoCtx.prevSortBy}
-            nextBtnHandler={algoCtx.nextSortBy}
-            valueType="pixel value"
-          />
-        </Parallax>
-      )}
+      {/* {loaded && ( */}
+      <Parallax offset={25}>
+        <SidewaysSelector
+          field="Using"
+          values={algoCtx.algos}
+          selectedIdx={algoCtx.algoIdx}
+          prevBtnHandler={algoCtx.prevAlgo}
+          nextBtnHandler={algoCtx.nextAlgo}
+          valueType="algorithm"
+        />
+        <SidewaysSelector
+          field="Sort by"
+          values={algoCtx.sortByOptions}
+          selectedIdx={algoCtx.sortByIdx}
+          prevBtnHandler={algoCtx.prevSortBy}
+          nextBtnHandler={algoCtx.nextSortBy}
+          valueType="pixel value"
+        />
+      </Parallax>
+      {/* )} */}
     </div>
   );
 }

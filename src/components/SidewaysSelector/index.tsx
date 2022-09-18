@@ -110,6 +110,12 @@ export function SidewaysSelector({
   valueType?: string;
 }) {
   const [infoOpen, setInfoOpen] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   const decrementSelected = (e: React.MouseEvent) => {
     e.preventDefault();
     prevBtnHandler();
@@ -184,9 +190,11 @@ export function SidewaysSelector({
             confirmationActionName={`Changing ${valueType}`}
           />
           <div>
-            <ul ref={fieldValueRef} className={styles.fieldList}>
-              {fieldValues}
-            </ul>
+            {loaded && (
+              <ul ref={fieldValueRef} className={styles.fieldList}>
+                {fieldValues}
+              </ul>
+            )}
           </div>
           <ImageUIBtn
             src="/icons/right.svg"
