@@ -243,7 +243,7 @@ const preventScrollX = (ref: RefObject<HTMLElement>) => {
   // Prevent selectors being scrollable - user has to click
   const stopScrolling = (e: WheelEvent) => {
     // e.stopPropagation();
-    e.preventDefault();
+    // e.preventDefault();
     window.scrollBy(0, e.deltaY);
   };
 
@@ -255,7 +255,7 @@ const preventScrollX = (ref: RefObject<HTMLElement>) => {
 
   const stopSwiping = (e: TouchEvent) => {
     // e.stopPropagation();
-    e.preventDefault();
+    // e.preventDefault();
 
     const offsetY = startY - e.touches[0].pageY;
     window.scrollBy(0, offsetY);
