@@ -19,6 +19,8 @@ const FieldValue = ({
 
   useEffect(() => {
     if (active && optionRef.current && parentRef?.current) {
+      console.log(">>>", optionRef.current.offsetLeft);
+      console.log(">>>", optionRef.current.clientWidth);
       parentRef.current.scrollTo({
         left: optionRef.current.offsetLeft - optionRef.current.clientWidth,
         behavior: "smooth",
