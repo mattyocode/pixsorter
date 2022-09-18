@@ -9,9 +9,9 @@ import {
 } from "./algoData";
 
 const defaultAlgoState = {
-  algoIdx: 0,
+  algoIdx: 1,
   algos: AlgoOptions,
-  sortByIdx: 0,
+  sortByIdx: 1,
   sortByOptions: SortByOptions,
   pixelDistance: 4,
 };

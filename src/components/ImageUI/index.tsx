@@ -171,22 +171,24 @@ export function ImageUI() {
 
   useEffect(() => {
     if (!image && image !== "") {
-      try {
-        fetchImg(
-          {
-            url: "/api/image",
-          },
-          addImageData
-        );
-      } catch {
-        setImage("img/test-image.jpg");
-      }
+      fetchImg(
+        {
+          url: "/api/image",
+        },
+        addImageData
+      );
     }
   }, [fetchImg, addImageData, setImage, image]);
 
   useEffect(() => {
+    if (error) {
+      setImage("img/test-image.jpg");
+    }
+  }, [error]);
+
+  useEffect(() => {
     setStartedSorting(false);
-  }, [algoCtx, setStartedSorting]);
+  }, [algoCtx]);
 
   return (
     <Parallax offset={Math.round(canvasSize ? canvasSize / 12 : 25)}>

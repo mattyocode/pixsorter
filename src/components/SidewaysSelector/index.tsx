@@ -110,6 +110,7 @@ export function SidewaysSelector({
   valueType?: string;
 }) {
   const [infoOpen, setInfoOpen] = useState<boolean>(false);
+
   const decrementSelected = (e: React.MouseEvent) => {
     e.preventDefault();
     prevBtnHandler();
@@ -165,10 +166,6 @@ export function SidewaysSelector({
   useEffect(() => {
     preventScrollX(fieldValueRef);
     preventScrollX(fieldInfoRef);
-  }, []);
-
-  useEffect(() => {
-    loadedRef.current = true;
   }, []);
 
   return (
@@ -242,7 +239,7 @@ export function SidewaysSelector({
 const preventScrollX = (ref: RefObject<HTMLElement>) => {
   // Prevent selectors being scrollable - user has to click
   const stopScrolling = (e: WheelEvent) => {
-    // e.stopPropagation();
+    e.stopPropagation();
     e.preventDefault();
     window.scrollBy(0, e.deltaY);
   };
@@ -254,10 +251,12 @@ const preventScrollX = (ref: RefObject<HTMLElement>) => {
   };
 
   const stopSwiping = (e: TouchEvent) => {
-    // e.stopPropagation();
+    e.stopPropagation();
     e.preventDefault();
 
-    const offsetY = startY - e.touches[0].pageY;
+    let offsetY = startY - e.touches[0].pageY;
+    offsetY = offsetY / 12;
+
     window.scrollBy(0, offsetY);
   };
 
