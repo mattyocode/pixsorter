@@ -255,12 +255,9 @@ const preventScrollX = (ref: RefObject<HTMLElement>) => {
     e.preventDefault();
 
     let offsetY = startY - e.touches[0].pageY;
-    offsetY = offsetY / 10;
+    offsetY = offsetY / 12;
 
     window.scrollBy(0, offsetY);
-    console.log("startY >", startY);
-    console.log("e.touches[0].pageY >", e.touches[0]);
-    console.log("offsetY >", offsetY);
   };
 
   const refCurrent = ref.current;
