@@ -8,27 +8,30 @@ import styles from "./Controls.module.scss";
 
 export function Controls() {
   const algoCtx = useContext(AlgoContext);
+  // const;
 
   return (
     <div className={styles.wrapper}>
-      <Parallax offset={25}>
-        <SidewaysSelector
-          field="Using"
-          values={algoCtx.algos}
-          selectedIdx={algoCtx.algoIdx}
-          prevBtnHandler={algoCtx.prevAlgo}
-          nextBtnHandler={algoCtx.nextAlgo}
-          valueType="algorithm"
-        />
-        <SidewaysSelector
-          field="Sort by"
-          values={algoCtx.sortByOptions}
-          selectedIdx={algoCtx.sortByIdx}
-          prevBtnHandler={algoCtx.prevSortBy}
-          nextBtnHandler={algoCtx.nextSortBy}
-          valueType="pixel value"
-        />
-      </Parallax>
+      {algoCtx && (
+        <Parallax offset={25}>
+          <SidewaysSelector
+            field="Using"
+            values={algoCtx.algos}
+            selectedIdx={algoCtx.algoIdx}
+            prevBtnHandler={algoCtx.prevAlgo}
+            nextBtnHandler={algoCtx.nextAlgo}
+            valueType="algorithm"
+          />
+          <SidewaysSelector
+            field="Sort by"
+            values={algoCtx.sortByOptions}
+            selectedIdx={algoCtx.sortByIdx}
+            prevBtnHandler={algoCtx.prevSortBy}
+            nextBtnHandler={algoCtx.nextSortBy}
+            valueType="pixel value"
+          />
+        </Parallax>
+      )}
     </div>
   );
 }

@@ -177,13 +177,13 @@ export function SidewaysSelector({
             confirm={true}
             confirmationActionName={`Changing ${valueType}`}
           />
-          {fieldValues ? (
-            <div>
-              <ul ref={fieldValueRef} className={styles.fieldList}>
-                {fieldValues}
-              </ul>
-            </div>
-          ) : null}
+          {/* {fieldValues && ( */}
+          <div>
+            <ul ref={fieldValueRef} className={styles.fieldList}>
+              {fieldValues}
+            </ul>
+          </div>
+          {/* )} */}
           <ImageUIBtn
             src="/icons/right.svg"
             alt="next option"
