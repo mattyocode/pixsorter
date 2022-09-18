@@ -8,11 +8,15 @@ import styles from "./Controls.module.scss";
 
 export function Controls() {
   const algoCtx = useContext(AlgoContext);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    algoCtx.prevAlgo();
-    algoCtx.prevSortBy();
-  }, []);
+    if (!loaded) {
+      algoCtx.prevAlgo();
+      algoCtx.prevSortBy();
+      setLoaded(true);
+    }
+  }, [loaded, algoCtx]);
 
   return (
     <div className={styles.wrapper}>
