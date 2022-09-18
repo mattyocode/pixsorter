@@ -19,6 +19,7 @@ export function ImageBackground({
         objectFit="cover"
         objectPosition="center"
         quality={100}
+        priority={true}
       />
       {children}
     </div>
