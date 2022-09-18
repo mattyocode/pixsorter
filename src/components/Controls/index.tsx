@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SidewaysSelector } from "../SidewaysSelector";
 import { Parallax } from "../Parallax";
 
@@ -8,15 +8,15 @@ import styles from "./Controls.module.scss";
 
 export function Controls() {
   const algoCtx = useContext(AlgoContext);
-  const loadedRef = useRef<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    loadedRef.current = true;
+    console.log("useEffect runs");
+    setLoaded(true);
   }, []);
-
   return (
     <div className={styles.wrapper}>
-      {loadedRef.current && (
+      {loaded && (
         <Parallax offset={25}>
           <SidewaysSelector
             field="Using"
