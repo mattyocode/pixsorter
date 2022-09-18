@@ -57,10 +57,6 @@ export function ImageUI() {
     [setStartedSorting]
   );
 
-  // const stopSort = useCallback(() => {
-  //   setKeepSorting(false);
-  // }, [setKeepSorting]);
-
   const shuffleImage = async (e: React.MouseEvent) => {
     e.preventDefault();
     setKeepSorting(false);
