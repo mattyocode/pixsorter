@@ -8,14 +8,14 @@ import styles from "./Controls.module.scss";
 
 export function Controls() {
   const algoCtx = useContext(AlgoContext);
-  // const [loaded, setLoaded] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   setLoaded(true);
-  // }, []);
+  useEffect(() => {
+    algoCtx.prevAlgo();
+    algoCtx.prevSortBy();
+  }, []);
+
   return (
     <div className={styles.wrapper}>
-      {/* {loaded && ( */}
       <Parallax offset={25}>
         <SidewaysSelector
           field="Using"
@@ -34,7 +34,6 @@ export function Controls() {
           valueType="pixel value"
         />
       </Parallax>
-      {/* )} */}
     </div>
   );
 }

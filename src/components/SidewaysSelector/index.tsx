@@ -16,14 +16,9 @@ const FieldValue = ({
   parentRef: RefObject<HTMLElement>;
 }) => {
   const optionRef = useRef<HTMLLIElement>(null);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (active && optionRef.current && parentRef?.current && loaded) {
+    if (active && optionRef.current && parentRef?.current) {
       parentRef.current.scrollTo({
         left: optionRef.current.offsetLeft - optionRef.current.clientWidth,
         behavior: "smooth",
@@ -34,7 +29,6 @@ const FieldValue = ({
     parentRef,
     optionRef.current?.offsetLeft,
     optionRef.current?.clientWidth,
-    loaded,
   ]);
 
   return (
@@ -116,11 +110,6 @@ export function SidewaysSelector({
   valueType?: string;
 }) {
   const [infoOpen, setInfoOpen] = useState<boolean>(false);
-  // const [loaded, setLoaded] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   setLoaded(true);
-  // }, []);
 
   const decrementSelected = (e: React.MouseEvent) => {
     e.preventDefault();
