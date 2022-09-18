@@ -16,6 +16,11 @@ const FieldValue = ({
   parentRef: RefObject<HTMLElement>;
 }) => {
   const optionRef = useRef<HTMLLIElement>(null);
+  const [loaded, setLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   useEffect(() => {
     if (active && optionRef.current && parentRef?.current) {
@@ -29,6 +34,7 @@ const FieldValue = ({
     parentRef,
     optionRef.current?.offsetLeft,
     optionRef.current?.clientWidth,
+    loaded,
   ]);
 
   return (
@@ -110,11 +116,11 @@ export function SidewaysSelector({
   valueType?: string;
 }) {
   const [infoOpen, setInfoOpen] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
+  // const [loaded, setLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
+  // useEffect(() => {
+  //   setLoaded(true);
+  // }, []);
 
   const decrementSelected = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -190,11 +196,9 @@ export function SidewaysSelector({
             confirmationActionName={`Changing ${valueType}`}
           />
           <div>
-            {loaded && (
-              <ul ref={fieldValueRef} className={styles.fieldList}>
-                {fieldValues}
-              </ul>
-            )}
+            <ul ref={fieldValueRef} className={styles.fieldList}>
+              {fieldValues}
+            </ul>
           </div>
           <ImageUIBtn
             src="/icons/right.svg"
