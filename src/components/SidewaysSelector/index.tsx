@@ -167,10 +167,6 @@ export function SidewaysSelector({
     preventScrollX(fieldInfoRef);
   }, []);
 
-  useEffect(() => {
-    loadedRef.current = true;
-  }, []);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.selectorRow}>
@@ -188,11 +184,9 @@ export function SidewaysSelector({
             confirmationActionName={`Changing ${valueType}`}
           />
           <div>
-            {loadedRef.current && (
-              <ul ref={fieldValueRef} className={styles.fieldList}>
-                {fieldValues}
-              </ul>
-            )}
+            <ul ref={fieldValueRef} className={styles.fieldList}>
+              {fieldValues}
+            </ul>
           </div>
           <ImageUIBtn
             src="/icons/right.svg"
