@@ -50,7 +50,7 @@ export function ImageUI() {
       const imgUrl = imgData.urls.regular;
       const name = imgData.user.name;
       const accountLink = imgData.user.links.html;
-      if (imgData.urls.regular) {
+      if (imgData) {
         setImage(imgUrl);
         setImgAttribution({ name, accountLink });
         setStartedSorting(false);
