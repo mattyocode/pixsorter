@@ -161,72 +161,76 @@ export function SidewaysSelector({
     preventScrollX(fieldInfoRef);
   }, []);
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.selectorRow}>
-        <label htmlFor="fieldInput" className={styles.field}>
-          <h3>{field}</h3>
-        </label>
-        <div className={styles.optionsWrapper}>
-          <ImageUIBtn
-            src="/icons/left.svg"
-            alt="prev option"
-            width={25}
-            height={25}
-            clickHandler={decrementSelected}
-            confirm={true}
-            confirmationActionName={`Changing ${valueType}`}
-          />
-          <div>
-            <ul ref={fieldValueRef} className={styles.fieldList}>
-              {fieldValues}
-            </ul>
+  if (fieldValues) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.selectorRow}>
+          <label htmlFor="fieldInput" className={styles.field}>
+            <h3>{field}</h3>
+          </label>
+          <div className={styles.optionsWrapper}>
+            <ImageUIBtn
+              src="/icons/left.svg"
+              alt="prev option"
+              width={25}
+              height={25}
+              clickHandler={decrementSelected}
+              confirm={true}
+              confirmationActionName={`Changing ${valueType}`}
+            />
+            <div>
+              <ul ref={fieldValueRef} className={styles.fieldList}>
+                {fieldValues}
+              </ul>
+            </div>
+            <ImageUIBtn
+              src="/icons/right.svg"
+              alt="next option"
+              width={25}
+              height={25}
+              clickHandler={incrementSelected}
+              confirm={true}
+              confirmationActionName={`Changing ${valueType}`}
+            />
           </div>
-          <ImageUIBtn
-            src="/icons/right.svg"
-            alt="next option"
-            width={25}
-            height={25}
-            clickHandler={incrementSelected}
-            confirm={true}
-            confirmationActionName={`Changing ${valueType}`}
-          />
+          <div className={styles.actionIcon}>
+            {infoOpen ? (
+              <ImageUIBtn
+                src="/icons/close.svg"
+                alt="more information"
+                width={18}
+                height={18}
+                clickHandler={toggleInfo}
+                confirm={false}
+              />
+            ) : (
+              <ImageUIBtn
+                src="/icons/info.svg"
+                alt="more information"
+                width={18}
+                height={18}
+                clickHandler={toggleInfo}
+                confirm={false}
+              />
+            )}
+          </div>
         </div>
-        <div className={styles.actionIcon}>
-          {infoOpen ? (
-            <ImageUIBtn
-              src="/icons/close.svg"
-              alt="more information"
-              width={18}
-              height={18}
-              clickHandler={toggleInfo}
-              confirm={false}
-            />
-          ) : (
-            <ImageUIBtn
-              src="/icons/info.svg"
-              alt="more information"
-              width={18}
-              height={18}
-              clickHandler={toggleInfo}
-              confirm={false}
-            />
-          )}
-        </div>
+        <motion.div
+          className={styles.infoRowWrapper}
+          initial="closed"
+          animate={controls}
+          variants={fieldInfoVariants}
+          ref={fieldInfoWrapperRef}
+        >
+          <ul ref={fieldInfoRef} className={styles.infoRow}>
+            {fieldInfos}
+          </ul>
+        </motion.div>
       </div>
-      <motion.div
-        className={styles.infoRowWrapper}
-        initial="closed"
-        animate={controls}
-        variants={fieldInfoVariants}
-        ref={fieldInfoWrapperRef}
-      >
-        <ul ref={fieldInfoRef} className={styles.infoRow}>
-          {fieldInfos}
-        </ul>
-      </motion.div>
-    </div>
-  );
+    );
+  } else {
+    null;
+  }
 }
 
 const preventScrollX = (ref: RefObject<HTMLElement>) => {
@@ -252,13 +256,13 @@ const preventScrollX = (ref: RefObject<HTMLElement>) => {
   };
 
   const refCurrent = ref.current;
-  refCurrent?.addEventListener("wheel", stopScrolling);
   refCurrent?.addEventListener("touchstart", touchStart);
   refCurrent?.addEventListener("touchmove", stopSwiping);
+  refCurrent?.addEventListener("wheel", stopScrolling);
 
   return () => {
-    refCurrent?.removeEventListener("wheel", stopScrolling);
     refCurrent?.removeEventListener("touchstart", touchStart);
     refCurrent?.removeEventListener("touchmove", stopSwiping);
+    refCurrent?.removeEventListener("wheel", stopScrolling);
   };
 };
