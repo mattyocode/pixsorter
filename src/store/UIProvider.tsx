@@ -11,7 +11,8 @@ const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const showConfirmationModal =
-      localStorage.getItem("pixSorter.showConfirmationModal") || "";
+      localStorage.getItem("pixSorter.showConfirmationModal") ||
+      JSON.stringify("");
     const confirmValue = JSON.parse(showConfirmationModal);
     setAskToConfirm(confirmValue || true);
   }, []);
