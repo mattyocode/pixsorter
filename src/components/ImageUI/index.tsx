@@ -188,7 +188,7 @@ export function ImageUI() {
 
   useEffect(() => {
     setStartedSorting(false);
-  }, [algoCtx]);
+  }, [algoCtx, setStartedSorting]);
 
   return (
     <Parallax offset={Math.round(canvasSize ? canvasSize / 12 : 25)}>
