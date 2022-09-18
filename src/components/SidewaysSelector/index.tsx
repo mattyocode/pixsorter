@@ -198,7 +198,7 @@ export function SidewaysSelector({
           {infoOpen ? (
             <ImageUIBtn
               src="/icons/close.svg"
-              alt="more information"
+              alt="close information"
               width={18}
               height={18}
               clickHandler={toggleInfo}
