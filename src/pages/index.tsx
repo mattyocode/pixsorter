@@ -30,7 +30,7 @@ const Home: NextPage = () => {
               <ImageUI />
               <Controls />
               <Footer>
-                by <a href="https://github.com/mattyocode">mattyocode</a>
+                <a href="https://github.com/mattyocode">mattyocode</a>
               </Footer>
             </ImageBackground>
           </main>
