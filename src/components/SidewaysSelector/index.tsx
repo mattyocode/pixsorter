@@ -24,7 +24,12 @@ const FieldValue = ({
         behavior: "smooth",
       });
     }
-  }, [active, parentRef, optionRef]);
+  }, [
+    active,
+    parentRef,
+    optionRef.current?.offsetLeft,
+    optionRef.current?.clientWidth,
+  ]);
 
   return (
     <li ref={optionRef} className={styles.fieldListItem}>
