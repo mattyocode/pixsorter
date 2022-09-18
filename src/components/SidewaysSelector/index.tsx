@@ -188,9 +188,11 @@ export function SidewaysSelector({
             confirmationActionName={`Changing ${valueType}`}
           />
           <div>
-            <ul ref={fieldValueRef} className={styles.fieldList}>
-              {fieldValues}
-            </ul>
+            {loadedRef.current && (
+              <ul ref={fieldValueRef} className={styles.fieldList}>
+                {fieldValues}
+              </ul>
+            )}
           </div>
           <ImageUIBtn
             src="/icons/right.svg"
@@ -242,8 +244,8 @@ export function SidewaysSelector({
 const preventScrollX = (ref: RefObject<HTMLElement>) => {
   // Prevent selectors being scrollable - user has to click
   const stopScrolling = (e: WheelEvent) => {
-    // e.stopPropagation();
-    // e.preventDefault();
+    e.stopPropagation();
+    e.preventDefault();
     window.scrollBy(0, e.deltaY);
   };
 
@@ -254,8 +256,8 @@ const preventScrollX = (ref: RefObject<HTMLElement>) => {
   };
 
   const stopSwiping = (e: TouchEvent) => {
-    // e.stopPropagation();
-    // e.preventDefault();
+    e.stopPropagation();
+    e.preventDefault();
 
     const offsetY = startY - e.touches[0].pageY;
     window.scrollBy(0, offsetY);
