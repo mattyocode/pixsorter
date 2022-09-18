@@ -24,7 +24,7 @@ const FieldValue = ({
         behavior: "smooth",
       });
     }
-  }, [active, parentRef]);
+  }, [active, parentRef, optionRef]);
 
   return (
     <li ref={optionRef} className={styles.fieldListItem}>
@@ -123,6 +123,7 @@ export function SidewaysSelector({
   const fieldValueRef = useRef<HTMLUListElement | null>(null);
   const fieldInfoRef = useRef<HTMLUListElement | null>(null);
   const fieldInfoWrapperRef = useRef<HTMLDivElement | null>(null);
+  const loadedRef = useRef<boolean>(false);
 
   const controls = useAnimation();
 
@@ -161,6 +162,10 @@ export function SidewaysSelector({
     preventScrollX(fieldInfoRef);
   }, []);
 
+  useEffect(() => {
+    loadedRef.current = true;
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.selectorRow}>
@@ -177,13 +182,11 @@ export function SidewaysSelector({
             confirm={true}
             confirmationActionName={`Changing ${valueType}`}
           />
-          {selectedIdx && (
-            <div>
-              <ul ref={fieldValueRef} className={styles.fieldList}>
-                {fieldValues}
-              </ul>
-            </div>
-          )}
+          <div>
+            <ul ref={fieldValueRef} className={styles.fieldList}>
+              {fieldValues}
+            </ul>
+          </div>
           <ImageUIBtn
             src="/icons/right.svg"
             alt="next option"
