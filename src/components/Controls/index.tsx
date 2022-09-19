@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { SidewaysSelector } from "../SidewaysSelector";
 import { Parallax } from "../Parallax";
 
@@ -8,15 +8,6 @@ import styles from "./Controls.module.scss";
 
 export function Controls() {
   const algoCtx = useContext(AlgoContext);
-  const [loaded, setLoaded] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!loaded) {
-      algoCtx.prevAlgo();
-      algoCtx.prevSortBy();
-      setLoaded(true);
-    }
-  }, [loaded, algoCtx]);
 
   return (
     <div className={styles.wrapper}>
