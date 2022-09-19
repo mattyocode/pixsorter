@@ -24,7 +24,7 @@ export const ConfirmationModal = ({
     callback(e);
     close(e);
   };
-  const setAskToConfirm = (e: React.MouseEvent) => {
+  const setAskToConfirm = () => {
     uiContext.setAskToConfirm((prev) => !prev);
   };
 
