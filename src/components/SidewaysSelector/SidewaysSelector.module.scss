@@ -1,5 +1,9 @@
 .wrapper {
   max-width: 400px;
+
+  // @media screen and (min-width: 500px) {
+  //   width: 440px;
+  // }
 }
 
 .selectorRow {
@@ -17,16 +21,16 @@
 
   & > h3 {
     margin: 0;
-    width: 3.5rem;
+    width: 4rem;
   }
 
   @media screen and (min-width: 450px) {
     margin: 0.3rem;
     font-size: 1rem;
-    width: 4rem;
+    width: 5rem;
 
     & > h3 {
-      width: 4rem;
+      width: 5rem;
     }
   }
 }
@@ -42,6 +46,11 @@
     width: 3rem;
   }
 }
+
+// .fieldListWrapper {
+//   max-width: 100%;
+//   overflow-x: hidden;
+// }
 
 .fieldList {
   display: flex;

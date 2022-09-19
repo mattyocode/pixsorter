@@ -18,18 +18,15 @@ const FieldValue = ({
   const optionRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
-    if (active && optionRef.current && parentRef?.current) {
-      parentRef.current.scrollTo({
-        left: optionRef.current.offsetLeft - optionRef.current.clientWidth,
-        behavior: "smooth",
-      });
-    }
-  }, [
-    active,
-    parentRef,
-    optionRef.current?.offsetLeft,
-    optionRef.current?.clientWidth,
-  ]);
+    setTimeout(() => {
+      if (active && optionRef.current && parentRef?.current) {
+        parentRef.current.scrollTo({
+          left: optionRef.current.offsetLeft - optionRef.current.clientWidth,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+  }, [active, parentRef]);
 
   return (
     <li ref={optionRef} className={styles.fieldListItem}>
@@ -129,7 +126,6 @@ export function SidewaysSelector({
   const fieldValueRef = useRef<HTMLUListElement | null>(null);
   const fieldInfoRef = useRef<HTMLUListElement | null>(null);
   const fieldInfoWrapperRef = useRef<HTMLDivElement | null>(null);
-  const loadedRef = useRef<boolean>(false);
 
   const controls = useAnimation();
 
@@ -184,7 +180,7 @@ export function SidewaysSelector({
             confirm={true}
             confirmationActionName={`Changing ${valueType}`}
           />
-          <div>
+          <div className={styles.fieldListWrapper}>
             <ul ref={fieldValueRef} className={styles.fieldList}>
               {fieldValues}
             </ul>

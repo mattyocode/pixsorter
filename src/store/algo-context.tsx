@@ -16,9 +16,9 @@ type AlgoContextTypes = {
 
 const AlgoContext = React.createContext<AlgoContextTypes>({
   // Initialised with default state for IDE autocompletion.
-  algoIdx: 1,
+  algoIdx: 0,
   algos: [],
-  sortByIdx: 1,
+  sortByIdx: 0,
   sortByOptions: [],
   pixelDistance: 4,
   prevAlgo: () => {},

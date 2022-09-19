@@ -157,7 +157,7 @@ export function ImageUI() {
   useEffect(() => {
     if (width && !keepSorting) {
       switch (true) {
-        case width >= 450:
+        case width >= 480:
           setCanvasSize(400);
           break;
         case width >= 425:
