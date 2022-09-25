@@ -1,34 +1,123 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PixSorter - Using algorithms to sort images
 
-## Getting Started
+This web app provides a chance to explore foundational sorting algorithms in a practical context, while allowing users to view images in an unusual and interesting new way.
 
-First, run the development server:
+## Tech stack
 
-```bash
-npm run dev
-# or
-yarn dev
+- Typescript
+- Next JS
+- Sass
+- Framer Motion
+- Jest
+- React Testing Library
+
+## Deployment
+
+Website is hosted on Vercel, and is available at [pixsorter.com](https://pixsorter.com)
+
+![Homepage image](https://github.com/mattyocode/images/blob/main/pixsorter/pixsorter-main.png)
+
+## How to install
+
+1. Clone from Github
+
+   ```bash
+   cd projects
+   git clone <repo-tag>
+   ```
+
+2. Add environment variables
+
+   Create `.env` file in the root directory that includes the required variables for Unsplash API.
+
+3. Install dependencies
+
+   Run `yarn install` to install dependencies.
+
+4. Run tests
+
+   Run `yarn test` see results of unit tests.
+
+5. Start app locally
+
+   Run `yarn start` to launch the app on localhost:3000
+
+## Key site features
+
+### Sorting algorithms passed via context with shared interface
+
+To allow for easy switching between algorithms, they share a common interface and are passed via context to the function that renders the pixel array (periodically) to the screen.
+
+Algorithm interface
+
+```tsx
+export type SortAlgoTypes = (
+  array: Uint8ClampedArray,
+  sortedCallback: () => void,
+  compare: compareFnTypes,
+  sortPosition: number | SortDataTypes | null,
+  pixelIdxLength?: number,
+  renderLoops?: number
+) => number | SortDataTypes;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Animation function in Canvas component
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```tsx
+const draw = useCallback(() => {
+  const finishedSorting = () => {
+    setIsSorted(true);
+    setKeepSorting(false);
+  };
+  if (keepSorting && !isSorted) {
+    if (imgData.current?.data && context.current) {
+      // Algorithm will run for a set number of loops
+      // before rendering to the screen
+      let updatedPositionData = algorithm(
+        imgData.current.data,
+        finishedSorting,
+        sortBy,
+        sortPosition
+      );
+      setSortPosition(updatedPositionData);
+      context.current.putImageData(imgData.current, 0, 0);
+      requestId.current = requestAnimationFrame(draw);
+    }
+  }
+  [...]
+},[...]);
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Side-scrolling selection component
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+![Controls image](https://github.com/mattyocode/images/blob/main/pixsorter/controls.png)
 
-## Learn More
+The sideways selector component provides fluid user interaction through using Framer Motion's `easeInOut` transition animation for revealing hidden content, by and smoothly scrolling to the position of the selected value by passing down a reference to the parent container to the FieldValue component.
 
-To learn more about Next.js, take a look at the following resources:
+```tsx
+const FieldValue = ({
+  value,
+  active,
+  parentRef,
+}: {
+  value: string;
+  active: boolean;
+  parentRef: RefObject<HTMLElement>;
+}) => {
+  const optionRef = useRef<HTMLLIElement>(null);
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  useEffect(() => {
+      if (active && optionRef.current && parentRef?.current) {
+        parentRef.current.scrollTo({
+          left: optionRef.current.offsetLeft - optionRef.current.clientWidth,
+          behavior: "smooth",
+        });
+      }
+  }, [active, parentRef]);
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Challenges and Improvements
 
-## Deploy on Vercel
+Algorithm pacing is a challenge, especially for the faster algorithms. Merge sort needs to be slowed down.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Next I'd like to implement K-means clustering to find and visualise the most common colours in an image - perhaps as a microservice that's called by the client.
