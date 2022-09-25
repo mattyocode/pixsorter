@@ -15,7 +15,7 @@ This web app provides a chance to explore foundational sorting algorithms in a p
 
 Website is hosted on Vercel, and is available at [pixsorter.com](https://pixsorter.com)
 
-![Homepage screengrab](https://github.com/mattyocode/images/blob/main/pixsorter/PixSorterHomepageImage.png)
+![Homepage image](https://github.com/mattyocode/images/blob/main/pixsorter/pixsorter-main.png)
 
 ## How to install
 
@@ -89,6 +89,8 @@ const draw = useCallback(() => {
 ```
 
 ### Side-scrolling selection component
+
+![Controls image](https://github.com/mattyocode/images/blob/main/pixsorter/controls.png)
 
 The sideways selector component provides fluid user interaction through using Framer Motion's `easeInOut` transition animation for revealing hidden content, by and smoothly scrolling to the position of the selected value by passing down a reference to the parent container to the FieldValue component.
 
