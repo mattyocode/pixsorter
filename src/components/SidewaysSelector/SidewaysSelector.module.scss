@@ -1,9 +1,5 @@
 .wrapper {
   max-width: 400px;
-
-  // @media screen and (min-width: 500px) {
-  //   width: 440px;
-  // }
 }
 
 .selectorRow {
@@ -46,11 +42,6 @@
     width: 3rem;
   }
 }
-
-// .fieldListWrapper {
-//   max-width: 100%;
-//   overflow-x: hidden;
-// }
 
 .fieldList {
   display: flex;
@@ -144,7 +135,6 @@
     margin: 0 0 1rem 0;
 
     @media screen and (min-width: 450px) {
-      // font-size: 1.2rem;
       margin: 1rem 0;
     }
   }
@@ -160,7 +150,11 @@
 .actionIcon {
   display: flex;
   align-items: center;
-  width: 1.5rem;
+  width: 2rem;
+
+  @media screen and (min-width: 450px) {
+    width: 4rem;
+  }
 }
 
 .dropdown {
