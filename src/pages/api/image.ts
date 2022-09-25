@@ -85,7 +85,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data | Error>
 ) {
-  // res.status(200).json({ name: 'John Doe' })
   try {
     const response = await fetch(`${UNSPLASH_URL}/photos/random`, {
       headers: {
