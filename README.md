@@ -127,4 +127,6 @@ const FieldValue = ({
 
 Algorithm pacing is a challenge, especially for the faster algorithms. Merge sort needs to be slowed down.
 
+There's also more testing to be done. And a couple of other algorithms to add.
+
 Next I'd like to implement K-means clustering to find and visualise the most common colours in an image - perhaps as a microservice that's called by the client.
