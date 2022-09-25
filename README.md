@@ -107,13 +107,20 @@ const FieldValue = ({
   const optionRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
-      if (active && optionRef.current && parentRef?.current) {
-        parentRef.current.scrollTo({
-          left: optionRef.current.offsetLeft - optionRef.current.clientWidth,
-          behavior: "smooth",
-        });
-      }
+    if (active && optionRef.current && parentRef?.current) {
+      parentRef.current.scrollTo({
+        left: optionRef.current.offsetLeft - optionRef.current.clientWidth,
+        behavior: "smooth",
+      });
+    }
   }, [active, parentRef]);
+
+  return (
+    <li ref={optionRef} className={styles.fieldListItem}>
+      {value}
+    </li>
+  );
+};
 ```
 
 ## Challenges and Improvements
