@@ -33,7 +33,7 @@ const Home: NextPage = () => {
                 <Controls />
                 <Footer>
                   &#128075;{" "}
-                  <a href="https://github.com/mattyocode">mattyocode</a>
+                  <a href="https://www.mattoliver.dev/#contact">mattyocode</a>
                 </Footer>
               </ImageBackground>
             </main>
