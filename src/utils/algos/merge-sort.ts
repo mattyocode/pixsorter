@@ -2,10 +2,6 @@ import copy from "./pixel-copy";
 import { SortAlgoTypes, SortDataTypes } from "./algoTypes";
 import { compareFnTypes } from "./pixel-comparison";
 
-// const sleep = (ms: number) => {
-//   return new Promise((resolve) => setTimeout(resolve, ms));
-// };
-
 const mergeSort: SortAlgoTypes = (
   array,
   sortedCallback,
