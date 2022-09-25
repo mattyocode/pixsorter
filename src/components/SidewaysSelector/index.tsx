@@ -257,9 +257,9 @@ const preventScrollX = (ref: RefObject<HTMLElement>) => {
   };
 
   const refCurrent = ref.current;
-  refCurrent?.addEventListener("touchstart", touchStart);
-  refCurrent?.addEventListener("touchmove", stopSwiping);
-  refCurrent?.addEventListener("wheel", stopScrolling);
+  refCurrent?.addEventListener("touchstart", touchStart, { passive: false });
+  refCurrent?.addEventListener("touchmove", stopSwiping, { passive: false });
+  refCurrent?.addEventListener("wheel", stopScrolling, { passive: false });
 
   return () => {
     refCurrent?.removeEventListener("touchstart", touchStart);

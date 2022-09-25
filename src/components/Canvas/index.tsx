@@ -13,8 +13,6 @@ import { SortDataTypes } from "../../utils/algos/algoTypes";
 
 import SortingContext from "../../store/sorting-context";
 
-import styles from "./Canvas.module.scss";
-
 export function SortCanvas({
   imageSrc,
   height,
@@ -30,10 +28,11 @@ export function SortCanvas({
   const [sortPosition, setSortPosition] = useState<
     SortDataTypes | number | null
   >(null);
+  // Algorithm state
   const algoCtx = useContext(AlgoContext);
   const algorithm = algoCtx.algos[algoCtx.algoIdx].function;
   const sortBy = algoCtx.sortByOptions[algoCtx.sortByIdx].function;
-
+  // Sorting state
   const { keepSorting, setKeepSorting, isSorted, setIsSorted } =
     useContext(SortingContext);
 
@@ -49,6 +48,8 @@ export function SortCanvas({
     };
     if (keepSorting && !isSorted) {
       if (imgData.current?.data && context.current) {
+        // Algorithm will run for a set number of loops
+        // before rendering to the screen
         let updatedPositionData = algorithm(
           imgData.current.data,
           finishedSorting,
@@ -115,7 +116,7 @@ export function SortCanvas({
   }, [canvasRef, draw]);
 
   return (
-    <div className={styles.canvas}>
+    <div>
       <canvas ref={canvasRef} height={height} width={width} />
     </div>
   );

@@ -4,9 +4,7 @@ $size: 50px;
 
 .spinner {
   position: absolute;
-  // top: calc(0%);
   margin: auto;
-  // left: calc(50% - #{$size / 2});
   width: $size;
   height: $size;
   animation: spinner 0.75s linear infinite;
